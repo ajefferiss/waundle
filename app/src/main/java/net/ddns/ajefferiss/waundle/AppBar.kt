@@ -8,12 +8,14 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import net.ddns.ajefferiss.waundle.ui.theme.Green40
+import net.ddns.ajefferiss.waundle.ui.theme.Background40
 
 @Composable
 fun AppBarView(title: String, onBackNavClicked: () -> Unit = {}) {
@@ -44,6 +46,20 @@ fun AppBarView(title: String, onBackNavClicked: () -> Unit = {}) {
         },
         elevation = 3.dp,
         navigationIcon = navigationIcon,
-        backgroundColor = Green40
+        backgroundColor = Background40,
+        actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = stringResource(id = R.string.search_navigation_icon)
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = stringResource(id = R.string.more_options_navigation_icon)
+                )
+            }
+        }
     )
 }

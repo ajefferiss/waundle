@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Waundle</string>
     <string name="back_navigation_arrow">Back navigation icon</string>
+    <string name="search_navigation_icon">Search icon\n</string>
+    <string name="more_options_navigation_icon">Options icon\n</string>
 </resources>
