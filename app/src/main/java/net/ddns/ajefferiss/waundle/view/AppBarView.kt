@@ -42,7 +42,7 @@ fun AppBarView(title: String, onBackNavClicked: () -> Unit = {}) {
                 modifier = Modifier
                     .padding(start = 4.dp)
                     .heightIn(max = 24.dp),
-                color = Color.DarkGray
+                color = Color.Black
             )
         },
         elevation = 3.dp,
