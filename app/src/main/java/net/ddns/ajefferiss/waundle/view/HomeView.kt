@@ -1,4 +1,4 @@
-package net.ddns.ajefferiss.waundle
+package net.ddns.ajefferiss.waundle.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,8 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.flowOf
+import net.ddns.ajefferiss.waundle.R
+import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.data.Hill
-import net.ddns.ajefferiss.waundle.view.WaundleViewModel
 import java.time.LocalDate
 
 @Composable
@@ -55,7 +56,9 @@ fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
                 .padding(it)
         ) {
             items(walkedHills.value, key = { hill -> hill.id }) { hill ->
-                HillItem(hill = hill, onClick = {})
+                HillItem(
+                    hill = hill,
+                    onClick = { navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}") })
             }
         }
     }

@@ -1,4 +1,4 @@
-package net.ddns.ajefferiss.waundle
+package net.ddns.ajefferiss.waundle.view
 
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -7,7 +7,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.ui.theme.Background40
 
 @Composable
@@ -25,7 +26,7 @@ fun AppBarView(title: String, onBackNavClicked: () -> Unit = {}) {
             {
                 IconButton(onClick = { onBackNavClicked() }) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                         contentDescription = stringResource(id = R.string.back_navigation_arrow)
                     )
                 }
