@@ -4,4 +4,5 @@
     <string name="search_navigation_icon">Search icon\n</string>
     <string name="more_options_navigation_icon">Options icon\n</string>
     <string name="details_title">Hill Details</string>
+    <string name="walked_hills_description">Hills you\'ve walked</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.Graph
 import net.ddns.ajefferiss.waundle.data.Hill
@@ -14,10 +15,13 @@ class WaundleViewModel(
 ) : ViewModel() {
 
     lateinit var walkedHills: Flow<List<Hill>>
+    var loading: Flow<Boolean>
 
     init {
+        loading = flowOf(true)
         viewModelScope.launch {
             walkedHills = hillRepository.getWalkedHills()
+            loading = flowOf(false)
         }
     }
 
