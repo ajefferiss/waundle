@@ -23,4 +23,10 @@ abstract class HillDAO {
 
     @Query("SELECT * FROM `hills_table` WHERE id = :id")
     abstract fun getHillById(id: Long): Flow<Hill>
+
+    @Query("SELECT * FROM `hills_meta` WHERE id = 1")
+    abstract fun getHillsMeta(): Flow<HillsMeta>
+
+    @Update
+    abstract suspend fun updateHillMeta(metaEntry: HillsMeta)
 }

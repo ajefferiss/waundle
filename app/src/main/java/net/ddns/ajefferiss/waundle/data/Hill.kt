@@ -26,3 +26,10 @@ data class Hill(
     @ColumnInfo(name = "latitude") val latitude: Float = 0F,
     @ColumnInfo(name = "longitude") val longitude: Float = 0F
 )
+
+@Entity(tableName = "hills_meta")
+data class HillsMeta(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    @ColumnInfo(name = "csv_name") val csvName: String = "",
+    @ColumnInfo(name = "csv_hash") val csvHash: String = ""
+)
