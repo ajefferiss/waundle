@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
@@ -64,18 +65,29 @@ fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
                 CircularProgressIndicator(modifier = Modifier.width(64.dp))
             }
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-            ) {
-                items(walkedHills.value, key = { hill -> hill.id }) { hill ->
-                    HillItem(
-                        hill = hill,
-                        onClick = {
-                            navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
-                        }
-                    )
+            if (walkedHills.value.isEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.no_walked_hills),
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it),
+                    textAlign = TextAlign.Center
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
+                    items(walkedHills.value, key = { hill -> hill.id }) { hill ->
+                        HillItem(
+                            hill = hill,
+                            onClick = {
+                                navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
+                            }
+                        )
+                    }
                 }
             }
         }
