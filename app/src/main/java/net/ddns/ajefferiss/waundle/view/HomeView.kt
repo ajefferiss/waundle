@@ -24,11 +24,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.coroutines.flow.flowOf
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.data.Hill
-import java.time.LocalDate
 
 @Composable
 fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
@@ -44,16 +42,9 @@ fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
         }
     ) {
 
-//        val walkedHills = viewModel.walkedHills.collectAsState(
-//            initial = listOf()
-//        )
-        val walkedHills = flowOf(
-            listOf(
-                Hill(id = 1, name = "Test Hil", climbed = LocalDate.now()),
-                Hill(id = 2, name = "Another Hill", climbed = LocalDate.of(2023, 12, 1)),
-                Hill(id = 3, name = "Final Hill", climbed = LocalDate.of(2024, 3, 24))
-            )
-        ).collectAsState(initial = listOf())
+        val walkedHills = viewModel.walkedHills.collectAsState(
+            initial = listOf()
+        )
         val showProgressBar = viewModel.loading.collectAsState(initial = false)
 
         Column(

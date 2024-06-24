@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(
-    entities = [Hill::class],
+    entities = [Hill::class, HillsMeta::class],
     version = 1,
     exportSchema = false
 )

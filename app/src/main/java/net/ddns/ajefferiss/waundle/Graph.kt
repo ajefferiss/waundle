@@ -13,6 +13,8 @@ object Graph {
     }
 
     fun provide(context: Context) {
-        database = Room.databaseBuilder(context, HillDatabase::class.java, "waundle.db").build()
+        database = Room.databaseBuilder(context, HillDatabase::class.java, "waundle.db")
+            .createFromAsset("database/waundle.db")
+            .build()
     }
 }

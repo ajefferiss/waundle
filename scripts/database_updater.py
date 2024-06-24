@@ -61,7 +61,7 @@ def process_csv(input_file: str, database_path: str):
                         row['Classification'],
                         row['Metres'],
                         row['Feet'],
-                        False, 
+                        None, 
                         row['Country'],
                         row['Hill-bagging'],
                         row['Latitude'],
