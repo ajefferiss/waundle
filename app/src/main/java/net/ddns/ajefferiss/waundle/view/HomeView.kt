@@ -9,17 +9,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,17 +32,17 @@ import net.ddns.ajefferiss.waundle.data.Hill
 
 @Composable
 fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
-    val context = LocalContext.current
-    val scaffoldState = rememberScaffoldState()
+    val snackBarHostState = remember { SnackbarHostState() }
 
     Scaffold(
-        scaffoldState = scaffoldState,
+        snackbarHost = { SnackbarHost(snackBarHostState) },
         topBar = {
             AppBarView(
                 title = stringResource(id = R.string.app_name),
                 navController = navController
             )
-        }
+        },
+        containerColor = Color.White
     ) {
 
         val walkedHills = viewModel.walkedHills.collectAsState(
@@ -102,8 +103,8 @@ fun HillItem(hill: Hill, onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(top = 8.dp, start = 8.dp, end = 8.dp)
             .clickable { onClick() },
-        elevation = 10.dp,
-        backgroundColor = Color.White
+//        elevation = CardElevation,
+//        backgroundColor = Color.White
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = hill.name, fontWeight = FontWeight.ExtraBold)

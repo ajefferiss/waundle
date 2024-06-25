@@ -4,15 +4,14 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,20 +30,21 @@ import net.ddns.ajefferiss.waundle.ui.theme.WaundleTheme
 @Composable
 fun SearchView(navController: NavController, viewModel: WaundleViewModel) {
     val context = LocalContext.current
-    val scaffoldState = rememberScaffoldState()
+    val snackBarHostState = remember { SnackbarHostState() }
 
     fun onSearchChanged(searchText: String) {
         Toast.makeText(context, "Got: $searchText", Toast.LENGTH_LONG).show()
     }
 
     Scaffold(
-        scaffoldState = scaffoldState,
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         topBar = {
             AppBarView(
                 title = stringResource(id = R.string.search_view),
                 navController = navController
             )
-        }
+        },
+        containerColor = Color.White
     ) {
         Column(
             modifier = Modifier.padding(it)
@@ -57,7 +57,6 @@ fun SearchView(navController: NavController, viewModel: WaundleViewModel) {
 @Composable
 fun SearchField(onSearchChanged: (String) -> Unit) {
     var text by remember { mutableStateOf("") }
-    var context = LocalContext.current
 
     OutlinedTextField(
         value = text,
@@ -82,13 +81,7 @@ fun SearchField(onSearchChanged: (String) -> Unit) {
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedLabelColor = Color.Black,
-            unfocusedLabelColor = Color.Black,
-            focusedBorderColor = MaterialTheme.colors.primary,
-            unfocusedBorderColor = MaterialTheme.colors.secondary
-        )
+            .padding(8.dp)
     )
 }
 
