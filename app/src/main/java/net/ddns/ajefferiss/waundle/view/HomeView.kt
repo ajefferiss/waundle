@@ -38,7 +38,8 @@ fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
         scaffoldState = scaffoldState,
         topBar = {
             AppBarView(
-                title = stringResource(id = R.string.app_name)
+                title = stringResource(id = R.string.app_name),
+                navController = navController
             )
         }
     ) {

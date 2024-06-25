@@ -29,4 +29,7 @@ abstract class HillDAO {
 
     @Update
     abstract suspend fun updateHillMeta(metaEntry: HillsMeta)
+
+    @Query("SELECT * FROM `hills_table` WHERE name LIKE '%' || :text || '%' OR country LIKE '%' || :text || '%'")
+    abstract fun searchForHill(text: String): Flow<List<Hill>>
 }

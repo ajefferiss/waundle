@@ -44,4 +44,8 @@ class WaundleViewModel(
     fun getHillById(id: Long): Flow<Hill> {
         return hillRepository.getHillById(id)
     }
+
+    fun searchForHill(text: String): Flow<List<Hill>> {
+        return hillRepository.searchForHill(text)
+    }
 }

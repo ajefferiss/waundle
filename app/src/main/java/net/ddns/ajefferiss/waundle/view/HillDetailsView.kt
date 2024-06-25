@@ -28,7 +28,7 @@ fun HillDetailsView(
         topBar = {
             AppBarView(
                 title = stringResource(id = R.string.details_title),
-                onBackNavClicked = { navController.navigateUp() }
+                navController = navController
             )
         },
         scaffoldState = scaffoldState

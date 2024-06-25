@@ -6,4 +6,7 @@
     <string name="details_title">Hill Details</string>
     <string name="walked_hills_description">Hills you\'ve walked</string>
     <string name="no_walked_hills">No hills marked as walked yet</string>
+    <string name="search_view">Search</string>
+    <string name="search_field_label">Search</string>
+    <string name="search_field_placeholder">Search by name or country</string>
 </resources>

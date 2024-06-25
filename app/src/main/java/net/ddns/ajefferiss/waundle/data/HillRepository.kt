@@ -19,4 +19,8 @@ class HillRepository(private val hillDAO: HillDAO) {
     suspend fun updateHill(hill: Hill) {
         hillDAO.updateHill(hill)
     }
+
+    fun searchForHill(text: String): Flow<List<Hill>> {
+        return hillDAO.searchForHill(text)
+    }
 }

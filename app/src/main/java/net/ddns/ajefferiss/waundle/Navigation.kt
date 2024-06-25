@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HomeView
+import net.ddns.ajefferiss.waundle.view.SearchView
 import net.ddns.ajefferiss.waundle.view.WaundleViewModel
 
 @Composable
@@ -33,6 +34,9 @@ fun Navigation(
         ) { entry ->
             val id = if (entry.arguments != null) entry.arguments!!.getLong("id") else 0L
             HillDetailsView(id = id, viewModel = viewModel, navController = navController)
+        }
+        composable(Screen.SearchScreen.route) {
+            SearchView(navController = navController, viewModel = viewModel)
         }
     }
 }
