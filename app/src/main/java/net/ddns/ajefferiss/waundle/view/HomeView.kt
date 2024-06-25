@@ -1,6 +1,5 @@
 package net.ddns.ajefferiss.waundle.view
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
-import net.ddns.ajefferiss.waundle.data.Hill
 
 @Composable
 fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
@@ -48,7 +45,7 @@ fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
         val walkedHills = viewModel.walkedHills.collectAsState(
             initial = listOf()
         )
-        val showProgressBar = viewModel.loading.collectAsState(initial = false)
+        val showProgressBar = viewModel.loading.collectAsState(initial = true)
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -92,23 +89,6 @@ fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun HillItem(hill: Hill, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp)
-            .clickable { onClick() },
-//        elevation = CardElevation,
-//        backgroundColor = Color.White
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = hill.name, fontWeight = FontWeight.ExtraBold)
-            Text(text = "Walked on " + hill.climbed.toString())
         }
     }
 }

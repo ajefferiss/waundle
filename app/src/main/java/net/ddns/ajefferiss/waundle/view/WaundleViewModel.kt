@@ -45,7 +45,7 @@ class WaundleViewModel(
         return hillRepository.getHillById(id)
     }
 
-    fun searchForHill(text: String): Flow<List<Hill>> {
-        return hillRepository.searchForHill(text)
+    fun searchBy(search: String): Flow<List<Hill>> {
+        return hillRepository.searchByNameOrCountry(search)
     }
 }

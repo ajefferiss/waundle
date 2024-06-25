@@ -20,7 +20,7 @@ class HillRepository(private val hillDAO: HillDAO) {
         hillDAO.updateHill(hill)
     }
 
-    fun searchForHill(text: String): Flow<List<Hill>> {
-        return hillDAO.searchForHill(text)
+    fun searchByNameOrCountry(searchText: String): Flow<List<Hill>> {
+        return hillDAO.filterHillsByNameOrCountry(searchText)
     }
 }

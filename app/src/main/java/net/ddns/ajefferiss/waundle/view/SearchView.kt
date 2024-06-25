@@ -1,11 +1,15 @@
 package net.ddns.ajefferiss.waundle.view
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -13,28 +17,27 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
+import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.ui.theme.WaundleTheme
 
 @Composable
 fun SearchView(navController: NavController, viewModel: WaundleViewModel) {
-    val context = LocalContext.current
     val snackBarHostState = remember { SnackbarHostState() }
-
-    fun onSearchChanged(searchText: String) {
-        Toast.makeText(context, "Got: $searchText", Toast.LENGTH_LONG).show()
-    }
+    var searchText by remember { mutableStateOf("") }
+    val searchResult = viewModel.searchBy(searchText).collectAsState(initial = listOf())
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
@@ -49,7 +52,27 @@ fun SearchView(navController: NavController, viewModel: WaundleViewModel) {
         Column(
             modifier = Modifier.padding(it)
         ) {
-            SearchField(onSearchChanged = { searchText -> onSearchChanged(searchText) })
+            SearchField(onSearchChanged = { it2 -> searchText = it2 })
+            if (searchResult.value.isEmpty()) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .width(64.dp)
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally)
+                )
+            }
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(searchResult.value, key = { hill -> hill.id }) { hill ->
+                    HillItem(
+                        hill = hill,
+                        onClick = {
+                            navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
+                        }
+                    )
+                }
+            }
         }
     }
 }
