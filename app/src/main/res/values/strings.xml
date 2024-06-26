@@ -9,4 +9,8 @@
     <string name="search_view">Search</string>
     <string name="search_field_label">Search</string>
     <string name="search_field_placeholder">Search by name or country</string>
+    <string name="hill_desc_name">Name</string>
+    <string name="hill_desc_county">County</string>
+    <string name="hill_desc_classification">Classification</string>
+    <string name="hill_desc_height">Height</string>
 </resources>
