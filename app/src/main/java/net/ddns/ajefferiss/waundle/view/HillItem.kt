@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.data.Hill
 
 @Composable
@@ -22,7 +24,7 @@ fun HillItem(hill: Hill, onClick: () -> Unit) {
     var hillDescription = ""
     var descriptionSeparator = ""
     if (hill.climbed != null) {
-        hillDescription += "Walked on " + hill.climbed.toString()
+        hillDescription += stringResource(id = R.string.hill_walked_on) + " " + hill.climbed.toString()
         descriptionSeparator = ", "
     }
     hillDescription += descriptionSeparator + hill.feet + "ft, " + hill.metres + "m"
