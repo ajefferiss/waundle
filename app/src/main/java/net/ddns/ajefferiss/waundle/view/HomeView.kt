@@ -28,9 +28,11 @@ import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
 
 @Composable
-fun HomeView(navController: NavController, viewModel: WaundleViewModel) {
+fun HomeView(
+    navController: NavController,
+    viewModel: WaundleViewModel
+) {
     val snackBarHostState = remember { SnackbarHostState() }
-
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
         topBar = {

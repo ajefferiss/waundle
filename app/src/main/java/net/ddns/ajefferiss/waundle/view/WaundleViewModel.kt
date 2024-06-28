@@ -1,5 +1,7 @@
 package net.ddns.ajefferiss.waundle.view
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -9,10 +11,14 @@ import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.Graph
 import net.ddns.ajefferiss.waundle.data.Hill
 import net.ddns.ajefferiss.waundle.data.HillRepository
+import net.ddns.ajefferiss.waundle.data.LocationData
+import java.time.LocalDate
 
 class WaundleViewModel(
     private val hillRepository: HillRepository = Graph.hillRepository
 ) : ViewModel() {
+    private val _location = mutableStateOf<LocationData?>(null)
+    val location: State<LocationData?> = _location
 
     lateinit var walkedHills: Flow<List<Hill>>
     var loading: Flow<Boolean>
@@ -47,5 +53,9 @@ class WaundleViewModel(
 
     fun searchBy(search: String): Flow<List<Hill>> {
         return hillRepository.searchByNameOrCountry(search)
+    }
+    
+    fun updateLocation(newLocation: LocationData) {
+        _location.value = newLocation
     }
 }
