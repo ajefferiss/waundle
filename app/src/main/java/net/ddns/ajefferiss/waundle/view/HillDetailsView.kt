@@ -17,7 +17,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -48,7 +47,7 @@ fun HillDetailsView(id: Long, viewModel: WaundleViewModel, navController: NavCon
     val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Picker)
     val openDatePickerDialog = remember { mutableStateOf(false) }
 
-    var hill = viewModel.getHillById(id).collectAsState(initial = null)
+    val hill = viewModel.getHillById(id).collectAsState(initial = null)
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
@@ -75,22 +74,30 @@ fun HillDetailsView(id: Long, viewModel: WaundleViewModel, navController: NavCon
                         .align(Alignment.CenterHorizontally)
                 )
             } else {
-                Text(
+                WaundleTextField(
                     text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
                     fontWeight = FontWeight.SemiBold
                 )
-                Text(text = stringResource(id = R.string.hill_desc_county) + ": ${hill.value!!.county}")
-                Text(text = stringResource(id = R.string.hill_desc_classification) + ": ${hill.value!!.classification}")
-                Text(text = stringResource(id = R.string.hill_desc_height) + ": ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)")
+                WaundleTextField(
+                    text = stringResource(id = R.string.hill_desc_county) + ": ${hill.value!!.county}"
+                )
+                WaundleTextField(
+                    text = stringResource(id = R.string.hill_desc_classification) + ": ${hill.value!!.classification}"
+                )
+                WaundleTextField(
+                    text = stringResource(id = R.string.hill_desc_height) + ": ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)"
+                )
                 if (hill.value!!.climbed != null) {
-                    Text(text = stringResource(id = R.string.hill_walked_on) + " " + hill.value!!.climbed.toString())
+                    WaundleTextField(
+                        text = stringResource(id = R.string.hill_walked_on) + " " + hill.value!!.climbed.toString()
+                    )
                 } else {
                     Button(
                         onClick = {
                             openDatePickerDialog.value = !openDatePickerDialog.value
                         }
                     ) {
-                        Text(text = stringResource(id = R.string.mark_hill_walked))
+                        WaundleTextField(text = stringResource(id = R.string.mark_hill_walked))
                     }
                 }
 
@@ -126,7 +133,7 @@ fun HillDetailsView(id: Long, viewModel: WaundleViewModel, navController: NavCon
                             viewModel.updateHill(hill.value!!.copy(climbed = walkedDate))
                         }
                     ) {
-                        Text("OK")
+                        WaundleTextField(stringResource(id = R.string.dialog_ok))
                     }
                 },
                 dismissButton = {
@@ -136,7 +143,7 @@ fun HillDetailsView(id: Long, viewModel: WaundleViewModel, navController: NavCon
                             openDatePickerDialog.value = false
                         }
                     ) {
-                        Text("CANCEL")
+                        WaundleTextField(stringResource(id = R.string.dialog_cancel))
                     }
                 }
             ) {

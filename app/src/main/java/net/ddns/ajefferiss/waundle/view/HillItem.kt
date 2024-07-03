@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,13 +20,11 @@ import net.ddns.ajefferiss.waundle.data.Hill
 @Composable
 fun HillItem(hill: Hill, onClick: () -> Unit) {
 
-    var hillDescription = ""
-    var descriptionSeparator = ""
+    var hillDescription =
+        stringResource(id = R.string.hill_desc_height) + ": " + hill.feet + "(ft), " + hill.metres + "(m)"
     if (hill.climbed != null) {
-        hillDescription += stringResource(id = R.string.hill_walked_on) + " " + hill.climbed.toString()
-        descriptionSeparator = ", "
+        hillDescription += "\n" + stringResource(id = R.string.hill_walked_on) + " " + hill.climbed.toString()
     }
-    hillDescription += descriptionSeparator + hill.feet + "ft, " + hill.metres + "m"
 
     Card(
         modifier = Modifier
@@ -38,11 +35,11 @@ fun HillItem(hill: Hill, onClick: () -> Unit) {
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.background)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = hill.name, fontWeight = FontWeight.ExtraBold)
-            Text(text = hillDescription, fontWeight = FontWeight.SemiBold)
+            WaundleTextField(text = hill.name, fontWeight = FontWeight.ExtraBold)
+            WaundleTextField(text = hillDescription, fontWeight = FontWeight.SemiBold)
         }
     }
 }

@@ -17,4 +17,6 @@
     <string name="location_permission_required">Location permission required for this feature</string>
     <string name="location_permission_required_feature">Location permission required for this feature, please enable this</string>
     <string name="mark_hill_walked">Mark as walked</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
 </resources>
