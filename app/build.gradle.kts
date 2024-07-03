@@ -13,7 +13,7 @@ android {
         applicationId = "net.ddns.ajefferiss.waundle"
         minSdk = 26
         targetSdk = 34
-        versionCode = 2
+        versionCode = 4
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -66,18 +66,20 @@ secrets {
 dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.play.services.maps)
     kapt("androidx.room:room-compiler:2.6.0")
 
-    implementation("com.google.maps.android:maps-compose:2.15.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.android.gms:play-services-location:21.2.0")
-
-    implementation(libs.androidx.navigation)
-    implementation(libs.secrets.gradle.plugin)
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation)
+
+
+    implementation(libs.secrets.gradle.plugin)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -86,6 +88,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Test dependencies
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)

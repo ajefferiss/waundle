@@ -10,17 +10,18 @@ class LocationUtils(private val context: Context) {
 
     private val _fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-    fun hasLocationPermission(): Boolean {
+    fun hasLocationPermission(context: Context): Boolean {
 
-        val fine = ContextCompat.checkSelfPermission(
+        val hasFine = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION
-        )
-        val coarse = ContextCompat.checkSelfPermission(
+        ) == PackageManager.PERMISSION_GRANTED
+
+        val hasCoarse = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_COARSE_LOCATION
-        )
+        ) == PackageManager.PERMISSION_GRANTED
 
-        return fine == PackageManager.PERMISSION_GRANTED && coarse == PackageManager.PERMISSION_GRANTED
+        return hasFine && hasCoarse
     }
 }

@@ -1,5 +1,10 @@
 package net.ddns.ajefferiss.waundle.view
 
+import android.Manifest
+import android.content.Context
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,25 +34,61 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.CameraPositionState
-import com.google.maps.android.compose.GoogleMap
+import net.ddns.ajefferiss.waundle.MainActivity
 import net.ddns.ajefferiss.waundle.R
+import net.ddns.ajefferiss.waundle.Screen
+import net.ddns.ajefferiss.waundle.data.LocationData
+import net.ddns.ajefferiss.waundle.util.LocationUtils
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HillDetailsView(id: Long, viewModel: WaundleViewModel, navController: NavController) {
-    val cameraZoom = 10f
+fun HillDetailsView(
+    id: Long,
+    viewModel: WaundleViewModel,
+    navController: NavController,
+    context: Context
+) {
+    val locationUtils = LocationUtils(context)
     val snackBarHostState = remember { SnackbarHostState() }
     val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Picker)
     val openDatePickerDialog = remember { mutableStateOf(false) }
 
     val hill = viewModel.getHillById(id).collectAsState(initial = null)
+
+    val permissionRequired: String = stringResource(id = R.string.location_permission_required)
+    val permissionRequiredFor: String =
+        stringResource(id = R.string.location_permission_required_feature)
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { permissions ->
+            if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true &&
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
+            ) {
+                viewModel.updateLocation(
+                    LocationData(
+                        hill.value!!.latitude.toDouble(),
+                        hill.value!!.longitude.toDouble()
+                    )
+                )
+            } else {
+                val rationaleRequired = ActivityCompat.shouldShowRequestPermissionRationale(
+                    context as MainActivity,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) || ActivityCompat.shouldShowRequestPermissionRationale(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+
+                val toastText = if (rationaleRequired) permissionRequired else permissionRequiredFor
+                Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
+            }
+        }
+    )
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
@@ -101,18 +142,28 @@ fun HillDetailsView(id: Long, viewModel: WaundleViewModel, navController: NavCon
                     }
                 }
 
-                GoogleMap(
-                    modifier = Modifier.padding(top = 16.dp),
-                    cameraPositionState = CameraPositionState(
-                        position = CameraPosition.fromLatLngZoom(
-                            LatLng(
+                Button(onClick = {
+                    if (locationUtils.hasLocationPermission(context)) {
+                        viewModel.updateLocation(
+                            LocationData(
                                 hill.value!!.latitude.toDouble(),
                                 hill.value!!.longitude.toDouble()
-                            ),
-                            cameraZoom
+                            )
                         )
-                    )
-                )
+                        navController.navigate(Screen.MapViewDialog.route) {
+                            this.launchSingleTop
+                        }
+                    } else {
+                        requestPermissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            )
+                        )
+                    }
+                }) {
+                    WaundleTextField(text = stringResource(id = R.string.view_on_map))
+                }
             }
         }
 
