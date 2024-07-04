@@ -8,4 +8,5 @@ sealed class Screen(val route: String) {
     data object SettingsScreen : Screen("settings_screen")
     data object LiveTrackScreen : Screen("live_tracking_screen")
     data object NearByScreen : Screen("nearby_screen")
+    data object HelpFeedbackScreen : Screen("help_feedback_screen")
 }

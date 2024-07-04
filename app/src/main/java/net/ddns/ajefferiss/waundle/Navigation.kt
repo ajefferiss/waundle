@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.menu.DrawerContent
 import net.ddns.ajefferiss.waundle.menu.drawerMenuItems
+import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HillMapView
 import net.ddns.ajefferiss.waundle.view.HomeView
@@ -96,6 +97,9 @@ fun Navigation() {
             }
             composable(Screen.LiveTrackScreen.route) {
                 LiveTrackingView(navController = navController, drawerState = drawerState)
+            }
+            composable(Screen.HelpFeedbackScreen.route) {
+                HelpFeedbackView(navController = navController, drawerState = drawerState)
             }
         }
     }
