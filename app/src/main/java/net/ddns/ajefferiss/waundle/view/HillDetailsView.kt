@@ -9,16 +9,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -101,12 +101,10 @@ fun HillDetailsView(
         containerColor = Color.White
     ) {
         Column(
-            modifier = Modifier
-                .padding(it)
-                .wrapContentSize(),
+            modifier = Modifier.padding(it),
             verticalArrangement = Arrangement.Center
         ) {
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.padding(5.dp))
             if (hill.value == null) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -115,54 +113,59 @@ fun HillDetailsView(
                         .align(Alignment.CenterHorizontally)
                 )
             } else {
-                WaundleTextField(
-                    text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
-                    fontWeight = FontWeight.SemiBold
-                )
-                WaundleTextField(
-                    text = stringResource(id = R.string.hill_desc_county) + ": ${hill.value!!.county}"
-                )
-                WaundleTextField(
-                    text = stringResource(id = R.string.hill_desc_classification) + ": ${hill.value!!.classification}"
-                )
-                WaundleTextField(
-                    text = stringResource(id = R.string.hill_desc_height) + ": ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)"
-                )
-                if (hill.value!!.climbed != null) {
+                Column(modifier = Modifier.padding(start = 16.dp)) {
                     WaundleTextField(
-                        text = stringResource(id = R.string.hill_walked_on) + " " + hill.value!!.climbed.toString()
+                        text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
+                        fontWeight = FontWeight.SemiBold
                     )
-                } else {
+                    WaundleTextField(
+                        text = stringResource(id = R.string.hill_desc_county) + ": ${hill.value!!.county}"
+                    )
+                    WaundleTextField(
+                        text = stringResource(id = R.string.hill_desc_classification) + ": ${hill.value!!.classification}"
+                    )
+                    WaundleTextField(
+                        text = stringResource(id = R.string.hill_desc_height) + ": ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)"
+                    )
+                    if (hill.value!!.climbed != null) {
+                        WaundleTextField(
+                            text = stringResource(id = R.string.hill_walked_on) + " " + hill.value!!.climbed.toString()
+                        )
+                    } else {
+                        Button(
+                            onClick = {
+                                openDatePickerDialog.value = !openDatePickerDialog.value
+                            }
+                        ) {
+                            WaundleTextField(text = stringResource(id = R.string.mark_hill_walked))
+                        }
+                    }
+
                     Button(
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         onClick = {
-                            openDatePickerDialog.value = !openDatePickerDialog.value
+                            if (locationUtils.hasLocationPermission(context)) {
+                                viewModel.updateLocation(
+                                    LocationData(
+                                        hill.value!!.latitude.toDouble(),
+                                        hill.value!!.longitude.toDouble()
+                                    )
+                                )
+                                navController.navigate(Screen.MapViewDialog.route) {
+                                    this.launchSingleTop
+                                }
+                            } else {
+                                requestPermissionLauncher.launch(
+                                    arrayOf(
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION
+                                    )
+                                )
+                            }
                         }
                     ) {
-                        WaundleTextField(text = stringResource(id = R.string.mark_hill_walked))
+                        WaundleTextField(text = stringResource(id = R.string.view_on_map))
                     }
-                }
-
-                Button(onClick = {
-                    if (locationUtils.hasLocationPermission(context)) {
-                        viewModel.updateLocation(
-                            LocationData(
-                                hill.value!!.latitude.toDouble(),
-                                hill.value!!.longitude.toDouble()
-                            )
-                        )
-                        navController.navigate(Screen.MapViewDialog.route) {
-                            this.launchSingleTop
-                        }
-                    } else {
-                        requestPermissionLauncher.launch(
-                            arrayOf(
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION
-                            )
-                        )
-                    }
-                }) {
-                    WaundleTextField(text = stringResource(id = R.string.view_on_map))
                 }
             }
         }

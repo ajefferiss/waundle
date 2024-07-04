@@ -8,7 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
@@ -51,11 +50,9 @@ fun Navigation() {
         composable(Screen.SearchScreen.route) {
             SearchView(navController = navController, viewModel = viewModel)
         }
-        dialog(Screen.MapViewDialog.route) {
+        composable(Screen.MapViewDialog.route) {
             viewModel.location.value?.let { locationIt ->
-                HillMapView(location = locationIt, onCloseClicked = {
-                    navController.popBackStack()
-                })
+                HillMapView(location = locationIt, navController = navController)
             }
         }
     }
