@@ -26,6 +26,8 @@ fun AppBarView(
     title: String,
     navController: NavController
 ) {
+    val onSearchScreen = title == stringResource(id = R.string.search_view)
+
     TopAppBar(
         title = {
             WaundleTextField(
@@ -49,7 +51,11 @@ fun AppBarView(
             containerColor = Background40
         ),
         actions = {
-            IconButton(onClick = { navController.navigate(Screen.SearchScreen.route) }) {
+            IconButton(onClick = {
+                if (!onSearchScreen) {
+                    navController.navigate(Screen.SearchScreen.route)
+                }
+            }) {
                 Icon(
                     imageVector = Icons.Filled.Search,
                     contentDescription = stringResource(id = R.string.search_navigation_icon)
