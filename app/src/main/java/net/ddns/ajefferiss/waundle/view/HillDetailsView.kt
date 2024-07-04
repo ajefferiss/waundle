@@ -17,6 +17,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DisplayMode
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -51,7 +52,8 @@ fun HillDetailsView(
     id: Long,
     viewModel: WaundleViewModel,
     navController: NavController,
-    context: Context
+    context: Context,
+    drawerState: DrawerState
 ) {
     val locationUtils = LocationUtils(context)
     val snackBarHostState = remember { SnackbarHostState() }
@@ -95,7 +97,8 @@ fun HillDetailsView(
         topBar = {
             AppBarView(
                 title = stringResource(id = R.string.details_title),
-                navController = navController
+                navController = navController,
+                drawerState = drawerState
             )
         },
         containerColor = Color.White
@@ -151,7 +154,7 @@ fun HillDetailsView(
                                         hill.value!!.longitude.toDouble()
                                     )
                                 )
-                                navController.navigate(Screen.MapViewDialog.route) {
+                                navController.navigate(Screen.MapViewScreen.route) {
                                     this.launchSingleTop
                                 }
                             } else {

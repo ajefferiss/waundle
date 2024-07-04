@@ -3,6 +3,7 @@ package net.ddns.ajefferiss.waundle.view
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -28,7 +29,7 @@ import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.data.LocationData
 
 @Composable
-fun HillMapView(location: LocationData, navController: NavController) {
+fun HillMapView(location: LocationData, navController: NavController, drawerState: DrawerState) {
     val snackBarHostState = remember { SnackbarHostState() }
     val hillLocation = LatLng(location.latitude, location.longitude)
     val cameraPositionState = rememberCameraPositionState {
@@ -43,7 +44,8 @@ fun HillMapView(location: LocationData, navController: NavController) {
         topBar = {
             AppBarView(
                 title = stringResource(id = R.string.details_title),
-                navController = navController
+                navController = navController,
+                drawerState = drawerState
             )
         },
         containerColor = Color.White

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Waundle</string>
     <string name="back_navigation_arrow">Back navigation icon</string>
-    <string name="search_navigation_icon">Search icon\n</string>
-    <string name="more_options_navigation_icon">Options icon\n</string>
+    <string name="search_navigation_icon">Search icon</string>
+    <string name="more_options_navigation_icon">Options icon</string>
     <string name="details_title">Hill Details</string>
     <string name="walked_hills_description">Hills you\'ve walked</string>
     <string name="no_walked_hills">No hills marked as walked yet</string>
@@ -21,4 +21,7 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="view_on_map">View on Map</string>
     <string name="close">Close</string>
+    <string name="settings">Settings</string>
+    <string name="live_track">Live Track</string>
+    <string name="nearby">Nearby Hills</string>
 </resources>

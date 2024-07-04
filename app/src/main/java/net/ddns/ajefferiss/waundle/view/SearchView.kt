@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -34,7 +35,11 @@ import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.ui.theme.WaundleTheme
 
 @Composable
-fun SearchView(navController: NavController, viewModel: WaundleViewModel) {
+fun SearchView(
+    navController: NavController,
+    viewModel: WaundleViewModel,
+    drawerState: DrawerState
+) {
     val snackBarHostState = remember { SnackbarHostState() }
     var searchText by remember { mutableStateOf("") }
     val searchResult = viewModel.searchBy(searchText).collectAsState(initial = listOf())
@@ -44,7 +49,8 @@ fun SearchView(navController: NavController, viewModel: WaundleViewModel) {
         topBar = {
             AppBarView(
                 title = stringResource(id = R.string.search_view),
-                navController = navController
+                navController = navController,
+                drawerState = drawerState
             )
         },
         containerColor = Color.White

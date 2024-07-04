@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -30,7 +31,8 @@ import net.ddns.ajefferiss.waundle.Screen
 @Composable
 fun HomeView(
     navController: NavController,
-    viewModel: WaundleViewModel
+    viewModel: WaundleViewModel,
+    drawerState: DrawerState
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
     Scaffold(
@@ -38,7 +40,8 @@ fun HomeView(
         topBar = {
             AppBarView(
                 title = stringResource(id = R.string.app_name),
-                navController = navController
+                navController = navController,
+                drawerState = drawerState
             )
         },
         containerColor = Color.White
