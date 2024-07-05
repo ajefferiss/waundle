@@ -3,7 +3,12 @@ package net.ddns.ajefferiss.waundle.view
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -14,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.CameraPosition
@@ -26,18 +32,36 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import net.ddns.ajefferiss.waundle.R
+import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.data.LocationData
+import net.ddns.ajefferiss.waundle.util.GOOGLE_MAP_TYPES_MAP
+import net.ddns.ajefferiss.waundle.util.PreferencesHelper.mapType
+import net.ddns.ajefferiss.waundle.util.PreferencesHelper.sharedPreferences
 
 @Composable
 fun HillMapView(location: LocationData, navController: NavController, drawerState: DrawerState) {
+    val prefs = sharedPreferences(LocalContext.current)
     val snackBarHostState = remember { SnackbarHostState() }
     val hillLocation = LatLng(location.latitude, location.longitude)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(hillLocation, 10f)
     }
 
-    var uiSettings by remember { mutableStateOf(MapUiSettings(zoomControlsEnabled = true)) }
-    var properties by remember { mutableStateOf(MapProperties(mapType = MapType.SATELLITE)) }
+    var uiSettings by remember {
+        mutableStateOf(
+            MapUiSettings(
+                zoomControlsEnabled = true,
+                mapToolbarEnabled = true
+            )
+        )
+    }
+    var properties by remember {
+        mutableStateOf(
+            MapProperties(
+                mapType = GOOGLE_MAP_TYPES_MAP.getOrDefault(prefs.mapType, MapType.SATELLITE)
+            )
+        )
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
@@ -48,7 +72,22 @@ fun HillMapView(location: LocationData, navController: NavController, drawerStat
                 drawerState = drawerState
             )
         },
-        containerColor = Color.White
+        containerColor = Color.White,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Screen.MapFABDialog.route) {
+                        this.launchSingleTop
+                    }
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = stringResource(id = R.string.map_fab_description)
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Start
     ) {
         Column(
             modifier = Modifier.padding(it)

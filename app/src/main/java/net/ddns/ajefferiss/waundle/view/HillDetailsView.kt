@@ -138,7 +138,7 @@ fun HillDetailsView(
                     }
 
                     Row {
-                        if (hill.value!!.climbed != null) {
+                        if (hill.value!!.climbed == null) {
                             Button(
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = MaterialTheme.colorScheme.primary

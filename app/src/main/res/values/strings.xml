@@ -28,4 +28,6 @@
     <string name="help_feedback_description">Waundle support is provided through GitHub or Email as and when I can. You can email me below, or raise a GitHub issue by following the links.</string>
     <string name="github">GitHub</string>
     <string name="email">Email</string>
+    <string name="map_fab_description">Map Settings</string>
+    <string name="select_map_type">Map type:</string>
 </resources>
