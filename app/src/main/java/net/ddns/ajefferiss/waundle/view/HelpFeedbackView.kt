@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -45,6 +47,9 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
                 WaundleTextField(text = stringResource(id = R.string.help_feedback_description))
                 Row(modifier = Modifier.padding(5.dp)) {
                     Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ),
                         modifier = Modifier.padding(2.dp),
                         onClick = {
                             val urlIntent = Intent(
@@ -59,6 +64,9 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
                         WaundleTextField(text = stringResource(id = R.string.github))
                     }
                     Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ),
                         modifier = Modifier.padding(2.dp),
                         onClick = {
                             val emailIntent = Intent(Intent.ACTION_SEND).apply {

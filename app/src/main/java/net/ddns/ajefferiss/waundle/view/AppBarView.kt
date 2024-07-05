@@ -10,6 +10,7 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -21,7 +22,6 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
-import net.ddns.ajefferiss.waundle.ui.theme.Background40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +53,7 @@ fun AppBarView(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Background40
+            containerColor = MaterialTheme.colorScheme.background
         ),
         actions = {
             IconButton(onClick = {

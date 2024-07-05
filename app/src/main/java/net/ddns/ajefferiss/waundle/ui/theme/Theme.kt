@@ -5,19 +5,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
     primary = Waundle80,
     secondary = WaundleGrey80,
     tertiary = WaundleLight80,
-    background = Background80
+    background = Background80,
+    surface = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Waundle40,
     secondary = WaundleGrey40,
     tertiary = WaundleDark40,
-    background = Background40
+    background = Background40,
+    surface = Color.White
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),

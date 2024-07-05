@@ -7,6 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -134,40 +135,52 @@ fun HillDetailsView(
                         WaundleTextField(
                             text = stringResource(id = R.string.hill_walked_on) + " " + hill.value!!.climbed.toString()
                         )
-                    } else {
-                        Button(
-                            onClick = {
-                                openDatePickerDialog.value = !openDatePickerDialog.value
-                            }
-                        ) {
-                            WaundleTextField(text = stringResource(id = R.string.mark_hill_walked))
-                        }
                     }
 
-                    Button(
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                        onClick = {
-                            if (locationUtils.hasLocationPermission(context)) {
-                                viewModel.updateLocation(
-                                    LocationData(
-                                        hill.value!!.latitude.toDouble(),
-                                        hill.value!!.longitude.toDouble()
-                                    )
-                                )
-                                navController.navigate(Screen.MapViewScreen.route) {
-                                    this.launchSingleTop
-                                }
-                            } else {
-                                requestPermissionLauncher.launch(
-                                    arrayOf(
-                                        Manifest.permission.ACCESS_FINE_LOCATION,
-                                        Manifest.permission.ACCESS_COARSE_LOCATION
-                                    )
-                                )
+                    Row {
+                        if (hill.value!!.climbed != null) {
+                            Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary
+                                ),
+                                onClick = {
+                                    openDatePickerDialog.value = !openDatePickerDialog.value
+                                },
+                                modifier = Modifier.padding(2.dp)
+                            ) {
+                                WaundleTextField(text = stringResource(id = R.string.mark_hill_walked))
                             }
                         }
-                    ) {
-                        WaundleTextField(text = stringResource(id = R.string.view_on_map))
+
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ),
+                            onClick = {
+                                if (locationUtils.hasLocationPermission(context)) {
+                                    viewModel.updateLocation(
+                                        LocationData(
+                                            hill.value!!.latitude.toDouble(),
+                                            hill.value!!.longitude.toDouble()
+                                        )
+                                    )
+                                    navController.navigate(Screen.MapViewScreen.route) {
+                                        this.launchSingleTop
+                                    }
+                                } else {
+                                    requestPermissionLauncher.launch(
+                                        arrayOf(
+                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                            Manifest.permission.ACCESS_COARSE_LOCATION
+                                        )
+                                    )
+                                }
+                            },
+                            modifier = Modifier.padding(2.dp)
+                        ) {
+                            WaundleTextField(text = stringResource(id = R.string.view_on_map))
+                        }
+
                     }
                 }
             }
