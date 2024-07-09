@@ -23,6 +23,9 @@ waundle lets you
 ## Screenshots
 
 ## Permissions
+waundle requires the following permissions:
+- Full Location
+- Internet Access
 
 ## License
 
