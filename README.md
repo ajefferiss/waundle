@@ -2,16 +2,17 @@
 
 ![Waundle Icon](./images/WaundleIcon.jpg)
 
-<a href="https://play.google.com/store/apps/details?id=net.ddns.ajefferiss.waundle">
-    <img alt="Get it on Google Play"
-        height="80"
-        src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
-</a>  
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=net.ddns.ajefferiss.waundle)
 
 ## About
 
 waundle has been made for you to track the hills/mountains you've walked in the UK and Ireland. It
 uses the [database of British and Irish Hills](https://www.hills-database.co.uk/) for this.
+
+If you like the app and wish to drop me a coffee or beer, you can do so
+through [Tipeee](https://en.tipeee.com/adam-j)
+
+[![Support me on Tipeee](https://en.tipeee.com/img/pedago/tipeee-tip-btn.png)](https://en.tipeee.com/adam-j)
 
 ## Features
 
@@ -30,6 +31,3 @@ waundle lets you
 This application is released under a MIT License (see [LICENSE](LICENSE)). Some of the libraries
 used are released under difference licenses.
 
-<a href="https://en.tipeee.com/adam-j" class="tipeee-project-cart-simple" data-orientation="line" data-rewards="1">
-Support Adam J on Tipeee</a>
-<script async src="https://plugin.tipeee.com/widget.js" charset="utf-8"></script>
