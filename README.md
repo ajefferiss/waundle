@@ -1,8 +1,12 @@
 # waundle - Android App
 
-![Waundle Icon](./images/WaundleIcon.jpg =200x)
+<img src="./images/WaundleIcon.jpg" align="left" width="200" hspace="10" vspace="10" />
 
-[![Get it on Google Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png =x80)](https://play.google.com/store/apps/details?id=net.ddns.ajefferiss.waundle)
+<p align="left">
+  <a href="https://play.google.com/store/apps/details?id=net.ddns.ajefferiss.waundle">
+    <img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
+  </a>
+</p>
 
 ## About
 
@@ -12,7 +16,9 @@ uses the [database of British and Irish Hills](https://www.hills-database.co.uk/
 If you like the app and wish to drop me a coffee or beer, you can do so
 through [Tipeee](https://en.tipeee.com/adam-j)
 
-[![Support me on Tipeee](https://en.tipeee.com/img/pedago/tipeee-tip-btn.png =172x92)](https://en.tipeee.com/adam-j)
+<a href="https://en.tipeee.com/adam-j">
+  <img alt="Support me on Tipeee" width="172" height="92" src="https://en.tipeee.com/img/pedago/tipeee-tip-btn.png" />
+</a>
 
 ## Features
 
