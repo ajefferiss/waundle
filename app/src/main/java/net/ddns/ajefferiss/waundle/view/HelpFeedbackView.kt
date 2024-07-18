@@ -10,13 +10,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,19 +20,12 @@ import net.ddns.ajefferiss.waundle.R
 
 @Composable
 fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
-    val snackBarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
-        topBar = {
-            AppBarView(
-                title = stringResource(id = R.string.settings),
-                navController = navController,
-                drawerState = drawerState
-            )
-        },
-        containerColor = Color.White
+    WaundleScaffold(
+        navController = navController,
+        drawerState = drawerState,
+        title = stringResource(id = R.string.settings)
     ) {
         Column(
             modifier = Modifier.padding(it)

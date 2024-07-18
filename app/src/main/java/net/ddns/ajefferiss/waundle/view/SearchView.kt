@@ -13,9 +13,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,20 +36,13 @@ fun SearchView(
     viewModel: WaundleViewModel,
     drawerState: DrawerState
 ) {
-    val snackBarHostState = remember { SnackbarHostState() }
     var searchText by remember { mutableStateOf("") }
     val searchResult = viewModel.searchBy(searchText).collectAsState(initial = listOf())
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
-        topBar = {
-            AppBarView(
-                title = stringResource(id = R.string.search_view),
-                navController = navController,
-                drawerState = drawerState
-            )
-        },
-        containerColor = Color.White
+    WaundleScaffold(
+        navController = navController,
+        drawerState = drawerState,
+        title = stringResource(id = R.string.search_view)
     ) {
         Column(
             modifier = Modifier.padding(it)

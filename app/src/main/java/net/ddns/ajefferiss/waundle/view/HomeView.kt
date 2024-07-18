@@ -10,16 +10,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,19 +29,11 @@ fun HomeView(
     viewModel: WaundleViewModel,
     drawerState: DrawerState
 ) {
-    val snackBarHostState = remember { SnackbarHostState() }
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackBarHostState) },
-        topBar = {
-            AppBarView(
-                title = stringResource(id = R.string.app_name),
-                navController = navController,
-                drawerState = drawerState
-            )
-        },
-        containerColor = Color.White
+    WaundleScaffold(
+        navController = navController,
+        drawerState = drawerState,
+        title = stringResource(id = R.string.app_name)
     ) {
-
         val walkedHills = viewModel.walkedHills.collectAsState(
             initial = listOf()
         )
