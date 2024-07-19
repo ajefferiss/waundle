@@ -110,7 +110,8 @@ fun Navigation() {
                 NearbyHillsView(
                     navController = navController,
                     drawerState = drawerState,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    context = context
                 )
             }
 

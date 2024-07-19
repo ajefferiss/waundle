@@ -12,7 +12,6 @@ import net.ddns.ajefferiss.waundle.Graph
 import net.ddns.ajefferiss.waundle.data.Hill
 import net.ddns.ajefferiss.waundle.data.HillRepository
 import net.ddns.ajefferiss.waundle.data.LocationData
-import java.time.LocalDate
 
 class WaundleViewModel(
     private val hillRepository: HillRepository = Graph.hillRepository
@@ -37,6 +36,10 @@ class WaundleViewModel(
         }
     }
 
+    fun getAllHills(): Flow<List<Hill>> {
+        return hillRepository.getAllHills()
+    }
+
     fun updateHill(hill: Hill) {
         viewModelScope.launch {
             hillRepository.updateHill(hill)
@@ -54,7 +57,7 @@ class WaundleViewModel(
     fun searchBy(search: String): Flow<List<Hill>> {
         return hillRepository.searchByNameOrCountry(search)
     }
-    
+
     fun updateLocation(newLocation: LocationData) {
         _location.value = newLocation
     }

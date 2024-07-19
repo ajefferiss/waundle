@@ -9,7 +9,6 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +37,6 @@ import net.ddns.ajefferiss.waundle.util.PreferencesHelper.sharedPreferences
 @Composable
 fun HillMapView(location: LocationData, navController: NavController, drawerState: DrawerState) {
     val prefs = sharedPreferences(LocalContext.current)
-    val snackBarHostState = remember { SnackbarHostState() }
     val hillLocation = LatLng(location.latitude, location.longitude)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(hillLocation, 10f)
@@ -59,7 +57,7 @@ fun HillMapView(location: LocationData, navController: NavController, drawerStat
             )
         )
     }
-    
+
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
