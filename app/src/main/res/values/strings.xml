@@ -30,4 +30,6 @@
     <string name="email">Email</string>
     <string name="map_fab_description">Map Settings</string>
     <string name="select_map_type">Map type:</string>
+    <string name="home">Home</string>
+    <string name="nearby_hill_setting">Distance to search nearby hills, in meters</string>
 </resources>

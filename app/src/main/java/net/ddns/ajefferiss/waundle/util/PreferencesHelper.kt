@@ -19,8 +19,9 @@ val GOOGLE_MAP_TYPES_MAP = mapOf(
 )
 
 object PreferencesHelper {
-    val WAUNDLE_PREFS = "WaundlePrefs"
-    val MAP_TYPE = "MapType"
+    private const val WAUNDLE_PREFS = "WaundlePrefs"
+    private const val MAP_TYPE = "MapType"
+    private const val NEARBY_HILL_DISTANCE = "NearbyDistance"
 
     fun sharedPreferences(context: Context): SharedPreferences = context.getSharedPreferences(
         WAUNDLE_PREFS, Context.MODE_PRIVATE
@@ -37,6 +38,16 @@ object PreferencesHelper {
         set(value) {
             edit {
                 it.putString(MAP_TYPE, value)
+            }
+        }
+
+    var SharedPreferences.nearbyDistance
+        get() = getInt(NEARBY_HILL_DISTANCE, 5000)
+        set(value) {
+            edit {
+                it.putInt(
+                    NEARBY_HILL_DISTANCE, value
+                )
             }
         }
 }
