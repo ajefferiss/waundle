@@ -27,6 +27,7 @@ import net.ddns.ajefferiss.waundle.view.HillMapView
 import net.ddns.ajefferiss.waundle.view.HomeView
 import net.ddns.ajefferiss.waundle.view.LiveTrackingView
 import net.ddns.ajefferiss.waundle.view.MapFABDialog
+import net.ddns.ajefferiss.waundle.view.NearbyHillsView
 import net.ddns.ajefferiss.waundle.view.SearchView
 import net.ddns.ajefferiss.waundle.view.SettingsView
 import net.ddns.ajefferiss.waundle.view.WaundleViewModel
@@ -104,6 +105,13 @@ fun Navigation() {
             }
             composable(Screen.HelpFeedbackScreen.route) {
                 HelpFeedbackView(navController = navController, drawerState = drawerState)
+            }
+            composable(Screen.NearByScreen.route) {
+                NearbyHillsView(
+                    navController = navController,
+                    drawerState = drawerState,
+                    viewModel = viewModel
+                )
             }
 
             dialog(Screen.MapFABDialog.route) {

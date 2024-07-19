@@ -16,7 +16,7 @@ import net.ddns.ajefferiss.waundle.view.WaundleTextField
 
 @Composable
 fun DrawerContent(
-    menus: List<DrawerMenu>,
+    menus: List<NavItem>,
     onMenuClick: (Screen) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
