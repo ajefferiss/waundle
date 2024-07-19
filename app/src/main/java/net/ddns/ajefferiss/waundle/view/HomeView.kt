@@ -1,9 +1,12 @@
 package net.ddns.ajefferiss.waundle.view
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,6 +26,7 @@ import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeView(
     navController: NavController,
@@ -44,14 +48,6 @@ fun HomeView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = stringResource(id = R.string.walked_hills_description),
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth(),
-                fontWeight = FontWeight.SemiBold
-            )
-
             if (showProgressBar.value) {
                 CircularProgressIndicator(modifier = Modifier.width(64.dp))
             }
@@ -68,9 +64,24 @@ fun HomeView(
             } else {
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxHeight()
                         .padding(it)
                 ) {
+                    stickyHeader {
+                        Column(
+                            modifier = Modifier
+                                .height(40.dp)
+                                .fillMaxWidth()
+                        ) {
+                            WaundleTextField(
+                                text = stringResource(id = R.string.walked_hills_description),
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth(),
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                    }
                     items(walkedHills.value, key = { hill -> hill.id }) { hill ->
                         HillItem(
                             hill = hill,
