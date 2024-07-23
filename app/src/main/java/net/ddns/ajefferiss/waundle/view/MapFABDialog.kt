@@ -80,7 +80,7 @@ fun MapFABDialog(onCloseClicked: () -> Unit) {
             modifier = Modifier.padding(5.dp)
         ) {
             Row {
-                WaundleTextField(text = stringResource(id = R.string.select_map_type))
+                Text(text = stringResource(id = R.string.select_map_type))
                 Text(
                     text = text,
                     modifier = Modifier
@@ -93,7 +93,7 @@ fun MapFABDialog(onCloseClicked: () -> Unit) {
                     onDismissRequest = { mapTypeExpanded = false }) {
                     GOOGLE_MAP_TYPES_BY_NAME.forEachIndexed { index, s ->
                         DropdownMenuItem(
-                            text = { WaundleTextField(text = s) },
+                            text = { Text(text = s) },
                             onClick = {
                                 selectedMapType = index
                                 mapTypeExpanded = false
@@ -111,7 +111,7 @@ fun MapFABDialog(onCloseClicked: () -> Unit) {
                 onClick = { onCloseClicked() },
                 modifier = Modifier.padding(2.dp)
             ) {
-                WaundleTextField(text = stringResource(id = R.string.close))
+                Text(text = stringResource(id = R.string.close))
             }
         }
     }

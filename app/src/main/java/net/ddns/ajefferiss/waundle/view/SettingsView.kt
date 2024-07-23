@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -37,7 +38,7 @@ fun SettingsView(navController: NavController, drawerState: DrawerState) {
                 .padding(it)
         ) {
             Column(modifier = Modifier.padding(8.dp)) {
-                WaundleTextField(text = stringResource(id = R.string.nearby_hill_setting))
+                Text(text = stringResource(id = R.string.nearby_hill_setting))
                 OutlinedTextField(
                     value = nearbyDistance.toString(),
                     onValueChange = { nb ->

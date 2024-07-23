@@ -10,6 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,7 +33,7 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
         ) {
             Spacer(modifier = Modifier.padding(start = 5.dp))
             Column(modifier = Modifier.padding(start = 16.dp)) {
-                WaundleTextField(text = stringResource(id = R.string.help_feedback_description))
+                Text(text = stringResource(id = R.string.help_feedback_description))
                 Row(modifier = Modifier.padding(5.dp)) {
                     Button(
                         colors = ButtonDefaults.buttonColors(
@@ -49,7 +50,7 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
                             }
 
                         }) {
-                        WaundleTextField(text = stringResource(id = R.string.github))
+                        Text(text = stringResource(id = R.string.github))
                     }
                     Button(
                         colors = ButtonDefaults.buttonColors(
@@ -68,7 +69,7 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
 
                         }
                     ) {
-                        WaundleTextField(text = stringResource(id = R.string.email))
+                        Text(text = stringResource(id = R.string.email))
                     }
                 }
             }

@@ -21,6 +21,7 @@ import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -107,21 +108,21 @@ fun HillDetailsView(
                 )
             } else {
                 Column(modifier = Modifier.padding(start = 16.dp)) {
-                    WaundleTextField(
+                    Text(
                         text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
                         fontWeight = FontWeight.SemiBold
                     )
-                    WaundleTextField(
+                    Text(
                         text = stringResource(id = R.string.hill_desc_county) + ": ${hill.value!!.county}"
                     )
-                    WaundleTextField(
+                    Text(
                         text = stringResource(id = R.string.hill_desc_classification) + ": ${hill.value!!.classification}"
                     )
-                    WaundleTextField(
+                    Text(
                         text = stringResource(id = R.string.hill_desc_height) + ": ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)"
                     )
                     if (hill.value!!.climbed != null) {
-                        WaundleTextField(
+                        Text(
                             text = stringResource(id = R.string.hill_walked_on) + " " + hill.value!!.climbed.toString()
                         )
                     }
@@ -137,7 +138,7 @@ fun HillDetailsView(
                                 },
                                 modifier = Modifier.padding(2.dp)
                             ) {
-                                WaundleTextField(text = stringResource(id = R.string.mark_hill_walked))
+                                Text(text = stringResource(id = R.string.mark_hill_walked))
                             }
                         }
 
@@ -167,7 +168,7 @@ fun HillDetailsView(
                             },
                             modifier = Modifier.padding(2.dp)
                         ) {
-                            WaundleTextField(text = stringResource(id = R.string.view_on_map))
+                            Text(text = stringResource(id = R.string.view_on_map))
                         }
 
                     }
@@ -192,7 +193,7 @@ fun HillDetailsView(
                             viewModel.updateHill(hill.value!!.copy(climbed = walkedDate))
                         }
                     ) {
-                        WaundleTextField(stringResource(id = R.string.dialog_ok))
+                        Text(stringResource(id = R.string.dialog_ok))
                     }
                 },
                 dismissButton = {
@@ -202,7 +203,7 @@ fun HillDetailsView(
                             openDatePickerDialog.value = false
                         }
                     ) {
-                        WaundleTextField(stringResource(id = R.string.dialog_cancel))
+                        Text(stringResource(id = R.string.dialog_cancel))
                     }
                 }
             ) {

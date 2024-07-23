@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -106,7 +107,7 @@ fun NearbyHillsView(
                                 .height(40.dp)
                                 .fillMaxWidth()
                         ) {
-                            WaundleTextField(
+                            Text(
                                 text = stringResource(id = R.string.walked_hills_description),
                                 modifier = Modifier
                                     .padding(8.dp)

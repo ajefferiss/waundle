@@ -73,7 +73,7 @@ fun HomeView(
                                 .height(40.dp)
                                 .fillMaxWidth()
                         ) {
-                            WaundleTextField(
+                            Text(
                                 text = stringResource(id = R.string.walked_hills_description),
                                 modifier = Modifier
                                     .padding(8.dp)

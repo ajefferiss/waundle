@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,8 +39,8 @@ fun HillItem(hill: Hill, onClick: () -> Unit) {
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.background)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            WaundleTextField(text = hill.name, fontWeight = FontWeight.ExtraBold)
-            WaundleTextField(text = hillDescription, fontWeight = FontWeight.SemiBold)
+            Text(text = hill.name, fontWeight = FontWeight.ExtraBold)
+            Text(text = hillDescription, fontWeight = FontWeight.SemiBold)
         }
     }
 }
