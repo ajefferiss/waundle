@@ -116,8 +116,7 @@ fun HillDetailsView(
                 if (hill.value!!.climbed != null) {
                     hillDescription += "\n${stringResource(id = R.string.hill_walked_on)}: ${hill.value!!.climbed.toString()}"
                 }
-
-
+                
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(
                         text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
