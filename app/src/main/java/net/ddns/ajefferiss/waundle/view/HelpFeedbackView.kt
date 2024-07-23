@@ -11,6 +11,7 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,10 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
         ) {
             Spacer(modifier = Modifier.padding(start = 5.dp))
             Column(modifier = Modifier.padding(start = 16.dp)) {
-                Text(text = stringResource(id = R.string.help_feedback_description))
+                Text(
+                    text = stringResource(id = R.string.help_feedback_description),
+                    color = Color.Black
+                )
                 Row(modifier = Modifier.padding(5.dp)) {
                     Button(
                         modifier = Modifier.padding(2.dp),
@@ -40,10 +44,7 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
                                 Intent.ACTION_VIEW,
                                 Uri.parse("https://github.com/ajefferiss/waundle/issues")
                             )
-                            if (urlIntent.resolveActivity(context.packageManager) != null) {
-                                context.startActivity(urlIntent)
-                            }
-
+                            context.startActivity(urlIntent)
                         }) {
                         Text(text = stringResource(id = R.string.github))
                     }
