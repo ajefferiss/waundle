@@ -31,6 +31,8 @@
     <string name="map_fab_description">Map Settings</string>
     <string name="select_map_type">Map type:</string>
     <string name="home">Home</string>
-    <string name="nearby_hill_setting">Distance to search nearby hills, in meters</string>
+    <string name="nearby_distance_setting">Distance to search nearby hills, in meters</string>
     <string name="nearby_hill_desc">Nearby Hills</string>
+    <string name="nearby_hill_settings">Nearby Hills</string>
+    <string name="mav_view_settings">Map Views</string>
 </resources>
