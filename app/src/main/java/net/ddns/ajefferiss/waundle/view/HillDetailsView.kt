@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -105,25 +106,25 @@ fun HillDetailsView(
                         .align(Alignment.CenterHorizontally)
                 )
             } else {
+                var hillDescription =
+                    """
+                        ${stringResource(id = R.string.hill_desc_county)}: ${hill.value!!.county}
+                        ${stringResource(id = R.string.hill_desc_classification)}: ${hill.value!!.classification}
+                        ${stringResource(id = R.string.hill_desc_height)}: ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)
+                """.trimIndent()
+
+                if (hill.value!!.climbed != null) {
+                    hillDescription += "\n${stringResource(id = R.string.hill_walked_on)}: ${hill.value!!.climbed.toString()}"
+                }
+
+
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(
                         text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
                     )
-                    Text(
-                        text = stringResource(id = R.string.hill_desc_county) + ": ${hill.value!!.county}"
-                    )
-                    Text(
-                        text = stringResource(id = R.string.hill_desc_classification) + ": ${hill.value!!.classification}"
-                    )
-                    Text(
-                        text = stringResource(id = R.string.hill_desc_height) + ": ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)"
-                    )
-                    if (hill.value!!.climbed != null) {
-                        Text(
-                            text = stringResource(id = R.string.hill_walked_on) + " " + hill.value!!.climbed.toString()
-                        )
-                    }
+                    Text(text = hillDescription, color = Color.Black)
 
                     Row {
                         if (hill.value!!.climbed == null) {
@@ -162,7 +163,6 @@ fun HillDetailsView(
                         ) {
                             Text(text = stringResource(id = R.string.view_on_map))
                         }
-
                     }
                 }
             }

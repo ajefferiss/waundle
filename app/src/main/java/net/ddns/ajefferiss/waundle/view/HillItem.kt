@@ -39,8 +39,8 @@ fun HillItem(hill: Hill, onClick: () -> Unit) {
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.background)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = hill.name, fontWeight = FontWeight.ExtraBold)
-            Text(text = hillDescription, fontWeight = FontWeight.SemiBold)
+            Text(text = hill.name, fontWeight = FontWeight.ExtraBold, color = Color.Black)
+            Text(text = hillDescription, fontWeight = FontWeight.SemiBold, color = Color.Black)
         }
     }
 }
