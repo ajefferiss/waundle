@@ -3,12 +3,7 @@ package net.ddns.ajefferiss.waundle.view
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +23,6 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import net.ddns.ajefferiss.waundle.R
-import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.data.LocationData
 import net.ddns.ajefferiss.waundle.util.GOOGLE_MAP_TYPES_MAP
 import net.ddns.ajefferiss.waundle.util.PreferencesHelper.mapType
@@ -61,22 +55,7 @@ fun HillMapView(location: LocationData, navController: NavController, drawerStat
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.details_title),
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    navController.navigate(Screen.MapFABDialog.route) {
-                        this.launchSingleTop
-                    }
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = stringResource(id = R.string.map_fab_description)
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.Start
+        title = stringResource(id = R.string.details_title)
     ) {
         Column(
             modifier = Modifier.padding(it)

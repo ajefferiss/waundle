@@ -14,7 +14,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +25,6 @@ import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HillMapView
 import net.ddns.ajefferiss.waundle.view.HomeView
 import net.ddns.ajefferiss.waundle.view.LiveTrackingView
-import net.ddns.ajefferiss.waundle.view.MapFABDialog
 import net.ddns.ajefferiss.waundle.view.NearbyHillsView
 import net.ddns.ajefferiss.waundle.view.SearchView
 import net.ddns.ajefferiss.waundle.view.SettingsView
@@ -113,12 +111,6 @@ fun Navigation() {
                     viewModel = viewModel,
                     context = context
                 )
-            }
-
-            dialog(Screen.MapFABDialog.route) {
-                MapFABDialog(onCloseClicked = {
-                    navController.popBackStack()
-                })
             }
         }
     }
