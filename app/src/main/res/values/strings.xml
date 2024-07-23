@@ -32,4 +32,5 @@
     <string name="select_map_type">Map type:</string>
     <string name="home">Home</string>
     <string name="nearby_hill_setting">Distance to search nearby hills, in meters</string>
+    <string name="nearby_hill_desc">Nearby Hills</string>
 </resources>

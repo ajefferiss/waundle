@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -105,10 +107,11 @@ fun NearbyHillsView(
                         Column(
                             modifier = Modifier
                                 .height(40.dp)
+                                .background(MaterialTheme.colorScheme.surface)
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = stringResource(id = R.string.walked_hills_description),
+                                text = stringResource(id = R.string.nearby_hill_desc),
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .fillMaxWidth(),
@@ -121,7 +124,7 @@ fun NearbyHillsView(
                         hillLocation.latitude = hill.latitude.toDouble()
                         hillLocation.longitude = hill.longitude.toDouble()
 
-                        if (currentLocation.distanceTo(hillLocation) / 1000 <= prefs.nearbyDistance) {
+                        if (currentLocation.distanceTo(hillLocation) <= prefs.nearbyDistance) {
                             HillItem(
                                 hill = hill,
                                 onClick = {
