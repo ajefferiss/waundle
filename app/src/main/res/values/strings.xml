@@ -14,8 +14,6 @@
     <string name="hill_desc_classification">Classification</string>
     <string name="hill_desc_height">Height</string>
     <string name="hill_walked_on">Walked on</string>
-    <string name="location_permission_required">Location permission required for this feature</string>
-    <string name="location_permission_required_feature">Location permission required for this feature, please enable this</string>
     <string name="mark_hill_walked">Mark as walked</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
@@ -35,4 +33,9 @@
     <string name="nearby_hill_desc">Nearby Hills</string>
     <string name="nearby_hill_settings">Nearby Hills</string>
     <string name="mav_view_settings">Map Views</string>
+    <string name="request_location_permission_btn">Allow permissions</string>
+    <string name="location_permission_rationale">Getting your exact location is important for this app so that it can track your walk and bag hills automatically, as well as finding nearby hills to walk</string>
+    <string name="location_permission_desc">waundle requires location permission</string>
+    <string name="location_permission_required">Location permission required for this feature</string>
+    <string name="enable_location_permission">Location permission required for this feature, please enable this</string>
 </resources>

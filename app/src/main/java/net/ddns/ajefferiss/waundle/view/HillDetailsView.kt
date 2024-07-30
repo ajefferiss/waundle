@@ -1,10 +1,6 @@
 package net.ddns.ajefferiss.waundle.view
 
-import android.Manifest
 import android.content.Context
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,9 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
-import net.ddns.ajefferiss.waundle.MainActivity
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.data.LocationData
@@ -55,38 +49,7 @@ fun HillDetailsView(
     val locationUtils = LocationUtils(context)
     val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Picker)
     val openDatePickerDialog = remember { mutableStateOf(false) }
-
     val hill = viewModel.getHillById(id).collectAsState(initial = null)
-
-    val permissionRequired: String = stringResource(id = R.string.location_permission_required)
-    val permissionRequiredFor: String =
-        stringResource(id = R.string.location_permission_required_feature)
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions(),
-        onResult = { permissions ->
-            if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true &&
-                permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
-            ) {
-                viewModel.updateLocation(
-                    LocationData(
-                        hill.value!!.latitude.toDouble(),
-                        hill.value!!.longitude.toDouble()
-                    )
-                )
-            } else {
-                val rationaleRequired = ActivityCompat.shouldShowRequestPermissionRationale(
-                    context as MainActivity,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) || ActivityCompat.shouldShowRequestPermissionRationale(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-
-                val toastText = if (rationaleRequired) permissionRequired else permissionRequiredFor
-                Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
-            }
-        }
-    )
 
     WaundleScaffold(
         navController = navController,
@@ -116,7 +79,7 @@ fun HillDetailsView(
                 if (hill.value!!.climbed != null) {
                     hillDescription += "\n${stringResource(id = R.string.hill_walked_on)}: ${hill.value!!.climbed.toString()}"
                 }
-                
+
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(
                         text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
@@ -139,23 +102,14 @@ fun HillDetailsView(
 
                         Button(
                             onClick = {
-                                if (locationUtils.hasLocationPermission(context)) {
-                                    viewModel.updateLocation(
-                                        LocationData(
-                                            hill.value!!.latitude.toDouble(),
-                                            hill.value!!.longitude.toDouble()
-                                        )
+                                viewModel.updateLocation(
+                                    LocationData(
+                                        hill.value!!.latitude.toDouble(),
+                                        hill.value!!.longitude.toDouble()
                                     )
-                                    navController.navigate(Screen.MapViewScreen.route) {
-                                        this.launchSingleTop
-                                    }
-                                } else {
-                                    requestPermissionLauncher.launch(
-                                        arrayOf(
-                                            Manifest.permission.ACCESS_FINE_LOCATION,
-                                            Manifest.permission.ACCESS_COARSE_LOCATION
-                                        )
-                                    )
+                                )
+                                navController.navigate(Screen.MapViewScreen.route) {
+                                    this.launchSingleTop
                                 }
                             },
                             modifier = Modifier.padding(2.dp)

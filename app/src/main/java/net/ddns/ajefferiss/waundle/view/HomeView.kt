@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,26 +28,34 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
+import net.ddns.ajefferiss.waundle.util.LocationUtils
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeView(
     navController: NavController,
     viewModel: WaundleViewModel,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    locationUtils: LocationUtils
 ) {
+    val walkedHills = viewModel.walkedHills.collectAsState(initial = listOf())
+    val showProgressBar = viewModel.loading.collectAsState(initial = true)
+
+    if (locationUtils.hasLocationPermission()) {
+        locationUtils.requestLocationUpdates(viewModel)
+    } else {
+        navController.navigate(Screen.PermissionRequestScreen.route)
+    }
+
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
         title = stringResource(id = R.string.app_name)
     ) {
-        val walkedHills = viewModel.walkedHills.collectAsState(
-            initial = listOf()
-        )
-        val showProgressBar = viewModel.loading.collectAsState(initial = true)
-
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -55,43 +64,43 @@ fun HomeView(
             }
 
             if (walkedHills.value.isEmpty()) {
-                Text(
-                    text = stringResource(id = R.string.no_walked_hills),
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it),
-                    textAlign = TextAlign.Center
-                )
+                Row {
+                    Text(
+                        text = stringResource(id = R.string.no_walked_hills),
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.fillMaxSize(),
+                        textAlign = TextAlign.Center
+                    )
+                }
             } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(it)
-                ) {
-                    stickyHeader {
-                        Column(
-                            modifier = Modifier
-                                .height(40.dp)
-                                .background(MaterialTheme.colorScheme.surface)
-                                .fillMaxWidth()
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.walked_hills_description),
+                Row {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxHeight()
+                    ) {
+                        stickyHeader {
+                            Column(
                                 modifier = Modifier
-                                    .padding(8.dp)
-                                    .fillMaxWidth(),
-                                fontWeight = FontWeight.SemiBold
+                                    .height(40.dp)
+                                    .background(MaterialTheme.colorScheme.surface)
+                                    .fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.walked_hills_description),
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .fillMaxWidth(),
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        }
+                        items(walkedHills.value, key = { hill -> hill.id }) { hill ->
+                            HillItem(
+                                hill = hill,
+                                onClick = {
+                                    navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
+                                }
                             )
                         }
-                    }
-                    items(walkedHills.value, key = { hill -> hill.id }) { hill ->
-                        HillItem(
-                            hill = hill,
-                            onClick = {
-                                navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
-                            }
-                        )
                     }
                 }
             }

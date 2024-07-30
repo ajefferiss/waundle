@@ -1,11 +1,7 @@
 package net.ddns.ajefferiss.waundle.view
 
-import android.Manifest
 import android.content.Context
 import android.location.Location
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -19,18 +15,14 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
-import net.ddns.ajefferiss.waundle.MainActivity
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
-import net.ddns.ajefferiss.waundle.util.LocationUtils
 import net.ddns.ajefferiss.waundle.util.PreferencesHelper.nearbyDistance
 import net.ddns.ajefferiss.waundle.util.PreferencesHelper.sharedPreferences
 
@@ -43,47 +35,9 @@ fun NearbyHillsView(
     context: Context
 ) {
     val prefs = sharedPreferences(context)
-    val locationUtils = LocationUtils(context)
     val allHills = viewModel.getAllHills().collectAsState(
         initial = listOf()
     )
-    val permissionRequired: String = stringResource(id = R.string.location_permission_required)
-    val permissionRequiredFor: String =
-        stringResource(id = R.string.location_permission_required_feature)
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions(),
-        onResult = { permissions ->
-            if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true &&
-                permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
-            ) {
-                locationUtils.requestLocationUpdates(viewModel)
-            } else {
-                val rationaleRequired = ActivityCompat.shouldShowRequestPermissionRationale(
-                    context as MainActivity,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) || ActivityCompat.shouldShowRequestPermissionRationale(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-
-                val toastText = if (rationaleRequired) permissionRequired else permissionRequiredFor
-                Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
-            }
-        }
-    )
-
-    LaunchedEffect(true) {
-        if (locationUtils.hasLocationPermission(context)) {
-            locationUtils.requestLocationUpdates(viewModel)
-        } else {
-            requestPermissionLauncher.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            )
-        }
-    }
 
     WaundleScaffold(
         navController = navController,
