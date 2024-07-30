@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
+import net.ddns.ajefferiss.waundle.model.WaundleViewModel
+import net.ddns.ajefferiss.waundle.util.LocationUtils
 import net.ddns.ajefferiss.waundle.util.PreferencesHelper.nearbyDistance
 import net.ddns.ajefferiss.waundle.util.PreferencesHelper.sharedPreferences
 

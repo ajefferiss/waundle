@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.menu.DrawerContent
 import net.ddns.ajefferiss.waundle.menu.drawerMenuItems
+import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.util.LocationUtils
 import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
@@ -30,7 +31,6 @@ import net.ddns.ajefferiss.waundle.view.NearbyHillsView
 import net.ddns.ajefferiss.waundle.view.PermissionRequest
 import net.ddns.ajefferiss.waundle.view.SearchView
 import net.ddns.ajefferiss.waundle.view.SettingsView
-import net.ddns.ajefferiss.waundle.view.WaundleViewModel
 
 @Composable
 fun Navigation() {

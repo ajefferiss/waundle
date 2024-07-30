@@ -1,4 +1,4 @@
-package net.ddns.ajefferiss.waundle.view
+package net.ddns.ajefferiss.waundle.model
 
 import android.graphics.PointF
 import androidx.compose.runtime.State

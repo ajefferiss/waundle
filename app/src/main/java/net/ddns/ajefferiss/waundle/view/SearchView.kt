@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
+import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.ui.theme.WaundleTheme
 
 @Composable

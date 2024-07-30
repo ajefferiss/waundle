@@ -12,7 +12,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import net.ddns.ajefferiss.waundle.data.LocationData
-import net.ddns.ajefferiss.waundle.view.WaundleViewModel
+import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 
 class LocationUtils(private val context: Context) {
 
