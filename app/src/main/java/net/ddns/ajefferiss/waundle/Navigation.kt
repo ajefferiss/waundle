@@ -8,7 +8,9 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -19,7 +21,7 @@ import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.menu.DrawerContent
-import net.ddns.ajefferiss.waundle.menu.drawerMenuItems
+import net.ddns.ajefferiss.waundle.menu.NavItem
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.util.LocationUtils
 import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
@@ -40,6 +42,34 @@ fun Navigation() {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val locationUtils = LocationUtils(context)
+
+    val drawerMenuItems = listOf(
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_home_icon),
+            R.string.home,
+            Screen.HomeScreen
+        ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_map_icon),
+            R.string.live_track,
+            Screen.LiveTrackScreen
+        ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
+            R.string.nearby,
+            Screen.NearByScreen
+        ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_settings_icon),
+            R.string.settings,
+            Screen.SettingsScreen
+        ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_info_icon),
+            R.string.help_feedback,
+            Screen.HelpFeedbackScreen
+        )
+    )
 
     ModalNavigationDrawer(
         drawerState = drawerState,
