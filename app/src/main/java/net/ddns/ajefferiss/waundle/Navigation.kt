@@ -20,12 +20,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.menu.DrawerContent
 import net.ddns.ajefferiss.waundle.menu.drawerMenuItems
+import net.ddns.ajefferiss.waundle.util.LocationUtils
 import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HillMapView
 import net.ddns.ajefferiss.waundle.view.HomeView
 import net.ddns.ajefferiss.waundle.view.LiveTrackingView
 import net.ddns.ajefferiss.waundle.view.NearbyHillsView
+import net.ddns.ajefferiss.waundle.view.PermissionRequest
 import net.ddns.ajefferiss.waundle.view.SearchView
 import net.ddns.ajefferiss.waundle.view.SettingsView
 import net.ddns.ajefferiss.waundle.view.WaundleViewModel
@@ -37,6 +39,7 @@ fun Navigation() {
     val context: Context = LocalContext.current
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val locationUtils = LocationUtils(context)
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -57,7 +60,8 @@ fun Navigation() {
                 HomeView(
                     navController = navController,
                     viewModel = viewModel,
-                    drawerState = drawerState
+                    drawerState = drawerState,
+                    locationUtils = locationUtils
                 )
             }
             composable(
@@ -110,6 +114,14 @@ fun Navigation() {
                     drawerState = drawerState,
                     viewModel = viewModel,
                     context = context
+                )
+            }
+            composable(Screen.PermissionRequestScreen.route) {
+                PermissionRequest(
+                    navController = navController,
+                    drawerState = drawerState,
+                    locationUtils = locationUtils,
+                    viewModel = viewModel
                 )
             }
         }

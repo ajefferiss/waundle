@@ -57,9 +57,7 @@ fun HillMapView(location: LocationData, navController: NavController, drawerStat
         drawerState = drawerState,
         title = stringResource(id = R.string.details_title)
     ) {
-        Column(
-            modifier = Modifier.padding(it)
-        ) {
+        Column(modifier = Modifier.padding(it)) {
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
                 cameraPositionState = cameraPositionState,

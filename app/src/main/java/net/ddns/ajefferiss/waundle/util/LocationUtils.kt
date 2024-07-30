@@ -18,8 +18,7 @@ class LocationUtils(private val context: Context) {
 
     private val _fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-    fun hasLocationPermission(context: Context): Boolean {
-
+    fun hasLocationPermission(): Boolean {
         val hasFine = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION

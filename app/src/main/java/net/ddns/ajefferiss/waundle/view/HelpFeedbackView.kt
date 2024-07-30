@@ -27,9 +27,7 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
         drawerState = drawerState,
         title = stringResource(id = R.string.settings)
     ) {
-        Column(
-            modifier = Modifier.padding(it)
-        ) {
+        Column(modifier = Modifier.padding(it)) {
             Spacer(modifier = Modifier.padding(start = 5.dp))
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
