@@ -23,4 +23,13 @@ class HillRepository(private val hillDAO: HillDAO) {
     fun searchByNameOrCountry(searchText: String): Flow<List<Hill>> {
         return hillDAO.filterHillsByNameOrCountry(searchText)
     }
+
+    fun searchNearbyLocation(
+        latLow: Float,
+        latHi: Float,
+        lonLow: Float,
+        lonHi: Float
+    ): Flow<List<Hill>> {
+        return hillDAO.nearbyHills(latLow, latHi, lonLow, lonHi)
+    }
 }
