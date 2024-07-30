@@ -33,7 +33,7 @@ abstract class HillDAO {
     @Query("SELECT * FROM `hills_table` WHERE name LIKE '%' || :search || '%' OR country LIKE '%' || :search || '%'")
     abstract fun filterHillsByNameOrCountry(search: String): Flow<List<Hill>>
 
-    @Query("SELECT * FROM `hills_table` WHERE latitude > :latLow AND latitude < :latHi AND longitude > :lonLow AND longitude < :lonHi")
+    @Query("SELECT * FROM `hills_table` WHERE latitude >= :latLow AND latitude <= :latHi AND longitude <= :lonLow AND longitude >= :lonHi")
     abstract fun nearbyHills(
         latLow: Float,
         latHi: Float,

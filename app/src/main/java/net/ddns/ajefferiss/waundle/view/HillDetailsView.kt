@@ -1,6 +1,5 @@
 package net.ddns.ajefferiss.waundle.view
 
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,9 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
-import net.ddns.ajefferiss.waundle.data.LocationData
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
-import net.ddns.ajefferiss.waundle.util.LocationUtils
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -44,10 +41,8 @@ fun HillDetailsView(
     id: Long,
     viewModel: WaundleViewModel,
     navController: NavController,
-    context: Context,
     drawerState: DrawerState
 ) {
-    val locationUtils = LocationUtils(context)
     val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Picker)
     val openDatePickerDialog = remember { mutableStateOf(false) }
     val hill = viewModel.getHillById(id).collectAsState(initial = null)
@@ -103,13 +98,7 @@ fun HillDetailsView(
 
                         Button(
                             onClick = {
-                                viewModel.updateLocation(
-                                    LocationData(
-                                        hill.value!!.latitude.toDouble(),
-                                        hill.value!!.longitude.toDouble()
-                                    )
-                                )
-                                navController.navigate(Screen.MapViewScreen.route) {
+                                navController.navigate(Screen.MapViewScreen.route + "/${hill.value!!.id}") {
                                     this.launchSingleTop
                                 }
                             },

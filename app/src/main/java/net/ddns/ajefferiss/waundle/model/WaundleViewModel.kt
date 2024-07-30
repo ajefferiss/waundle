@@ -1,13 +1,15 @@
 package net.ddns.ajefferiss.waundle.model
 
 import android.graphics.PointF
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.Graph
 import net.ddns.ajefferiss.waundle.data.Hill
@@ -21,8 +23,8 @@ import kotlin.math.sin
 class WaundleViewModel(
     private val hillRepository: HillRepository = Graph.hillRepository
 ) : ViewModel() {
-    private val _location = mutableStateOf<LocationData?>(null)
-    val location: State<LocationData?> = _location
+    private val _location = MutableStateFlow(LocationData())
+    val location: StateFlow<LocationData> = _location.asStateFlow()
 
     lateinit var walkedHills: Flow<List<Hill>>
     var loading: Flow<Boolean>
@@ -75,14 +77,19 @@ class WaundleViewModel(
     }
 
     fun updateLocation(newLocation: LocationData) {
-        _location.value = newLocation
+        _location.update { currentLocation ->
+            currentLocation.copy(
+                latitude = newLocation.latitude,
+                longitude = newLocation.longitude
+            )
+        }
     }
 
     private fun calculateDerivedPosition(range: Double, bearing: Double): PointF {
         // Taken from: https://stackoverflow.com/questions/3695224/sqlite-getting-nearest-locations-with-latitude-and-longitude
         val earthRadius = 6371000
-        val latA = Math.toRadians(_location.value!!.latitude)
-        val lonA = Math.toRadians(_location.value!!.longitude)
+        val latA = Math.toRadians(_location.value.latitude)
+        val lonA = Math.toRadians(_location.value.longitude)
         val angularDistance = range / earthRadius
         val trueCourse = Math.toRadians(bearing)
         var lat = asin(

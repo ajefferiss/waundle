@@ -79,7 +79,6 @@ fun Navigation() {
                     id = id,
                     viewModel = viewModel,
                     navController = navController,
-                    context = context,
                     drawerState = drawerState
                 )
             }
@@ -90,14 +89,23 @@ fun Navigation() {
                     drawerState = drawerState
                 )
             }
-            composable(Screen.MapViewScreen.route) {
-                viewModel.location.value?.let { locationIt ->
-                    HillMapView(
-                        location = locationIt,
-                        navController = navController,
-                        drawerState = drawerState
-                    )
-                }
+            composable(
+                route = Screen.MapViewScreen.route + "/{id}",
+                arguments = listOf(
+                    navArgument("id") {
+                        type = NavType.LongType
+                        defaultValue = 0L
+                        nullable = false
+                    }
+                )
+            ) { entry ->
+                val id = if (entry.arguments != null) entry.arguments!!.getLong("id") else 0L
+                HillMapView(
+                    id = id,
+                    viewModel = viewModel,
+                    navController = navController,
+                    drawerState = drawerState
+                )
             }
             composable(Screen.SettingsScreen.route) {
                 SettingsView(navController = navController, drawerState = drawerState)
@@ -113,7 +121,8 @@ fun Navigation() {
                     navController = navController,
                     drawerState = drawerState,
                     viewModel = viewModel,
-                    context = context
+                    context = context,
+                    locationUtils = locationUtils
                 )
             }
             composable(Screen.PermissionRequestScreen.route) {

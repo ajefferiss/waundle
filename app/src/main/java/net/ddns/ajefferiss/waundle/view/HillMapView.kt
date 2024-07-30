@@ -2,16 +2,21 @@ package net.ddns.ajefferiss.waundle.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -23,20 +28,22 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import net.ddns.ajefferiss.waundle.R
-import net.ddns.ajefferiss.waundle.data.LocationData
+import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.util.GOOGLE_MAP_TYPES_MAP
 import net.ddns.ajefferiss.waundle.util.PreferencesHelper.mapType
 import net.ddns.ajefferiss.waundle.util.PreferencesHelper.sharedPreferences
 
 @Composable
-fun HillMapView(location: LocationData, navController: NavController, drawerState: DrawerState) {
+fun HillMapView(
+    id: Long,
+    viewModel: WaundleViewModel,
+    navController: NavController,
+    drawerState: DrawerState
+) {
     val prefs = sharedPreferences(LocalContext.current)
-    val hillLocation = LatLng(location.latitude, location.longitude)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(hillLocation, 10f)
-    }
+    val hill = viewModel.getHillById(id).collectAsState(initial = null)
 
-    var uiSettings by remember {
+    val uiSettings by remember {
         mutableStateOf(
             MapUiSettings(
                 zoomControlsEnabled = true,
@@ -44,7 +51,7 @@ fun HillMapView(location: LocationData, navController: NavController, drawerStat
             )
         )
     }
-    var properties by remember {
+    val properties by remember {
         mutableStateOf(
             MapProperties(
                 mapType = GOOGLE_MAP_TYPES_MAP.getOrDefault(prefs.mapType, MapType.SATELLITE)
@@ -58,13 +65,30 @@ fun HillMapView(location: LocationData, navController: NavController, drawerStat
         title = stringResource(id = R.string.details_title)
     ) {
         Column(modifier = Modifier.padding(it)) {
-            GoogleMap(
-                modifier = Modifier.fillMaxSize(),
-                cameraPositionState = cameraPositionState,
-                properties = properties,
-                uiSettings = uiSettings
-            ) {
-                Marker(state = MarkerState(position = hillLocation))
+            if (hill.value == null) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .width(64.dp)
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally)
+                )
+            } else {
+                val hillLocation = LatLng(
+                    hill.value!!.latitude.toDouble(),
+                    hill.value!!.longitude.toDouble()
+                )
+                val cameraPositionState = rememberCameraPositionState {
+                    position = CameraPosition.fromLatLngZoom(hillLocation, 10f)
+                }
+
+                GoogleMap(
+                    modifier = Modifier.fillMaxSize(),
+                    cameraPositionState = cameraPositionState,
+                    properties = properties,
+                    uiSettings = uiSettings
+                ) {
+                    Marker(state = MarkerState(position = hillLocation))
+                }
             }
         }
     }
