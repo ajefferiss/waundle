@@ -9,7 +9,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import net.ddns.ajefferiss.waundle.R
+import net.ddns.ajefferiss.waundle.Screen
+import net.ddns.ajefferiss.waundle.menu.NavItem
 
 @Composable
 fun WaundleScaffold(
@@ -18,9 +25,29 @@ fun WaundleScaffold(
     title: String,
     floatingActionButton: @Composable () -> Unit = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
+    showBottomBar: Boolean = true,
     content: @Composable() (PaddingValues) -> Unit
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
+
+    val bottomNavigationItems = listOf(
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_home_icon),
+            R.string.home,
+            Screen.HomeScreen
+        ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_map_icon),
+            R.string.live_track,
+            Screen.LiveTrackScreen
+        ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
+            R.string.nearby,
+            Screen.NearByScreen
+        )
+    )
+
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
@@ -30,6 +57,23 @@ fun WaundleScaffold(
                 navController = navController,
                 drawerState = drawerState
             )
+        },
+        bottomBar = {
+            if (showBottomBar) {
+                AppBottomBar(
+                    destinations = bottomNavigationItems,
+                    currentDestination = navController.currentBackStackEntryAsState().value?.destination,
+                    onNavigateToDestination = {
+                        navController.navigate(it.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
         },
         containerColor = Color.White,
         content = content,

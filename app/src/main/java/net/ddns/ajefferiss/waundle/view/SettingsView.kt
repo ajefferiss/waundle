@@ -59,7 +59,8 @@ fun SettingsView(
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.settings)
+        title = stringResource(id = R.string.settings),
+        showBottomBar = false
     ) {
         Column(
             modifier = Modifier
