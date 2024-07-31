@@ -40,4 +40,7 @@ abstract class HillDAO {
         lonLow: Float,
         lonHi: Float
     ): Flow<List<Hill>>
+
+    @Query("UPDATE `hills_table` SET climbed = NULL")
+    abstract fun resetWalkedProgress()
 }

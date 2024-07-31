@@ -85,6 +85,12 @@ class WaundleViewModel(
         }
     }
 
+    fun resetWalkedProgress() {
+        viewModelScope.launch(Dispatchers.IO) {
+            hillRepository.resetProgress()
+        }
+    }
+
     private fun calculateDerivedPosition(range: Double, bearing: Double): PointF {
         // Taken from: https://stackoverflow.com/questions/3695224/sqlite-getting-nearest-locations-with-latitude-and-longitude
         val earthRadius = 6371000

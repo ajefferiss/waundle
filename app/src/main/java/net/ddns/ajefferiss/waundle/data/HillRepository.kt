@@ -32,4 +32,8 @@ class HillRepository(private val hillDAO: HillDAO) {
     ): Flow<List<Hill>> {
         return hillDAO.nearbyHills(latLow, latHi, lonLow, lonHi)
     }
+
+    fun resetProgress() {
+        hillDAO.resetWalkedProgress()
+    }
 }

@@ -138,7 +138,11 @@ fun Navigation() {
                 )
             }
             composable(Screen.SettingsScreen.route) {
-                SettingsView(navController = navController, drawerState = drawerState)
+                SettingsView(
+                    navController = navController,
+                    drawerState = drawerState,
+                    viewModel = viewModel
+                )
             }
             composable(Screen.LiveTrackScreen.route) {
                 LiveTrackingView(navController = navController, drawerState = drawerState)
