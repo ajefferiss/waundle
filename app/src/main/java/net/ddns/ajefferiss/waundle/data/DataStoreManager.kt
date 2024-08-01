@@ -1,4 +1,4 @@
-package net.ddns.ajefferiss.waundle.util
+package net.ddns.ajefferiss.waundle.data
 
 import android.content.Context
 import android.content.SharedPreferences

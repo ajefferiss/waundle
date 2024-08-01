@@ -41,11 +41,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
+import net.ddns.ajefferiss.waundle.data.GOOGLE_MAP_TYPES_BY_NAME
+import net.ddns.ajefferiss.waundle.data.PreferencesHelper.mapType
+import net.ddns.ajefferiss.waundle.data.PreferencesHelper.nearbyDistance
+import net.ddns.ajefferiss.waundle.data.PreferencesHelper.sharedPreferences
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
-import net.ddns.ajefferiss.waundle.util.GOOGLE_MAP_TYPES_BY_NAME
-import net.ddns.ajefferiss.waundle.util.PreferencesHelper.mapType
-import net.ddns.ajefferiss.waundle.util.PreferencesHelper.nearbyDistance
-import net.ddns.ajefferiss.waundle.util.PreferencesHelper.sharedPreferences
 
 @Composable
 fun SettingsView(

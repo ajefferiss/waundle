@@ -28,10 +28,10 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import net.ddns.ajefferiss.waundle.R
+import net.ddns.ajefferiss.waundle.data.GOOGLE_MAP_TYPES_MAP
+import net.ddns.ajefferiss.waundle.data.PreferencesHelper.mapType
+import net.ddns.ajefferiss.waundle.data.PreferencesHelper.sharedPreferences
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
-import net.ddns.ajefferiss.waundle.util.GOOGLE_MAP_TYPES_MAP
-import net.ddns.ajefferiss.waundle.util.PreferencesHelper.mapType
-import net.ddns.ajefferiss.waundle.util.PreferencesHelper.sharedPreferences
 
 @Composable
 fun HillMapView(
