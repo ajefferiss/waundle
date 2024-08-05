@@ -1,60 +1,52 @@
 package net.ddns.ajefferiss.waundle.view
 
-import android.app.AlertDialog
-import android.content.Context
-import android.content.SharedPreferences
-import android.widget.Toast
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.appendInlineContent
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.Placeholder
-import androidx.compose.ui.text.PlaceholderVerticalAlign
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
+import com.alorma.compose.settings.ui.SettingsGroup
+import com.alorma.compose.settings.ui.SettingsMenuLink
+import com.alorma.compose.settings.ui.SettingsRadioButton
+import com.google.maps.android.compose.MapType
 import net.ddns.ajefferiss.waundle.R
+import net.ddns.ajefferiss.waundle.data.DataStoreDefaults
 import net.ddns.ajefferiss.waundle.data.GOOGLE_MAP_TYPES_BY_NAME
-import net.ddns.ajefferiss.waundle.data.PreferencesHelper.mapType
-import net.ddns.ajefferiss.waundle.data.PreferencesHelper.nearbyDistance
-import net.ddns.ajefferiss.waundle.data.PreferencesHelper.sharedPreferences
+import net.ddns.ajefferiss.waundle.data.GOOGLE_MAP_TYPES_MAP
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
+import net.ddns.ajefferiss.waundle.util.WaundlePreferencesHelper
 
 @Composable
 fun SettingsView(
     navController: NavController,
     drawerState: DrawerState,
-    viewModel: WaundleViewModel
+    viewModel: WaundleViewModel,
+    prefs: WaundlePreferencesHelper
 ) {
-    val context = LocalContext.current
-    val prefs = sharedPreferences(context)
+    val showMapTypeDialog = remember { mutableStateOf(false) }
+    val showNearbyDistanceDialog = remember { mutableStateOf(false) }
+    val showResetProgress = remember { mutableStateOf(false) }
+    val currentPrefs = remember { mutableStateOf(prefs.getPrefs()) }
 
     WaundleScaffold(
         navController = navController,
@@ -67,37 +59,176 @@ fun SettingsView(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            Column(modifier = Modifier.padding(8.dp)) {
-                NearbyHillSettings(prefs)
-                HorizontalDivider(thickness = 2.dp, modifier = Modifier.padding(5.dp))
-                MapViewSettings(prefs)
-                HorizontalDivider(thickness = 2.dp, modifier = Modifier.padding(5.dp))
-                AdvancedSettings(viewModel, context)
+            SettingsGroup(
+                title = { Text(text = stringResource(id = R.string.map_settings)) }
+            ) {
+                SettingsMenuLink(
+                    title = { Text(text = stringResource(id = R.string.select_map_type)) },
+                    subtitle = { Text(text = currentPrefs.value.mapType.name) },
+                    onClick = { showMapTypeDialog.value = true }
+                )
+            }
+
+            SettingsGroup(
+                title = { Text(text = stringResource(id = R.string.nearby_hill_settings)) }
+            ) {
+                SettingsMenuLink(
+                    title = { Text(text = stringResource(id = R.string.nearby_distance_setting)) },
+                    subtitle = { Text(text = currentPrefs.value.nearbyDistance.toString()) },
+                    onClick = { showNearbyDistanceDialog.value = true }
+                )
+            }
+
+            SettingsGroup(
+                title = { Text(text = stringResource(id = R.string.advanced_settings)) }
+            ) {
+                SettingsMenuLink(
+                    title = { Text(text = stringResource(id = R.string.advanced_settings_warning)) }
+                ) {}
+                SettingsMenuLink(
+                    title = { Text(text = stringResource(id = R.string.advanced_reset_walked)) },
+                    onClick = { showResetProgress.value = true }
+                )
+            }
+        }
+    }
+
+    if (showMapTypeDialog.value) {
+        MapTypeDialog(
+            onDismissRequest = { showMapTypeDialog.value = false },
+            onConfirmation = {
+                val newPrefs = currentPrefs.value.copy(mapType = it)
+                showMapTypeDialog.value = false
+                prefs.updatePrefs(newPrefs)
+                currentPrefs.value = newPrefs
+            },
+            selectedItem = currentPrefs.value.mapType
+        )
+    }
+
+    if (showNearbyDistanceDialog.value) {
+        NearbyDistanceDialog(
+            onDismissRequest = { showNearbyDistanceDialog.value = false },
+            onConfirmation = {
+                val newPrefs = currentPrefs.value.copy(nearbyDistance = it)
+                showNearbyDistanceDialog.value = false
+                prefs.updatePrefs(newPrefs)
+                currentPrefs.value = newPrefs
+            },
+            nearbyDistance = prefs.getPrefs().nearbyDistance
+        )
+    }
+
+    if (showResetProgress.value) {
+        ResetProgressDialog(
+            onDismissRequest = { showResetProgress.value = false },
+            onConfirmation = {
+                showResetProgress.value = false
+                viewModel.resetWalkedProgress()
+            }
+        )
+    }
+}
+
+@Composable
+fun BaseSettingsDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+    title: String,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = { onDismissRequest() }) {
+        Surface(shape = RoundedCornerShape(16.dp)) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Text(text = title, fontWeight = FontWeight.SemiBold)
+                }
+                content()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TextButton(
+                        onClick = { onDismissRequest() },
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Text(text = stringResource(id = R.string.dialog_cancel))
+                    }
+                    TextButton(
+                        onClick = { onConfirmation() },
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Text(text = stringResource(id = R.string.dialog_ok))
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun NearbyHillSettings(prefs: SharedPreferences) {
-    var nearbyDistance by remember { mutableIntStateOf(prefs.nearbyDistance) }
+fun MapTypeDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: (MapType) -> Unit,
+    selectedItem: MapType
+) {
+    val state = remember { mutableStateOf(selectedItem.name) }
 
-    Column {
-        Text(
-            text = stringResource(id = R.string.nearby_hill_settings),
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Black
-        )
-        Text(
-            text = stringResource(id = R.string.nearby_distance_setting),
-            color = Color.Black
-        )
+    BaseSettingsDialog(
+        onDismissRequest = onDismissRequest,
+        onConfirmation = {
+            onConfirmation(
+                GOOGLE_MAP_TYPES_MAP.getOrDefault(
+                    state.value,
+                    DataStoreDefaults.mapType
+                )
+            )
+        },
+        title = stringResource(id = R.string.select_map_type)
+    ) {
+        GOOGLE_MAP_TYPES_BY_NAME.forEach { mapType ->
+            Row {
+                SettingsRadioButton(
+                    state = state.value == mapType,
+                    title = { Text(text = mapType) },
+                    onClick = {
+                        state.value = mapType
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun NearbyDistanceDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: (Int) -> Unit,
+    nearbyDistance: Int
+) {
+    val nearbyValue = remember { mutableIntStateOf(nearbyDistance) }
+    val numberPattern = remember { Regex("^\\d+\$") }
+
+    BaseSettingsDialog(
+        onDismissRequest = onDismissRequest,
+        onConfirmation = { onConfirmation(nearbyValue.intValue) },
+        title = stringResource(id = R.string.nearby_hill_settings)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = stringResource(id = R.string.nearby_distance_setting))
+        }
         OutlinedTextField(
-            value = nearbyDistance.toString(),
-            onValueChange = { nb ->
-                if (nb.isNotEmpty() && nb.matches(Regex("^\\d+\$"))) {
-                    prefs.nearbyDistance = nb.toInt()
-                    nearbyDistance = nb.toInt()
+            value = nearbyValue.intValue.toString(),
+            onValueChange = {
+                if (it.isNotEmpty() && it.matches(numberPattern)) {
+                    nearbyValue.intValue = Integer.valueOf(it)
                 }
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -106,105 +237,15 @@ fun NearbyHillSettings(prefs: SharedPreferences) {
 }
 
 @Composable
-fun MapViewSettings(prefs: SharedPreferences) {
-    var mapTypeExpanded by remember { mutableStateOf(false) }
-    var selectedMapType by remember { mutableIntStateOf(GOOGLE_MAP_TYPES_BY_NAME.indexOf(prefs.mapType)) }
-
-    val inlineContentId = "inlineContent"
-    val text = buildAnnotatedString {
-        append(GOOGLE_MAP_TYPES_BY_NAME[selectedMapType])
-        appendInlineContent(inlineContentId, "[icon]")
-    }
-
-    val inlineContent = mapOf(
-        Pair(
-            inlineContentId,
-            InlineTextContent(
-                Placeholder(
-                    width = 12.sp,
-                    height = 12.sp,
-                    placeholderVerticalAlign = PlaceholderVerticalAlign.AboveBaseline
-                )
-            ) {
-                Icon(Icons.Filled.ArrowDropDown, null)
-            }
-        )
-    )
-
-    Column {
-        Text(
-            text = stringResource(id = R.string.mav_view_settings),
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Black
-        )
-        Row {
-            Text(
-                text = stringResource(id = R.string.select_map_type),
-                color = Color.Black,
-                modifier = Modifier.padding(end = 5.dp)
-            )
-            Text(
-                text = text,
-                modifier = Modifier
-                    .padding(end = 2.dp)
-                    .clickable(onClick = { mapTypeExpanded = true }),
-                inlineContent = inlineContent,
-                color = Color.Black
-            )
-            DropdownMenu(
-                expanded = mapTypeExpanded,
-                onDismissRequest = { mapTypeExpanded = false }) {
-                GOOGLE_MAP_TYPES_BY_NAME.forEachIndexed { index, s ->
-                    DropdownMenuItem(
-                        text = { Text(text = s) },
-                        onClick = {
-                            selectedMapType = index
-                            mapTypeExpanded = false
-                            prefs.mapType = s
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun AdvancedSettings(viewModel: WaundleViewModel, context: Context) {
-
-    val confirmationToast = Toast.makeText(
-        context,
-        stringResource(id = R.string.progress_reset),
-        Toast.LENGTH_LONG
-    )
-
-    val resetProgressDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context)
-    resetProgressDialogBuilder.setTitle(R.string.reset_progress_dialog_title)
-        .setMessage(R.string.reset_progress_dialog_message)
-        .setPositiveButton(R.string.reset_progress_confirm) { dialog, which ->
-            viewModel.resetWalkedProgress()
-            confirmationToast.show()
-            dialog.dismiss()
-        }
-        .setNegativeButton(R.string.close) { dialog, which ->
-            dialog.dismiss()
-        }
-    val resetDialog: AlertDialog = resetProgressDialogBuilder.create()
-
-
-    Column {
-        Text(
-            text = stringResource(id = R.string.advanced_settings),
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Black
-        )
-        Text(text = stringResource(id = R.string.advanced_settings_warning), color = Color.Black)
-        Button(
-            onClick = {
-                resetDialog.show()
-            }
-        ) {
-            Text(text = stringResource(id = R.string.advanced_reset_walked))
-        }
+fun ResetProgressDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit
+) {
+    BaseSettingsDialog(
+        onDismissRequest = onDismissRequest,
+        onConfirmation = { onConfirmation() },
+        title = stringResource(id = R.string.reset_progress_dialog_title)
+    ) {
+        Text(text = stringResource(id = R.string.reset_progress_dialog_message))
     }
 }

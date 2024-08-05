@@ -91,6 +91,9 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
 
+    implementation(libs.ui.tiles)
+    implementation(libs.ui.tiles.extended)
+
     // Test dependencies
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)

@@ -24,6 +24,7 @@ import net.ddns.ajefferiss.waundle.menu.DrawerContent
 import net.ddns.ajefferiss.waundle.menu.NavItem
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.util.LocationUtils
+import net.ddns.ajefferiss.waundle.util.WaundlePreferencesHelper
 import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HillMapView
@@ -42,6 +43,7 @@ fun Navigation() {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val locationUtils = LocationUtils(context)
+    val waundlePrefs = WaundlePreferencesHelper(context)
 
     val drawerMenuItems = listOf(
         NavItem(
@@ -134,14 +136,16 @@ fun Navigation() {
                     id = id,
                     viewModel = viewModel,
                     navController = navController,
-                    drawerState = drawerState
+                    drawerState = drawerState,
+                    prefs = waundlePrefs
                 )
             }
             composable(Screen.SettingsScreen.route) {
                 SettingsView(
                     navController = navController,
                     drawerState = drawerState,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    prefs = waundlePrefs
                 )
             }
             composable(Screen.LiveTrackScreen.route) {
@@ -155,8 +159,8 @@ fun Navigation() {
                     navController = navController,
                     drawerState = drawerState,
                     viewModel = viewModel,
-                    context = context,
-                    locationUtils = locationUtils
+                    locationUtils = locationUtils,
+                    prefs = waundlePrefs
                 )
             }
             composable(Screen.PermissionRequestScreen.route) {

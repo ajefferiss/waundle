@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,42 +21,23 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import net.ddns.ajefferiss.waundle.R
-import net.ddns.ajefferiss.waundle.data.GOOGLE_MAP_TYPES_MAP
-import net.ddns.ajefferiss.waundle.data.PreferencesHelper.mapType
-import net.ddns.ajefferiss.waundle.data.PreferencesHelper.sharedPreferences
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
+import net.ddns.ajefferiss.waundle.util.WaundlePreferencesHelper
 
 @Composable
 fun HillMapView(
     id: Long,
     viewModel: WaundleViewModel,
     navController: NavController,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    prefs: WaundlePreferencesHelper
 ) {
-    val prefs = sharedPreferences(LocalContext.current)
     val hill = viewModel.getHillById(id).collectAsState(initial = null)
-
-    val uiSettings by remember {
-        mutableStateOf(
-            MapUiSettings(
-                zoomControlsEnabled = true,
-                mapToolbarEnabled = true
-            )
-        )
-    }
-    val properties by remember {
-        mutableStateOf(
-            MapProperties(
-                mapType = GOOGLE_MAP_TYPES_MAP.getOrDefault(prefs.mapType, MapType.SATELLITE)
-            )
-        )
-    }
 
     WaundleScaffold(
         navController = navController,
@@ -65,7 +45,7 @@ fun HillMapView(
         title = stringResource(id = R.string.details_title)
     ) {
         Column(modifier = Modifier.padding(it)) {
-            if (hill.value == null) {
+            if (hill.value == null || !prefs.isReady()) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .width(64.dp)
@@ -73,6 +53,22 @@ fun HillMapView(
                         .align(Alignment.CenterHorizontally)
                 )
             } else {
+                val uiSettings by remember {
+                    mutableStateOf(
+                        MapUiSettings(
+                            zoomControlsEnabled = true,
+                            mapToolbarEnabled = true
+                        )
+                    )
+                }
+                val properties by remember {
+                    mutableStateOf(
+                        MapProperties(
+                            mapType = prefs.getPrefs().mapType
+                        )
+                    )
+                }
+
                 val hillLocation = LatLng(
                     hill.value!!.latitude.toDouble(),
                     hill.value!!.longitude.toDouble()

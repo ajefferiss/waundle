@@ -18,6 +18,7 @@ room = "2.6.1"
 compose = "1.6.8"
 junitJupiter = "5.9.3"
 secretsGradlePlugin = "2.0.1"
+uiTiles = "2.4.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -48,6 +49,8 @@ maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = 
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocationVersion" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMapsVersion" }
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+ui-tiles = { module = "com.github.alorma.compose-settings:ui-tiles", version.ref = "uiTiles" }
+ui-tiles-extended = { module = "com.github.alorma.compose-settings:ui-tiles-extended", version.ref = "uiTiles" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

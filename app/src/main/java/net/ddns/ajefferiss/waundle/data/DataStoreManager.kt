@@ -1,8 +1,18 @@
 package net.ddns.ajefferiss.waundle.data
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.maps.android.compose.MapType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 val GOOGLE_MAP_TYPES_BY_NAME = listOf(
     MapType.SATELLITE.name,
@@ -18,36 +28,42 @@ val GOOGLE_MAP_TYPES_MAP = mapOf(
     MapType.TERRAIN.name to MapType.TERRAIN
 )
 
-object PreferencesHelper {
-    private const val WAUNDLE_PREFS = "WaundlePrefs"
-    private const val MAP_TYPE = "MapType"
-    private const val NEARBY_HILL_DISTANCE = "NearbyDistance"
+data class WaundlePreferences(
+    val mapType: MapType,
+    val nearbyDistance: Int
+)
 
-    fun sharedPreferences(context: Context): SharedPreferences = context.getSharedPreferences(
-        WAUNDLE_PREFS, Context.MODE_PRIVATE
-    )
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "waundlePrefs")
 
-    inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
-        val editor = edit()
-        operation(editor)
-        editor.apply()
-    }
+object DataStoreDefaults {
+    val mapType = MapType.TERRAIN
+    val nearbyDistance = 5000
+}
 
-    var SharedPreferences.mapType
-        get() = getString(MAP_TYPE, MapType.SATELLITE.name)
-        set(value) {
-            edit {
-                it.putString(MAP_TYPE, value)
-            }
-        }
+class WaundlePreferencesRepository(private val context: Context) {
+    private val _prefs = MutableLiveData<WaundlePreferences>()
+    val preferences: LiveData<WaundlePreferences> = _prefs
 
-    var SharedPreferences.nearbyDistance
-        get() = getInt(NEARBY_HILL_DISTANCE, 5000)
-        set(value) {
-            edit {
-                it.putInt(
-                    NEARBY_HILL_DISTANCE, value
+    private val mapType = stringPreferencesKey("map_type")
+    private val nearbyDistance = intPreferencesKey("nearby_distance")
+
+    init {
+        CoroutineScope(Dispatchers.Main).launch {
+            context.dataStore.data.collect { prefs ->
+                _prefs.value = WaundlePreferences(
+                    MapType.valueOf(prefs[mapType] ?: DataStoreDefaults.mapType.name),
+                    prefs[nearbyDistance] ?: DataStoreDefaults.nearbyDistance
                 )
             }
         }
+    }
+
+    suspend fun updateWaundlePrefs(waundlePreferences: WaundlePreferences) {
+        context.dataStore.edit { prefs ->
+            prefs[mapType] = waundlePreferences.mapType.name
+            prefs[nearbyDistance] = waundlePreferences.nearbyDistance
+
+            _prefs.value = waundlePreferences
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package net.ddns.ajefferiss.waundle.view
 
-import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,11 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
-import net.ddns.ajefferiss.waundle.data.PreferencesHelper.nearbyDistance
-import net.ddns.ajefferiss.waundle.data.PreferencesHelper.sharedPreferences
 import net.ddns.ajefferiss.waundle.data.UNSET_LOCATION
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.util.LocationUtils
+import net.ddns.ajefferiss.waundle.util.WaundlePreferencesHelper
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -37,12 +35,11 @@ fun NearbyHillsView(
     navController: NavController,
     drawerState: DrawerState,
     viewModel: WaundleViewModel,
-    context: Context,
-    locationUtils: LocationUtils
+    locationUtils: LocationUtils,
+    prefs: WaundlePreferencesHelper
 ) {
     locationUtils.requestLocationUpdates(viewModel)
     val locationState by viewModel.location.collectAsState()
-    val prefs = sharedPreferences(context)
 
     WaundleScaffold(
         navController = navController,
@@ -52,13 +49,16 @@ fun NearbyHillsView(
         Column(
             modifier = Modifier.padding(it)
         ) {
-            if (locationState.latitude == UNSET_LOCATION || locationState.longitude == UNSET_LOCATION) {
+            if (locationState.latitude == UNSET_LOCATION ||
+                locationState.longitude == UNSET_LOCATION ||
+                !prefs.isReady()
+            ) {
                 Text(stringResource(id = R.string.getting_current_location))
                 CircularProgressIndicator(modifier = Modifier.width(64.dp))
             } else {
-                val nearbyHills = viewModel.searchNearbyHills(prefs.nearbyDistance).collectAsState(
-                    initial = listOf()
-                )
+                val nearbyHills = viewModel
+                    .searchNearbyHills(prefs.getPrefs().nearbyDistance)
+                    .collectAsState(initial = listOf())
 
                 LazyColumn(
                     modifier = Modifier.fillMaxHeight()

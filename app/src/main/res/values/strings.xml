@@ -26,8 +26,8 @@
     <string name="help_feedback_description">Waundle support is provided through GitHub or Email as and when I can. You can email me below, or raise a GitHub issue by following the links.</string>
     <string name="github">GitHub</string>
     <string name="email">Email</string>
-    <string name="map_fab_description">Map Settings</string>
-    <string name="select_map_type">Map type:</string>
+    <string name="map_settings">Map Settings</string>
+    <string name="select_map_type">Map type</string>
     <string name="home">Home</string>
     <string name="nearby_distance_setting">Distance to search nearby hills, in meters</string>
     <string name="nearby_hill_desc">Nearby Hills</string>
@@ -39,7 +39,7 @@
     <string name="location_permission_required">Location permission required for this feature</string>
     <string name="enable_location_permission">Location permission required for this feature, please enable this</string>
     <string name="getting_current_location">Waiting for current location</string>
-    <string name="advanced_settings">Advanced Settings\n</string>
+    <string name="advanced_settings">Advanced Settings</string>
     <string name="advanced_settings_warning">Advanced settings can have a significant impact on the application and should be used with extreme care. You may want to backup your database before continuing.</string>
     <string name="advanced_reset_walked">Reset Progress</string>
     <string name="reset_progress_dialog_title">Reset Walked Hills</string>
