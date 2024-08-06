@@ -43,7 +43,7 @@
     <string name="map_type_setting_title">Map Type</string>
     <string name="nearby_hill_settings_title">Nearby Hills</string>
     <string name="nearby_distance_setting">Distance, in meters, to search for nearby hills</string>
-    <string name="bagging_distance_setting">Distance, in meters, to automatically bag hills</string>
+    <string name="bagging_distance_setting">Distance, in meters, to automatically bag hills when tracking a walk</string>
     <string name="bagging_distance_setting_title">Bagging distance</string>
     <string name="nearby_distance_setting_title">Nearby hill search distance</string>
 </resources>
