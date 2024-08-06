@@ -46,4 +46,7 @@
     <string name="bagging_distance_setting">Distance, in meters, to automatically bag hills when tracking a walk</string>
     <string name="bagging_distance_setting_title">Bagging distance</string>
     <string name="nearby_distance_setting_title">Nearby hill search distance</string>
+    <string name="advanced_settings_reset_defaults">Reset Settings</string>
+    <string name="reset_settings_dialog_title">Reset Settings</string>
+    <string name="reset_settings_dialog_message">Resetting the application settings will change all of your settings to the defaults. Are you sure you wish to continue?</string>
 </resources>

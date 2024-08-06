@@ -48,6 +48,7 @@ fun SettingsView(
     val showNearbyDistanceDialog = remember { mutableStateOf(false) }
     val showResetProgress = remember { mutableStateOf(false) }
     val showBaggingDistanceDialog = remember { mutableStateOf(false) }
+    val showResetSettings = remember { mutableStateOf(false) }
 
     WaundleScaffold(
         navController = navController,
@@ -94,6 +95,10 @@ fun SettingsView(
                 SettingsMenuLink(
                     title = { Text(text = stringResource(id = R.string.advanced_settings_reset_walked)) },
                     onClick = { showResetProgress.value = true }
+                )
+                SettingsMenuLink(
+                    title = { Text(text = stringResource(id = R.string.advanced_settings_reset_defaults)) },
+                    onClick = { showResetSettings.value = true }
                 )
             }
         }
@@ -143,12 +148,26 @@ fun SettingsView(
     }
 
     if (showResetProgress.value) {
-        ResetProgressDialog(
+        AdvancedConfirmationDialog(
             onDismissRequest = { showResetProgress.value = false },
             onConfirmation = {
                 showResetProgress.value = false
                 viewModel.resetWalkedProgress()
-            }
+            },
+            title = stringResource(id = R.string.reset_progress_dialog_title),
+            description = stringResource(id = R.string.reset_progress_dialog_message)
+        )
+    }
+
+    if (showResetSettings.value) {
+        AdvancedConfirmationDialog(
+            onDismissRequest = { showResetSettings.value = false },
+            onConfirmation = {
+                showResetSettings.value = false
+                currentPrefs.value = prefs.defaultPrefs()
+            },
+            title = stringResource(id = R.string.reset_settings_dialog_title),
+            description = stringResource(id = R.string.reset_settings_dialog_message)
         )
     }
 }
@@ -262,15 +281,17 @@ fun NumberPrefDialog(
 }
 
 @Composable
-fun ResetProgressDialog(
+fun AdvancedConfirmationDialog(
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit
+    onConfirmation: () -> Unit,
+    title: String,
+    description: String
 ) {
     BaseSettingsDialog(
         onDismissRequest = onDismissRequest,
         onConfirmation = { onConfirmation() },
-        title = stringResource(id = R.string.reset_progress_dialog_title)
+        title = title
     ) {
-        Text(text = stringResource(id = R.string.reset_progress_dialog_message))
+        Text(text = description)
     }
 }

@@ -12,6 +12,11 @@ import net.ddns.ajefferiss.waundle.data.WaundlePreferencesRepository
 class WaundlePreferencesHelper(val context: Context) {
     private val prefs: WaundlePreferencesRepository = WaundlePreferencesRepository(context)
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
+    private val defaultPrefs = WaundlePreferences(
+        mapType = DataStoreDefaults.mapType,
+        nearbyDistance = DataStoreDefaults.nearbyDistance,
+        baggingDistance = DataStoreDefaults.baggingDistance
+    )
 
     fun isReady(): Boolean {
         return prefs.preferences.isInitialized
@@ -19,11 +24,7 @@ class WaundlePreferencesHelper(val context: Context) {
 
     fun getPrefs(): WaundlePreferences {
         if (!isReady() || prefs.preferences.value == null) {
-            return WaundlePreferences(
-                mapType = DataStoreDefaults.mapType,
-                nearbyDistance = DataStoreDefaults.nearbyDistance,
-                baggingDistance = DataStoreDefaults.baggingDistance
-            )
+            return defaultPrefs
         }
 
         return prefs.preferences.value!!
@@ -33,5 +34,10 @@ class WaundlePreferencesHelper(val context: Context) {
         scope.launch {
             prefs.updateWaundlePrefs(newPrefs)
         }
+    }
+
+    fun defaultPrefs(): WaundlePreferences {
+        updatePrefs(defaultPrefs)
+        return defaultPrefs
     }
 }
