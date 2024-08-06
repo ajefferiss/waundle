@@ -20,8 +20,9 @@ class WaundlePreferencesHelper(val context: Context) {
     fun getPrefs(): WaundlePreferences {
         if (!isReady() || prefs.preferences.value == null) {
             return WaundlePreferences(
-                DataStoreDefaults.mapType,
-                DataStoreDefaults.nearbyDistance
+                mapType = DataStoreDefaults.mapType,
+                nearbyDistance = DataStoreDefaults.nearbyDistance,
+                baggingDistance = DataStoreDefaults.baggingDistance
             )
         }
 

@@ -43,10 +43,11 @@ fun SettingsView(
     viewModel: WaundleViewModel,
     prefs: WaundlePreferencesHelper
 ) {
+    val currentPrefs = remember { mutableStateOf(prefs.getPrefs()) }
     val showMapTypeDialog = remember { mutableStateOf(false) }
     val showNearbyDistanceDialog = remember { mutableStateOf(false) }
     val showResetProgress = remember { mutableStateOf(false) }
-    val currentPrefs = remember { mutableStateOf(prefs.getPrefs()) }
+    val showBaggingDistanceDialog = remember { mutableStateOf(false) }
 
     WaundleScaffold(
         navController = navController,
@@ -60,33 +61,38 @@ fun SettingsView(
                 .padding(it)
         ) {
             SettingsGroup(
-                title = { Text(text = stringResource(id = R.string.map_settings)) }
+                title = { Text(text = stringResource(id = R.string.map_settings_title)) }
             ) {
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.select_map_type)) },
+                    title = { Text(text = stringResource(id = R.string.map_type_setting_title)) },
                     subtitle = { Text(text = currentPrefs.value.mapType.name) },
                     onClick = { showMapTypeDialog.value = true }
                 )
             }
 
             SettingsGroup(
-                title = { Text(text = stringResource(id = R.string.nearby_hill_settings)) }
+                title = { Text(text = stringResource(id = R.string.nearby_hill_settings_title)) }
             ) {
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.nearby_distance_setting)) },
-                    subtitle = { Text(text = currentPrefs.value.nearbyDistance.toString()) },
+                    title = { Text(text = stringResource(id = R.string.nearby_distance_setting_title)) },
+                    subtitle = { Text(text = "${currentPrefs.value.nearbyDistance} (m)") },
                     onClick = { showNearbyDistanceDialog.value = true }
+                )
+                SettingsMenuLink(
+                    title = { Text(text = stringResource(id = R.string.bagging_distance_setting_title)) },
+                    subtitle = { Text(text = "${currentPrefs.value.baggingDistance} (m)") },
+                    onClick = { showBaggingDistanceDialog.value = true }
                 )
             }
 
             SettingsGroup(
-                title = { Text(text = stringResource(id = R.string.advanced_settings)) }
+                title = { Text(text = stringResource(id = R.string.advanced_settings_title)) }
             ) {
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.advanced_settings_warning)) }
+                    title = { Text(text = stringResource(id = R.string.advanced_settings_desc)) }
                 ) {}
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.advanced_reset_walked)) },
+                    title = { Text(text = stringResource(id = R.string.advanced_settings_reset_walked)) },
                     onClick = { showResetProgress.value = true }
                 )
             }
@@ -97,8 +103,8 @@ fun SettingsView(
         MapTypeDialog(
             onDismissRequest = { showMapTypeDialog.value = false },
             onConfirmation = {
-                val newPrefs = currentPrefs.value.copy(mapType = it)
                 showMapTypeDialog.value = false
+                val newPrefs = currentPrefs.value.copy(mapType = it)
                 prefs.updatePrefs(newPrefs)
                 currentPrefs.value = newPrefs
             },
@@ -107,15 +113,32 @@ fun SettingsView(
     }
 
     if (showNearbyDistanceDialog.value) {
-        NearbyDistanceDialog(
+        NumberPrefDialog(
             onDismissRequest = { showNearbyDistanceDialog.value = false },
             onConfirmation = {
-                val newPrefs = currentPrefs.value.copy(nearbyDistance = it)
                 showNearbyDistanceDialog.value = false
+                val newPrefs = currentPrefs.value.copy(nearbyDistance = it)
                 prefs.updatePrefs(newPrefs)
                 currentPrefs.value = newPrefs
             },
-            nearbyDistance = prefs.getPrefs().nearbyDistance
+            initialValue = prefs.getPrefs().nearbyDistance,
+            dialogTitle = stringResource(id = R.string.nearby_hill_settings),
+            dialogDescription = stringResource(id = R.string.nearby_distance_setting)
+        )
+    }
+
+    if (showBaggingDistanceDialog.value) {
+        NumberPrefDialog(
+            onDismissRequest = { showBaggingDistanceDialog.value = false },
+            onConfirmation = {
+                showBaggingDistanceDialog.value = false
+                val newPrefs = currentPrefs.value.copy(baggingDistance = it)
+                prefs.updatePrefs(newPrefs)
+                currentPrefs.value = newPrefs
+            },
+            initialValue = prefs.getPrefs().baggingDistance,
+            dialogTitle = stringResource(id = R.string.bagging_distance_setting_title),
+            dialogDescription = stringResource(id = R.string.bagging_distance_setting)
         )
     }
 
@@ -188,7 +211,7 @@ fun MapTypeDialog(
                 )
             )
         },
-        title = stringResource(id = R.string.select_map_type)
+        title = stringResource(id = R.string.map_type_setting_title)
     ) {
         GOOGLE_MAP_TYPES_BY_NAME.forEach { mapType ->
             Row {
@@ -205,30 +228,32 @@ fun MapTypeDialog(
 }
 
 @Composable
-fun NearbyDistanceDialog(
+fun NumberPrefDialog(
     onDismissRequest: () -> Unit,
     onConfirmation: (Int) -> Unit,
-    nearbyDistance: Int
+    initialValue: Int,
+    dialogTitle: String,
+    dialogDescription: String
 ) {
-    val nearbyValue = remember { mutableIntStateOf(nearbyDistance) }
+    val perfValue = remember { mutableIntStateOf(initialValue) }
     val numberPattern = remember { Regex("^\\d+\$") }
 
     BaseSettingsDialog(
         onDismissRequest = onDismissRequest,
-        onConfirmation = { onConfirmation(nearbyValue.intValue) },
-        title = stringResource(id = R.string.nearby_hill_settings)
+        onConfirmation = { onConfirmation(perfValue.intValue) },
+        title = dialogTitle
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = stringResource(id = R.string.nearby_distance_setting))
+            Text(text = dialogDescription)
         }
         OutlinedTextField(
-            value = nearbyValue.intValue.toString(),
+            value = perfValue.intValue.toString(),
             onValueChange = {
                 if (it.isNotEmpty() && it.matches(numberPattern)) {
-                    nearbyValue.intValue = Integer.valueOf(it)
+                    perfValue.intValue = Integer.valueOf(it)
                 }
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)

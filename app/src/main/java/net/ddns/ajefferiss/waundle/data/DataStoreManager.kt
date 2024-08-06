@@ -30,7 +30,8 @@ val GOOGLE_MAP_TYPES_MAP = mapOf(
 
 data class WaundlePreferences(
     val mapType: MapType,
-    val nearbyDistance: Int
+    val nearbyDistance: Int,
+    val baggingDistance: Int
 )
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "waundlePrefs")
@@ -38,6 +39,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "wa
 object DataStoreDefaults {
     val mapType = MapType.TERRAIN
     val nearbyDistance = 5000
+    val baggingDistance = 50
 }
 
 class WaundlePreferencesRepository(private val context: Context) {
@@ -46,13 +48,15 @@ class WaundlePreferencesRepository(private val context: Context) {
 
     private val mapType = stringPreferencesKey("map_type")
     private val nearbyDistance = intPreferencesKey("nearby_distance")
+    private val baggingDistance = intPreferencesKey("bagging_distance")
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
             context.dataStore.data.collect { prefs ->
                 _prefs.value = WaundlePreferences(
-                    MapType.valueOf(prefs[mapType] ?: DataStoreDefaults.mapType.name),
-                    prefs[nearbyDistance] ?: DataStoreDefaults.nearbyDistance
+                    mapType = MapType.valueOf(prefs[mapType] ?: DataStoreDefaults.mapType.name),
+                    nearbyDistance = prefs[nearbyDistance] ?: DataStoreDefaults.nearbyDistance,
+                    baggingDistance = prefs[baggingDistance] ?: DataStoreDefaults.baggingDistance
                 )
             }
         }
@@ -62,6 +66,7 @@ class WaundlePreferencesRepository(private val context: Context) {
         context.dataStore.edit { prefs ->
             prefs[mapType] = waundlePreferences.mapType.name
             prefs[nearbyDistance] = waundlePreferences.nearbyDistance
+            prefs[baggingDistance] = waundlePreferences.baggingDistance
 
             _prefs.value = waundlePreferences
         }
