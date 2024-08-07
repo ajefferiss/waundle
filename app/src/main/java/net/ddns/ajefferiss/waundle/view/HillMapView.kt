@@ -42,7 +42,8 @@ fun HillMapView(
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.details_title)
+        title = stringResource(id = R.string.details_title),
+        showBottomBar = false
     ) {
         Column(modifier = Modifier.padding(it)) {
             if (hill.value == null || !prefs.isReady()) {
