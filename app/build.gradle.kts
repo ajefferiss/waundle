@@ -13,7 +13,7 @@ android {
         applicationId = "net.ddns.ajefferiss.waundle"
         minSdk = 26
         targetSdk = 34
-        versionCode = 10
+        versionCode = 11
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
