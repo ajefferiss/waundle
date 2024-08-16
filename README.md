@@ -33,8 +33,8 @@ This application is released under a MIT License (see [LICENSE](LICENSE)). Some 
 used are released under difference licenses.
 
 ## Other
-If you like the app and wish to drop me a coffee or beer, you can do so through [Tipeee](https://en.tipeee.com/adam-j)
+If you like the app and wish to drop me a coffee or beer, you can do so through [Tipeee](https://en.tipeee.com/adam-j) or [Ko-fi](https://ko-fi.com/adamjefferiss)
 
-<a href="https://en.tipeee.com/adam-j">
-  <img alt="Support me on Tipeee" width="172" height="92" src="https://en.tipeee.com/img/pedago/tipeee-tip-btn.png" />
-</a>
+<a href="https://en.tipeee.com/adam-j"><img alt="Support me on Tipeee" width="172" height="92" src="https://en.tipeee.com/img/pedago/tipeee-tip-btn.png" /></a>
+
+<a href='https://ko-fi.com/A0A411J6BX' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
