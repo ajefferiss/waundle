@@ -49,4 +49,5 @@
     <string name="advanced_settings_reset_defaults">Reset Settings</string>
     <string name="reset_settings_dialog_title">Reset Settings</string>
     <string name="reset_settings_dialog_message">Resetting the application settings will change all of your settings to the defaults. Are you sure you wish to continue?</string>
+    <string name="no_nearby_hill">There are no nearby hills, you can try updating the Nearby Hill Search distance setting.</string>
 </resources>

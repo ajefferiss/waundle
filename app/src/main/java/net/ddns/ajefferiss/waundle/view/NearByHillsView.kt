@@ -79,6 +79,9 @@ fun NearbyHillsView(
                             )
                         }
                     }
+                    item {
+                        Text(stringResource(id = R.string.no_nearby_hill))
+                    }
                     items(nearbyHills.value, key = { hill -> hill.id }) { hill ->
                         HillItem(
                             hill = hill,

@@ -51,11 +51,11 @@ fun Navigation() {
             R.string.home,
             Screen.HomeScreen
         ),
-        NavItem(
-            ImageVector.vectorResource(id = R.drawable.ic_map_icon),
-            R.string.live_track,
-            Screen.LiveTrackScreen
-        ),
+//        NavItem(
+//            ImageVector.vectorResource(id = R.drawable.ic_map_icon),
+//            R.string.live_track,
+//            Screen.LiveTrackScreen
+//        ),
         NavItem(
             ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
             R.string.nearby,
