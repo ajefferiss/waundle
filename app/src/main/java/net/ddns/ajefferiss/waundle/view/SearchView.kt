@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
-import net.ddns.ajefferiss.waundle.ui.theme.WaundleTheme
+import net.ddns.ajefferiss.waundle.ui.theme.AppTheme
 
 @Composable
 fun SearchView(
@@ -107,7 +107,7 @@ fun SearchField(onSearchChanged: (String) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun SearchFieldPreview() {
-    WaundleTheme {
+    AppTheme {
         SearchField(onSearchChanged = {})
     }
 }

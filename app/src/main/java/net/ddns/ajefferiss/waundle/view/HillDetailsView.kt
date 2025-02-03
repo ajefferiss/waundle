@@ -23,7 +23,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -81,9 +80,8 @@ fun HillDetailsView(
                     Text(
                         text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
                         fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
                     )
-                    Text(text = hillDescription, color = Color.Black)
+                    Text(text = hillDescription)
 
                     Row {
                         if (hill.value!!.climbed == null) {

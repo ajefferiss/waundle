@@ -2,7 +2,6 @@ package net.ddns.ajefferiss.waundle
 
 import android.content.Context
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
@@ -84,8 +83,7 @@ fun Navigation() {
                     navController.navigate(route.route)
                 }
             }
-        },
-        scrimColor = MaterialTheme.colorScheme.surface
+        }
     ) {
         NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
             composable(Screen.HomeScreen.route) {

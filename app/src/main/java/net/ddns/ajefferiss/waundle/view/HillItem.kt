@@ -33,9 +33,6 @@ fun HillItem(hill: Hill, onClick: () -> Unit) {
             .padding(top = 8.dp, start = 8.dp, end = 8.dp)
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.background)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {

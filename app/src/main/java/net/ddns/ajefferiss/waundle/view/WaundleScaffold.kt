@@ -10,7 +10,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavController
@@ -81,7 +80,6 @@ fun WaundleScaffold(
                 )
             }
         },
-        containerColor = Color.White,
         content = content,
         floatingActionButton = floatingActionButton,
         floatingActionButtonPosition = floatingActionButtonPosition

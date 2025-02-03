@@ -6,13 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import net.ddns.ajefferiss.waundle.ui.theme.WaundleTheme
+import net.ddns.ajefferiss.waundle.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WaundleTheme {
+            AppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     Navigation()
                 }
