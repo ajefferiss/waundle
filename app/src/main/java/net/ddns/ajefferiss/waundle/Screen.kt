@@ -11,4 +11,5 @@ sealed class Screen(val route: String) {
     data object HelpFeedbackScreen : Screen("help_feedback_screen")
     data object PermissionRequestScreen : Screen("permission_request_screen")
     data object WalkedHillsScreen : Screen("walked_hills")
+    data object CategoriesList : Screen("categories_list")
 }

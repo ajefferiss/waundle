@@ -42,7 +42,7 @@ fun NearbyHillsView(
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.nearby)
+        title = stringResource(id = R.string.nearby_hills)
     ) {
         Column(
             modifier = Modifier.padding(it)

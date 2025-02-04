@@ -42,7 +42,7 @@ fun WaundleScaffold(
 //        ),
         NavItem(
             ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
-            R.string.nearby,
+            R.string.nearby_hills,
             Screen.NearByScreen
         ),
         NavItem(

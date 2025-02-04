@@ -24,6 +24,7 @@ import net.ddns.ajefferiss.waundle.menu.NavItem
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.util.LocationUtils
 import net.ddns.ajefferiss.waundle.util.WaundlePreferencesHelper
+import net.ddns.ajefferiss.waundle.view.CountryCategoryListView
 import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HillMapView
@@ -63,7 +64,7 @@ fun Navigation() {
 //        ),
         NavItem(
             ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
-            R.string.nearby,
+            R.string.nearby_hills,
             Screen.NearByScreen
         ),
         NavItem(
@@ -180,6 +181,25 @@ fun Navigation() {
                     navController = navController,
                     viewModel = viewModel,
                     drawerState = drawerState
+                )
+            }
+            composable(
+                route = Screen.CategoriesList.route + "/{countryCode}",
+                arguments = listOf(
+                    navArgument("countryCode") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                        nullable = false
+                    }
+                )
+            ) { entry ->
+                val id =
+                    if (entry.arguments != null) entry.arguments!!.getString("countryCode") else ""
+                CountryCategoryListView(
+                    countryId = id,
+                    viewModel = viewModel,
+                    navController = navController,
+                    drawerState = drawerState,
                 )
             }
         }

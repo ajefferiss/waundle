@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
-import net.ddns.ajefferiss.waundle.data.CountryDescription
+import net.ddns.ajefferiss.waundle.data.CountriesList
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.util.LocationUtils
 
@@ -31,34 +31,6 @@ fun HomeView(
         navController.navigate(Screen.PermissionRequestScreen.route)
     }
 
-    val countries = listOf(
-        CountryDescription(
-            stringResource(R.string.scotland),
-            stringResource(R.string.scotland_description),
-            R.drawable.scotland_hill,
-        ),
-        CountryDescription(
-            stringResource(R.string.england),
-            stringResource(R.string.england_description),
-            R.drawable.english_hill
-        ),
-        CountryDescription(
-            stringResource(R.string.ireland),
-            stringResource(R.string.ireland_description),
-            R.drawable.irish_hill
-        ),
-        CountryDescription(
-            stringResource(R.string.wales),
-            stringResource(R.string.wales_description),
-            R.drawable.welsh_hill
-        ),
-        CountryDescription(
-            stringResource(R.string.isle_of_man),
-            stringResource(R.string.isle_of_man_description),
-            R.drawable.isle_of_man_hill
-        )
-    )
-
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
@@ -71,20 +43,19 @@ fun HomeView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(countries, key = { country -> country.name.hashCode() }) { country ->
+                items(
+                    CountriesList,
+                    key = { country -> country.countryCode.hashCode() }
+                ) { country ->
                     CountryItem(
-                        country
+                        country,
+                        onClick = {
+                            navController.navigate(Screen.CategoriesList.route + "/${country.countryCode}")
+                        }
                     )
-//                    HillItem(
-//                        hill = hill,
-//                        onClick = {
-//                            navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
-//                        }
-//                    )
                 }
             }
         }
