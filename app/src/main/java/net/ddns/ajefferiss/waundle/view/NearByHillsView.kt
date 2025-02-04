@@ -68,7 +68,7 @@ fun NearbyHillsView(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = stringResource(id = R.string.nearby_hill_desc),
+                                text = stringResource(id = R.string.nearby_hills),
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .fillMaxWidth(),

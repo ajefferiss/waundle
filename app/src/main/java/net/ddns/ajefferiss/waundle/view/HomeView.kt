@@ -29,6 +29,10 @@ fun HomeView(
         navController.navigate(Screen.PermissionRequestScreen.route)
     }
 
+    val countries = mapOf(
+
+    )
+
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,

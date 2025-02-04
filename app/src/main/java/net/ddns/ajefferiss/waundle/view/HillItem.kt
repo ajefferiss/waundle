@@ -22,7 +22,7 @@ import net.ddns.ajefferiss.waundle.data.Hill
 fun HillItem(hill: Hill, onClick: () -> Unit) {
 
     var hillDescription =
-        stringResource(id = R.string.hill_desc_height) + ": " + hill.feet + "(ft), " + hill.metres + "(m)"
+        stringResource(id = R.string.height) + ": " + hill.feet + "(ft), " + hill.metres + "(m)"
     if (hill.climbed != null) {
         hillDescription += "\n" + stringResource(id = R.string.hill_walked_on) + " " + hill.climbed.toString()
     }

@@ -68,8 +68,8 @@ fun HillDetailsView(
                 var hillDescription =
                     """
                         ${stringResource(id = R.string.hill_desc_county)}: ${hill.value!!.county}
-                        ${stringResource(id = R.string.hill_desc_classification)}: ${hill.value!!.classification}
-                        ${stringResource(id = R.string.hill_desc_height)}: ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)
+                        ${stringResource(id = R.string.classification)}: ${hill.value!!.classification}
+                        ${stringResource(id = R.string.height)}: ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)
                 """.trimIndent()
 
                 if (hill.value!!.climbed != null) {
@@ -127,7 +127,7 @@ fun HillDetailsView(
                             viewModel.updateHill(hill.value!!.copy(climbed = walkedDate))
                         }
                     ) {
-                        Text(stringResource(id = R.string.dialog_ok))
+                        Text(stringResource(id = R.string.ok))
                     }
                 },
                 dismissButton = {
@@ -137,7 +137,7 @@ fun HillDetailsView(
                             openDatePickerDialog.value = false
                         }
                     ) {
-                        Text(stringResource(id = R.string.dialog_cancel))
+                        Text(stringResource(id = R.string.cancel))
                     }
                 }
             ) {
