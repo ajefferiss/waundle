@@ -33,6 +33,7 @@ import net.ddns.ajefferiss.waundle.view.NearbyHillsView
 import net.ddns.ajefferiss.waundle.view.PermissionRequest
 import net.ddns.ajefferiss.waundle.view.SearchView
 import net.ddns.ajefferiss.waundle.view.SettingsView
+import net.ddns.ajefferiss.waundle.view.WalkedHillsView
 
 @Composable
 fun Navigation() {
@@ -49,6 +50,11 @@ fun Navigation() {
             ImageVector.vectorResource(id = R.drawable.ic_home_icon),
             R.string.home,
             Screen.HomeScreen
+        ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_walked_icon),
+            R.string.walked_hills,
+            Screen.WalkedHillsScreen
         ),
 //        NavItem(
 //            ImageVector.vectorResource(id = R.drawable.ic_map_icon),
@@ -167,6 +173,13 @@ fun Navigation() {
                     drawerState = drawerState,
                     locationUtils = locationUtils,
                     viewModel = viewModel
+                )
+            }
+            composable(Screen.WalkedHillsScreen.route) {
+                WalkedHillsView(
+                    navController = navController,
+                    viewModel = viewModel,
+                    drawerState = drawerState
                 )
             }
         }
