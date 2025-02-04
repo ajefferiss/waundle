@@ -48,4 +48,14 @@
     <string name="reset_settings_dialog_message">Resetting the application settings will change all of your settings to the defaults. Are you sure you wish to continue?</string>
     <string name="no_nearby_hill">There are no nearby hills, you can try updating the Nearby Hill Search distance setting.</string>
     <string name="walked_hills">Walked Hills</string>
+    <string name="scotland">Scotland</string>
+    <string name="scotland_description">Scottish Corbetts, Donalds, Grahams, Munros, Marilyns, and Murdos</string>
+    <string name="england">England</string>
+    <string name="england_description">English Birketts, Hewitts, Marilyns, Nuttals and Wainwrights</string>
+    <string name="ireland">Ireland</string>
+    <string name="wales">Wales</string>
+    <string name="isle_of_man">Isle of Man</string>
+    <string name="ireland_description">Irish Arderins, Binnions, Carns, Dillons, Hewitts and Marilyns</string>
+    <string name="wales_description">Welsh Hewitts, Marilyns and Nuttalls</string>
+    <string name="isle_of_man_description">Isle of Man hills</string>
 </resources>
