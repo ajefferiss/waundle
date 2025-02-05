@@ -15,17 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import net.ddns.ajefferiss.waundle.data.CountryDetail
 
 @Composable
-fun CountryItem(countryDescription: CountryDetail, onClick: () -> Unit) {
-    val countryText = stringResource(countryDescription.nameId) +
-            "\r\n" +
-            stringResource(countryDescription.descriptionId)
-
+fun ImageCard(description: String, imageId: Int, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,13 +30,13 @@ fun CountryItem(countryDescription: CountryDetail, onClick: () -> Unit) {
     ) {
         Box {
             Image(
-                painter = painterResource(countryDescription.image),
+                painter = painterResource(imageId),
                 contentDescription = null,
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier.fillMaxSize()
             )
             Text(
-                text = countryText,
+                text = description,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
                 modifier = Modifier.padding(8.dp)

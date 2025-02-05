@@ -50,8 +50,11 @@ fun HomeView(
                     CountriesList,
                     key = { country -> country.countryCode.hashCode() }
                 ) { country ->
-                    CountryItem(
-                        country,
+                    ImageCard(
+                        description = stringResource(country.nameId) + "\r\n" + stringResource(
+                            country.descriptionId
+                        ),
+                        imageId = country.image,
                         onClick = {
                             navController.navigate(Screen.CategoriesList.route + "/${country.countryCode}")
                         }
