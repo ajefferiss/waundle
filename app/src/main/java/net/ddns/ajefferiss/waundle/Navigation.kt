@@ -28,6 +28,7 @@ import net.ddns.ajefferiss.waundle.view.CountryCategoryListView
 import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HillMapView
+import net.ddns.ajefferiss.waundle.view.HillsByCategoryView
 import net.ddns.ajefferiss.waundle.view.HomeView
 import net.ddns.ajefferiss.waundle.view.LiveTrackingView
 import net.ddns.ajefferiss.waundle.view.NearbyHillsView
@@ -199,6 +200,25 @@ fun Navigation() {
                     countryId = id,
                     navController = navController,
                     drawerState = drawerState,
+                )
+            }
+            composable(
+                route = Screen.HillsByCategory.route + "/{hillCategory}",
+                arguments = listOf(
+                    navArgument("hillCategory") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                        nullable = false
+                    }
+                )
+            ) { entry ->
+                val code =
+                    if (entry.arguments != null) entry.arguments!!.getString("hillCategory") else ""
+                HillsByCategoryView(
+                    categoryId = code,
+                    navController = navController,
+                    drawerState = drawerState,
+                    viewModel = viewModel
                 )
             }
         }
