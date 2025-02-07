@@ -197,7 +197,6 @@ fun Navigation() {
                     if (entry.arguments != null) entry.arguments!!.getString("countryCode") else ""
                 CountryCategoryListView(
                     countryId = id,
-                    viewModel = viewModel,
                     navController = navController,
                     drawerState = drawerState,
                 )
