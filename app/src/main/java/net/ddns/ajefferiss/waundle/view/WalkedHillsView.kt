@@ -41,7 +41,7 @@ fun WalkedHillsView(
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.app_name)
+        title = stringResource(id = R.string.walked_hills)
     ) {
         Column(
             modifier = Modifier
