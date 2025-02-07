@@ -112,7 +112,7 @@ fun Navigation() {
                     }
                 )
             ) { entry ->
-                val id = if (entry.arguments != null) entry.arguments!!.getLong("id") else 0L
+                val id = entry.arguments?.getLong("id") ?: 0L
                 HillDetailsView(
                     id = id,
                     viewModel = viewModel,
@@ -137,7 +137,7 @@ fun Navigation() {
                     }
                 )
             ) { entry ->
-                val id = if (entry.arguments != null) entry.arguments!!.getLong("id") else 0L
+                val id = entry.arguments?.getLong("id") ?: 0L
                 HillMapView(
                     id = id,
                     viewModel = viewModel,
@@ -194,8 +194,7 @@ fun Navigation() {
                     }
                 )
             ) { entry ->
-                val id =
-                    if (entry.arguments != null) entry.arguments!!.getString("countryCode") else ""
+                val id = entry.arguments?.getString("countryCode") ?: ""
                 CountryCategoryListView(
                     countryId = id,
                     navController = navController,
@@ -203,7 +202,7 @@ fun Navigation() {
                 )
             }
             composable(
-                route = Screen.HillsByCategory.route + "/{hillCategory}",
+                route = Screen.HillsByCategory.route + "/{hillCategory}/{country}",
                 arguments = listOf(
                     navArgument("hillCategory") {
                         type = NavType.StringType
@@ -212,10 +211,11 @@ fun Navigation() {
                     }
                 )
             ) { entry ->
-                val code =
-                    if (entry.arguments != null) entry.arguments!!.getString("hillCategory") else ""
+                val code = entry.arguments?.getString("hillCategory") ?: ""
+                val countryCode = entry.arguments?.getString("country") ?: ""
                 HillsByCategoryView(
                     categoryId = code,
+                    countryCode = countryCode,
                     navController = navController,
                     drawerState = drawerState,
                     viewModel = viewModel

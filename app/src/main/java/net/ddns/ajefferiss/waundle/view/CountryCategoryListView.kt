@@ -56,7 +56,7 @@ fun CountryCategoryListView(
                         description = hillCategory.name,
                         imageId = hillCategory.imageId ?: countryInfo.image,
                         onClick = {
-                            navController.navigate(Screen.HillsByCategory.route + "/${hillCategory.code}")
+                            navController.navigate(Screen.HillsByCategory.route + "/${hillCategory.code}/${countryDetail.countryCode}")
                         }
                     )
                 }

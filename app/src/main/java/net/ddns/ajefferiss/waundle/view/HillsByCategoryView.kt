@@ -8,6 +8,7 @@ import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 @Composable
 fun HillsByCategoryView(
     categoryId: String?,
+    countryCode: String?,
     navController: NavController,
     drawerState: DrawerState,
     viewModel: WaundleViewModel
