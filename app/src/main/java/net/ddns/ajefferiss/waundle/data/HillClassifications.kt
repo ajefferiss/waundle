@@ -2,6 +2,7 @@ package net.ddns.ajefferiss.waundle.data
 
 import net.ddns.ajefferiss.waundle.R
 
+@Suppress("UNUSED")
 enum class HillClassification(val code: String, val hill: String, val imageId: Int? = null) {
     Marilyn("Ma", "Marilyn", R.drawable.scottish_marilyn),
     Hump("Hu", "Hump"),
@@ -44,7 +45,6 @@ enum class HillClassification(val code: String, val hill: String, val imageId: I
     Binnion("Bin", "Binnion"),
     OtherHills("Oths", "Other Hills")
 }
-
 
 val CountryClassifications = mapOf(
     CountryCode.Scotland to listOf(
