@@ -4,16 +4,16 @@ import net.ddns.ajefferiss.waundle.R
 
 @Suppress("UNUSED")
 enum class HillClassification(val code: String, val codeName: String, val imageId: Int? = null) {
-    Marilyn("Ma", "Marilyn", R.drawable.scottish_marilyn),
+    Marilyn("Ma", "Marilyn", R.drawable.classification_marilyn),
     Hump("Hu", "Hump"),
     Simm("Sim", "Simm"),
     Dodd("5", "Dodd"),
-    Munro("M", "Munro", R.drawable.scottish_munro),
+    Munro("M", "Munro", R.drawable.classification_munro),
     MunroTop("MT", "Munro Top"),
     Furth("F", "Furth"),
-    Corbett("C", "Corbett", R.drawable.scottish_corbett),
-    Graham("G", "Graham", R.drawable.scottish_graham),
-    Donald("D", "Donald", R.drawable.scottish_donald),
+    Corbett("C", "Corbett", R.drawable.classification_corbett),
+    Graham("G", "Graham", R.drawable.classification_graham),
+    Donald("D", "Donald", R.drawable.classification_donald),
     DonaldTop("DT", "Donald Top"),
     Hewitt("Hew", "Hewitt"),
     Nuttall("N", "Nuttall"),
@@ -40,7 +40,7 @@ enum class HillClassification(val code: String, val codeName: String, val imageI
     VandeleurLynam("VL", "Vandeleur-Lynam"),
     OtherList("O", "Other list"),
     Unclassified("Un", "unclassified"),
-    Murdo("Mur", "Murdo", R.drawable.scottish_murdo),
+    Murdo("Mur", "Murdo", R.drawable.classification_murdo),
     Carn("Ca", "Carn"),
     Binnion("Bin", "Binnion"),
     OtherHills("Oths", "Other Hills");
