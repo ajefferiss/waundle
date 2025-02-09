@@ -53,7 +53,7 @@ fun CountryCategoryListView(
                     key = { hillCategory -> hillCategory.hashCode() }
                 ) { hillCategory ->
                     ImageCard(
-                        description = hillCategory.name,
+                        description = hillCategory.codeName,
                         imageId = hillCategory.imageId ?: countryInfo.image,
                         onClick = {
                             navController.navigate(Screen.HillsByCategory.route + "/${hillCategory.code}/${countryDetail.name}")
