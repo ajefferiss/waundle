@@ -5,7 +5,6 @@ import csv
 import hashlib
 import os
 import sqlite3
-from typing import Dict
 
 BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
 
@@ -28,13 +27,7 @@ def populate_database(hills_path: str, database_path: str, classifications_path:
         sqlite_conn = sqlite3.connect(database_path)
         print("Database created and Successfully Connected to SQLite")
 
-        classifications = process_classifications_csv(
-            classifications_path,
-            sqlite_conn
-        )
-
-        process_hills_csv(hills_path, sqlite_conn, classifications)
-
+        process_hills_csv(hills_path, sqlite_conn)
         add_meta_data(hills_path, sqlite_conn)
     except sqlite3.Error as error:
         print("Error while connecting to sqlite", error)
@@ -59,20 +52,22 @@ def add_meta_data(hills_file: str, sql_conn: sqlite3.Connection):
     sql_conn.commit()
 
 
-def process_hills_csv(hills_file: str, sql_conn: sqlite3.Connection,
-                      classifications: Dict[str, int]):
+def process_hills_csv(hills_file: str, sql_conn: sqlite3.Connection):
     cursor = sql_conn.cursor()
     hills_query = """INSERT INTO hills_table (
-        number, name, parent_num, section, region, area, island, topoSection, county, metres, feet, climbed, country, hillBaggingUrl, latitude, longitude)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        number, name, parent_num, section, region, area, island, topoSection, county, metres, feet, climbed, country, hillBaggingUrl, latitude, longitude, classifications)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """
-    classification_query = "INSERT INTO hill_classification_lookup(hill_id, classification_id) VALUES (?, ?)"
 
     with open(hills_file, "r") as infile:
         reader = csv.DictReader(infile)
 
         print("Starting insert of Hills Table")
         for row in reader:
+            classifications = ",".join(
+                [f"|{c}|" for c in row['Classification'].split(",")]
+            )
+
             cursor.execute(
                 hills_query,
                 (
@@ -91,43 +86,12 @@ def process_hills_csv(hills_file: str, sql_conn: sqlite3.Connection,
                     row['Country'],
                     row['Hill-bagging'],
                     row['Latitude'],
-                    row['Longitude']
+                    row['Longitude'],
+                    classifications
                 )
             )
 
-            hill_classifications = row['Classification'].split(",")
-            for classification in hill_classifications:
-                row_id = cursor.lastrowid
-                classification_id = classifications.get(classification, None)
-
-                if row_id and classification_id:
-                    cursor.execute(
-                        classification_query,
-                        (
-                            row_id,
-                            classification_id
-                        )
-                    )
-
     sql_conn.commit()
-
-
-def process_classifications_csv(classification_file: str, sql_conn: sqlite3.Connection) -> Dict[
-    str, int]:
-    cursor = sql_conn.cursor()
-    insert_query = "INSERT INTO hill_classifications(code, name) VALUES (?, ?)"
-
-    with open(classification_file, "r") as infile:
-        reader = csv.DictReader(infile)
-
-        print("Starting insert of Hill Classifications")
-        for row in reader:
-            cursor.execute(insert_query, (row['Code'], row['Name']))
-
-    sql_conn.commit()
-
-    cursor.execute("SELECT id, code FROM hill_classifications")
-    return {row[1]: row[0] for row in cursor.fetchall()}
 
 
 def main():
