@@ -91,6 +91,16 @@ class WaundleViewModel(
         }
     }
 
+    fun getHillsByCountryCategory(
+        countryCode: String,
+        category: String
+    ): Flow<List<Hill>> {
+        return hillRepository.searchByCountryAndHillCategory(
+            countryCode,
+            category
+        )
+    }
+
     private fun calculateDerivedPosition(range: Double, bearing: Double): PointF {
         // Taken from: https://stackoverflow.com/questions/3695224/sqlite-getting-nearest-locations-with-latitude-and-longitude
         val earthRadius = 6371000

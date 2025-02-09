@@ -83,11 +83,11 @@ fun WalkedHillsView(
                                 )
                             }
                         }
-                        items(walkedHills.value, key = { hill -> hill.id }) { hill ->
+                        items(walkedHills.value, key = { hill -> hill.hillId }) { hill ->
                             HillItem(
                                 hill = hill,
                                 onClick = {
-                                    navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
+                                    navController.navigate(Screen.HillDetailsScreen.route + "/${hill.hillId}")
                                 }
                             )
                         }

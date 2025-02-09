@@ -3,7 +3,7 @@ package net.ddns.ajefferiss.waundle.data
 import net.ddns.ajefferiss.waundle.R
 
 @Suppress("UNUSED")
-enum class HillClassification(val code: String, val hill: String, val imageId: Int? = null) {
+enum class HillClassification(val code: String, val codeName: String, val imageId: Int? = null) {
     Marilyn("Ma", "Marilyn", R.drawable.scottish_marilyn),
     Hump("Hu", "Hump"),
     Simm("Sim", "Simm"),
@@ -43,7 +43,23 @@ enum class HillClassification(val code: String, val hill: String, val imageId: I
     Murdo("Mur", "Murdo", R.drawable.scottish_murdo),
     Carn("Ca", "Carn"),
     Binnion("Bin", "Binnion"),
-    OtherHills("Oths", "Other Hills")
+    OtherHills("Oths", "Other Hills");
+
+    companion object {
+        fun findByCode(value: String): HillClassification? = entries.find { it.code == value }
+
+        fun namesFromCode(values: List<String>): String {
+            var names = ""
+            values.forEach { value ->
+                val classification = findByCode(value)
+                if (classification != null) {
+                    names += classification.codeName + ", "
+                }
+            }
+
+            return names
+        }
+    }
 }
 
 val CountryClassifications = mapOf(

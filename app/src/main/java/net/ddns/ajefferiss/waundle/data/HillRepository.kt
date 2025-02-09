@@ -33,6 +33,13 @@ class HillRepository(private val hillDAO: HillDAO) {
         return hillDAO.nearbyHills(latLow, latHi, lonLow, lonHi)
     }
 
+    fun searchByCountryAndHillCategory(
+        country: String,
+        hillCategory: String
+    ): Flow<List<Hill>> {
+        return hillDAO.getHillsByCountryAndCategory(country, hillCategory)
+    }
+
     fun resetProgress() {
         hillDAO.resetWalkedProgress()
     }

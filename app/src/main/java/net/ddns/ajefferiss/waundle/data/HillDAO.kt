@@ -21,7 +21,7 @@ abstract class HillDAO {
     @Update
     abstract suspend fun updateHill(hillEntity: Hill)
 
-    @Query("SELECT * FROM `hills_table` WHERE id = :id")
+    @Query("SELECT * FROM `hills_table` WHERE hillId = :id")
     abstract fun getHillById(id: Long): Flow<Hill>
 
     @Query("SELECT * FROM `hills_meta` WHERE id = 1")
@@ -44,7 +44,7 @@ abstract class HillDAO {
     @Query("UPDATE `hills_table` SET climbed = NULL")
     abstract fun resetWalkedProgress()
 
-    @Query("SELECT * FROM `hills_table` WHERE country LIKE '%' || :country AND name LIKE '%' || :categories")
+    @Query("SELECT * FROM `hills_table` WHERE country LIKE '%' || :country || '%' AND classifications LIKE '%' || :categories || '%'")
     abstract fun getHillsByCountryAndCategory(
         country: String,
         categories: String

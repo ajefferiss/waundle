@@ -81,11 +81,11 @@ fun NearbyHillsView(
                             Text(stringResource(id = R.string.no_nearby_hill))
                         }
                     }
-                    items(nearbyHills.value, key = { hill -> hill.id }) { hill ->
+                    items(nearbyHills.value, key = { hill -> hill.hillId }) { hill ->
                         HillItem(
                             hill = hill,
                             onClick = {
-                                navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
+                                navController.navigate(Screen.HillDetailsScreen.route + "/${hill.hillId}")
                             }
                         )
                     }

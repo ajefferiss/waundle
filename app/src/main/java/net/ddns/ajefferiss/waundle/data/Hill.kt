@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 @Entity(tableName = "hills_table")
 data class Hill(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
+    @PrimaryKey(autoGenerate = true) val hillId: Long = 0L,
     @ColumnInfo(name = "number") val number: Long = 0L,
     @ColumnInfo(name = "name") val name: String = "",
     @ColumnInfo(name = "parent_num") val parent: Long? = null,
@@ -23,7 +23,8 @@ data class Hill(
     @ColumnInfo(name = "country") val country: String = "",
     @ColumnInfo(name = "hillBaggingUrl") val hillBaggingUrl: String = "",
     @ColumnInfo(name = "latitude") val latitude: Float = 0F,
-    @ColumnInfo(name = "longitude") val longitude: Float = 0F
+    @ColumnInfo(name = "longitude") val longitude: Float = 0F,
+    @ColumnInfo(name = "classifications") val classifications: String? = ""
 )
 
 @Entity(tableName = "hills_meta")
@@ -31,18 +32,4 @@ data class HillsMeta(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     @ColumnInfo(name = "csv_name") val csvName: String = "",
     @ColumnInfo(name = "csv_hash") val csvHash: String = ""
-)
-
-@Entity(tableName = "hill_classifications")
-data class HillClassifications(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
-    @ColumnInfo(name = "code") val code: String = "",
-    @ColumnInfo(name = "name") val name: String = ""
-)
-
-@Entity(tableName = "hill_classification_lookup")
-data class HillClassificationLookup(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0L,
-    @ColumnInfo(name = "hill_id") val hillId: Long = 0L,
-    @ColumnInfo(name = "classification_id") val classificationId: Long = 0L
 )

@@ -21,11 +21,11 @@ import net.ddns.ajefferiss.waundle.data.SCOTLAND
 
 @Composable
 fun CountryCategoryListView(
-    countryId: String?,
+    countryId: String,
     navController: NavController,
     drawerState: DrawerState
 ) {
-    val countryDetail = CountryCode.valueOf(countryId!!)
+    val countryDetail = CountryCode.valueOf(countryId)
     val countryInfo = CountriesMap.getOrDefault(countryDetail, SCOTLAND)
     val hillCategories = CountryClassifications.getOrDefault(countryInfo.countryCode, listOf())
 
@@ -56,7 +56,7 @@ fun CountryCategoryListView(
                         description = hillCategory.name,
                         imageId = hillCategory.imageId ?: countryInfo.image,
                         onClick = {
-                            navController.navigate(Screen.HillsByCategory.route + "/${hillCategory.code}/${countryDetail.countryCode}")
+                            navController.navigate(Screen.HillsByCategory.route + "/${hillCategory.code}/${countryDetail.name}")
                         }
                     )
                 }

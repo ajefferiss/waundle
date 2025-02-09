@@ -10,10 +10,7 @@
     <string name="search_field_label">Search</string>
     <string name="search_field_placeholder">Search by name or country</string>
     <string name="hill_desc_name">Name</string>
-    <string name="hill_desc_county">County</string>
-    <string name="classification">Classification</string>
-    <string name="height">Height</string>
-    <string name="hill_walked_on">Walked on</string>
+    <string name="hill_walked_on">Walked on %1$s</string>
     <string name="mark_hill_walked">Mark as walked</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -58,4 +55,6 @@
     <string name="wales_description">Welsh Hewitts, Marilyns and Nuttalls</string>
     <string name="isle_of_man_description">Isle of Man hills</string>
     <string name="category_list_title">%1$s Hills</string>
+    <string name="base_hill_description">Height: %1$.1f (ft), %2$.1f (m)</string>
+    <string name="hill_detailed_description">County: %1$s\nClassification: %2$s\nHeight: %3$.1f (ft), %4$.1f (m)</string>
 </resources>

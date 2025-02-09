@@ -5,9 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(
-    entities = [Hill::class, HillsMeta::class, HillClassifications::class, HillClassificationLookup::class],
-    version = 2,
-    exportSchema = false
+    entities = [Hill::class, HillsMeta::class],
+    version = 1
 )
 @TypeConverters(Converters::class)
 abstract class HillDatabase : RoomDatabase() {

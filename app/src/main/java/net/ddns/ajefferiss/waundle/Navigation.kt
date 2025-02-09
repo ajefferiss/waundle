@@ -208,6 +208,11 @@ fun Navigation() {
                         type = NavType.StringType
                         defaultValue = ""
                         nullable = false
+                    },
+                    navArgument("country") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                        nullable = false
                     }
                 )
             ) { entry ->
