@@ -59,7 +59,8 @@ def add_meta_data(hills_file: str, sql_conn: sqlite3.Connection):
     sql_conn.commit()
 
 
-def process_hills_csv(hills_file: str, sql_conn: sqlite3.Connection, classifications: Dict[str, int]):
+def process_hills_csv(hills_file: str, sql_conn: sqlite3.Connection,
+                      classifications: Dict[str, int]):
     cursor = sql_conn.cursor()
     hills_query = """INSERT INTO hills_table (
         number, name, parent_num, section, region, area, island, topoSection, county, metres, feet, climbed, country, hillBaggingUrl, latitude, longitude)
@@ -111,7 +112,8 @@ def process_hills_csv(hills_file: str, sql_conn: sqlite3.Connection, classificat
     sql_conn.commit()
 
 
-def process_classifications_csv(classification_file: str, sql_conn: sqlite3.Connection) -> Dict[str, int]:
+def process_classifications_csv(classification_file: str, sql_conn: sqlite3.Connection) -> Dict[
+    str, int]:
     cursor = sql_conn.cursor()
     insert_query = "INSERT INTO hill_classifications(code, name) VALUES (?, ?)"
 
@@ -125,7 +127,7 @@ def process_classifications_csv(classification_file: str, sql_conn: sqlite3.Conn
     sql_conn.commit()
 
     cursor.execute("SELECT id, code FROM hill_classifications")
-    return {row[0]: row[1] for row in cursor.fetchall()}
+    return {row[1]: row[0] for row in cursor.fetchall()}
 
 
 def main():
