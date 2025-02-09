@@ -69,7 +69,7 @@ fun HillDetailsView(
                 val classifications =
                     hill.value!!.classifications?.replace("|", "")?.split(",") ?: listOf()
 
-                var hillDescription = stringResource(
+                val hillDescription = stringResource(
                     id = R.string.hill_detailed_description,
                     hill.value!!.county,
                     HillClassification.namesFromCode(classifications),
