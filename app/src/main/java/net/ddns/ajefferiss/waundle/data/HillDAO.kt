@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -49,4 +51,7 @@ abstract class HillDAO {
         country: String,
         categories: String
     ): Flow<List<Hill>>
+
+    @RawQuery
+    abstract suspend fun getCountryOtherHills(query: SupportSQLiteQuery): List<Hill>
 }

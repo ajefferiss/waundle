@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.Screen
+import net.ddns.ajefferiss.waundle.data.CountryClassifications
 import net.ddns.ajefferiss.waundle.data.CountryCode
 import net.ddns.ajefferiss.waundle.data.HillClassification
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
@@ -27,10 +28,21 @@ fun HillsByCategoryView(
 ) {
     val hillCategory = HillClassification.findByCode(categoryId) ?: HillClassification.OtherHills
     val country = CountryCode.valueOf(countryCode)
-    val searchResult = viewModel.getHillsByCountryCategory(
-        country.countryCode,
-        hillCategory.code
-    ).collectAsState(initial = listOf())
+    val countryClassifications = CountryClassifications[country]
+
+    val searchResult = if (hillCategory == HillClassification.OtherHills) {
+        val ignoreClassifications =
+            countryClassifications!!.filter { it != HillClassification.OtherHills }
+        viewModel.getCountryOtherHills(
+            country.countryCode,
+            ignoreClassifications
+        ).collectAsState(initial = listOf())
+    } else {
+        viewModel.getHillsByCountryCategory(
+            country.countryCode,
+            hillCategory.code
+        ).collectAsState(initial = listOf())
+    }
 
     WaundleScaffold(
         navController = navController,

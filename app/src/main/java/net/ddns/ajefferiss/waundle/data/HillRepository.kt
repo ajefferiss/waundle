@@ -1,6 +1,9 @@
 package net.ddns.ajefferiss.waundle.data
 
+import androidx.sqlite.db.SimpleSQLiteQuery
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 
 class HillRepository(private val hillDAO: HillDAO) {
 
@@ -42,5 +45,22 @@ class HillRepository(private val hillDAO: HillDAO) {
 
     fun resetProgress() {
         hillDAO.resetWalkedProgress()
+    }
+
+    fun getCountryOtherHills(
+        countryCode: String,
+        ignoreCategories: List<HillClassification>
+    ): Flow<List<Hill>> {
+        // SELECT * FROM hills_table WHERE country = "M" AND classifications NOT LIKE "%|Ma|%" AND classifications NOT LIKE "%|SIB|%"
+        val placeHolders = ignoreCategories.joinToString(" AND ") { "classifications NOT LIKE ?" }
+        val args = ignoreCategories.map { "%|${it.code}|%" }.toTypedArray()
+        val query = SimpleSQLiteQuery(
+            "SELECT * FROM `hills_table` WHERE country LIKE '%$countryCode%' AND $placeHolders",
+            args
+        )
+
+        return runBlocking {
+            flowOf(hillDAO.getCountryOtherHills(query))
+        }
     }
 }

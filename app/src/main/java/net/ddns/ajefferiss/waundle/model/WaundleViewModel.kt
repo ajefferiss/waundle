@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.ddns.ajefferiss.waundle.Graph
 import net.ddns.ajefferiss.waundle.data.Hill
+import net.ddns.ajefferiss.waundle.data.HillClassification
 import net.ddns.ajefferiss.waundle.data.HillRepository
 import net.ddns.ajefferiss.waundle.data.LocationData
 import kotlin.math.asin
@@ -99,6 +100,13 @@ class WaundleViewModel(
             countryCode,
             category
         )
+    }
+
+    fun getCountryOtherHills(
+        countryCode: String,
+        ignoreCategories: List<HillClassification>
+    ): Flow<List<Hill>> {
+        return hillRepository.getCountryOtherHills(countryCode, ignoreCategories)
     }
 
     private fun calculateDerivedPosition(range: Double, bearing: Double): PointF {
