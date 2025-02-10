@@ -27,7 +27,6 @@ import net.ddns.ajefferiss.waundle.util.WaundlePreferencesHelper
 import net.ddns.ajefferiss.waundle.view.CountryCategoryListView
 import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
-import net.ddns.ajefferiss.waundle.view.HillMapView
 import net.ddns.ajefferiss.waundle.view.HillsByCategoryView
 import net.ddns.ajefferiss.waundle.view.HomeView
 import net.ddns.ajefferiss.waundle.view.LiveTrackingView
@@ -117,7 +116,8 @@ fun Navigation() {
                     id = id,
                     viewModel = viewModel,
                     navController = navController,
-                    drawerState = drawerState
+                    drawerState = drawerState,
+                    context = context
                 )
             }
             composable(Screen.SearchScreen.route) {
@@ -125,25 +125,6 @@ fun Navigation() {
                     navController = navController,
                     viewModel = viewModel,
                     drawerState = drawerState
-                )
-            }
-            composable(
-                route = Screen.MapViewScreen.route + "/{id}",
-                arguments = listOf(
-                    navArgument("id") {
-                        type = NavType.LongType
-                        defaultValue = 0L
-                        nullable = false
-                    }
-                )
-            ) { entry ->
-                val id = entry.arguments?.getLong("id") ?: 0L
-                HillMapView(
-                    id = id,
-                    viewModel = viewModel,
-                    navController = navController,
-                    drawerState = drawerState,
-                    prefs = waundlePrefs
                 )
             }
             composable(Screen.SettingsScreen.route) {
