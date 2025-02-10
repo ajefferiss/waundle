@@ -94,5 +94,8 @@ val CountryClassifications = mapOf(
         HillClassification.Nuttall,
         HillClassification.OtherHills
     ),
-    CountryCode.IsleOfMan to listOf(HillClassification.OtherHills)
+    CountryCode.IsleOfMan to listOf(
+        HillClassification.Marilyn,
+        HillClassification.OtherHills
+    )
 )
