@@ -1,5 +1,8 @@
 package net.ddns.ajefferiss.waundle.view
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
-import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.data.HillClassification
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import java.time.Instant
@@ -41,7 +43,8 @@ fun HillDetailsView(
     id: Long,
     viewModel: WaundleViewModel,
     navController: NavController,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    context: Context
 ) {
     val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Picker)
     val openDatePickerDialog = remember { mutableStateOf(false) }
@@ -107,9 +110,15 @@ fun HillDetailsView(
 
                         Button(
                             onClick = {
-                                navController.navigate(Screen.MapViewScreen.route + "/${hill.value!!.hillId}") {
-                                    this.launchSingleTop
-                                }
+                                val geoUri = "geo:0,0?q=" +
+                                        hill.value!!.latitude +
+                                        "," +
+                                        hill.value!!.longitude +
+                                        " (" + hill.value!!.name + ")"
+
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(geoUri))
+                                intent.setPackage("com.google.android.apps.maps")
+                                context.startActivity(intent)
                             },
                             modifier = Modifier.padding(2.dp)
                         ) {
