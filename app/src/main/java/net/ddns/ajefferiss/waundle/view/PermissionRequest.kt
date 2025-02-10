@@ -105,7 +105,7 @@ fun PermissionRequest(
                                 )
                             )
                         }) {
-                        Text(stringResource(id = R.string.request_location_permission_btn))
+                        Text(stringResource(id = R.string.request_location_permission))
                     }
                 }
             }

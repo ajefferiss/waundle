@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
+import net.ddns.ajefferiss.waundle.data.HillClassification
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import java.time.Instant
 import java.time.LocalDate
@@ -65,20 +66,29 @@ fun HillDetailsView(
                         .align(Alignment.CenterHorizontally)
                 )
             } else {
-                var hillDescription =
-                    """
-                        ${stringResource(id = R.string.hill_desc_county)}: ${hill.value!!.county}
-                        ${stringResource(id = R.string.hill_desc_classification)}: ${hill.value!!.classification}
-                        ${stringResource(id = R.string.hill_desc_height)}: ${hill.value!!.feet} (ft), ${hill.value!!.metres} (m)
-                """.trimIndent()
+                val classifications =
+                    hill.value!!.classifications?.replace("|", "")?.split(",") ?: listOf()
+
+                val hillDescription = stringResource(
+                    id = R.string.hill_detailed_description,
+                    hill.value!!.county,
+                    HillClassification.namesFromCode(classifications),
+                    hill.value!!.feet,
+                    hill.value!!.metres
+                )
 
                 if (hill.value!!.climbed != null) {
-                    hillDescription += "\n${stringResource(id = R.string.hill_walked_on)}: ${hill.value!!.climbed.toString()}"
+                    hillDescription.plus("\n").plus(
+                        stringResource(
+                            id = R.string.hill_walked_on,
+                            hill.value!!.climbed.toString()
+                        )
+                    )
                 }
 
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(
-                        text = stringResource(id = R.string.hill_desc_name) + ": ${hill.value!!.name}",
+                        text = stringResource(id = R.string.hill_desc_name).plus(": ${hill.value!!.name}"),
                         fontWeight = FontWeight.SemiBold,
                     )
                     Text(text = hillDescription)
@@ -97,7 +107,7 @@ fun HillDetailsView(
 
                         Button(
                             onClick = {
-                                navController.navigate(Screen.MapViewScreen.route + "/${hill.value!!.id}") {
+                                navController.navigate(Screen.MapViewScreen.route + "/${hill.value!!.hillId}") {
                                     this.launchSingleTop
                                 }
                             },
@@ -127,7 +137,7 @@ fun HillDetailsView(
                             viewModel.updateHill(hill.value!!.copy(climbed = walkedDate))
                         }
                     ) {
-                        Text(stringResource(id = R.string.dialog_ok))
+                        Text(stringResource(id = R.string.ok))
                     }
                 },
                 dismissButton = {
@@ -137,7 +147,7 @@ fun HillDetailsView(
                             openDatePickerDialog.value = false
                         }
                     ) {
-                        Text(stringResource(id = R.string.dialog_cancel))
+                        Text(stringResource(id = R.string.cancel))
                     }
                 }
             ) {

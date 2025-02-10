@@ -20,11 +20,19 @@ import net.ddns.ajefferiss.waundle.data.Hill
 
 @Composable
 fun HillItem(hill: Hill, onClick: () -> Unit) {
+    val hillDescription = stringResource(
+        R.string.base_hill_description,
+        hill.feet,
+        hill.metres
+    )
 
-    var hillDescription =
-        stringResource(id = R.string.hill_desc_height) + ": " + hill.feet + "(ft), " + hill.metres + "(m)"
     if (hill.climbed != null) {
-        hillDescription += "\n" + stringResource(id = R.string.hill_walked_on) + " " + hill.climbed.toString()
+        hillDescription.plus("\n").plus(
+            stringResource(
+                id = R.string.hill_walked_on,
+                hill.climbed.toString()
+            )
+        )
     }
 
     Card(

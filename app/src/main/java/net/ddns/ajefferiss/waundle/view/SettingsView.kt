@@ -62,42 +62,42 @@ fun SettingsView(
                 .padding(it)
         ) {
             SettingsGroup(
-                title = { Text(text = stringResource(id = R.string.map_settings_title)) }
+                title = { Text(text = stringResource(id = R.string.map_settings)) }
             ) {
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.map_type_setting_title)) },
+                    title = { Text(text = stringResource(id = R.string.map_type)) },
                     subtitle = { Text(text = currentPrefs.value.mapType.name) },
                     onClick = { showMapTypeDialog.value = true }
                 )
             }
 
             SettingsGroup(
-                title = { Text(text = stringResource(id = R.string.nearby_hill_settings_title)) }
+                title = { Text(text = stringResource(id = R.string.nearby_hills)) }
             ) {
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.nearby_distance_setting_title)) },
+                    title = { Text(text = stringResource(id = R.string.nearby_search_distance)) },
                     subtitle = { Text(text = "${currentPrefs.value.nearbyDistance} (m)") },
                     onClick = { showNearbyDistanceDialog.value = true }
                 )
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.bagging_distance_setting_title)) },
+                    title = { Text(text = stringResource(id = R.string.bagging_distance)) },
                     subtitle = { Text(text = "${currentPrefs.value.baggingDistance} (m)") },
                     onClick = { showBaggingDistanceDialog.value = true }
                 )
             }
 
             SettingsGroup(
-                title = { Text(text = stringResource(id = R.string.advanced_settings_title)) }
+                title = { Text(text = stringResource(id = R.string.advanced_settings)) }
             ) {
                 SettingsMenuLink(
                     title = { Text(text = stringResource(id = R.string.advanced_settings_desc)) }
                 ) {}
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.advanced_settings_reset_walked)) },
+                    title = { Text(text = stringResource(id = R.string.reset_walked_progress)) },
                     onClick = { showResetProgress.value = true }
                 )
                 SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.advanced_settings_reset_defaults)) },
+                    title = { Text(text = stringResource(id = R.string.reset_settings)) },
                     onClick = { showResetSettings.value = true }
                 )
             }
@@ -127,7 +127,7 @@ fun SettingsView(
                 currentPrefs.value = newPrefs
             },
             initialValue = prefs.getPrefs().nearbyDistance,
-            dialogTitle = stringResource(id = R.string.nearby_hill_settings),
+            dialogTitle = stringResource(id = R.string.nearby_hills),
             dialogDescription = stringResource(id = R.string.nearby_distance_setting)
         )
     }
@@ -142,7 +142,7 @@ fun SettingsView(
                 currentPrefs.value = newPrefs
             },
             initialValue = prefs.getPrefs().baggingDistance,
-            dialogTitle = stringResource(id = R.string.bagging_distance_setting_title),
+            dialogTitle = stringResource(id = R.string.bagging_distance),
             dialogDescription = stringResource(id = R.string.bagging_distance_setting)
         )
     }
@@ -154,7 +154,7 @@ fun SettingsView(
                 showResetProgress.value = false
                 viewModel.resetWalkedProgress()
             },
-            title = stringResource(id = R.string.reset_progress_dialog_title),
+            title = stringResource(id = R.string.reset_walked_hills),
             description = stringResource(id = R.string.reset_progress_dialog_message)
         )
     }
@@ -166,7 +166,7 @@ fun SettingsView(
                 showResetSettings.value = false
                 currentPrefs.value = prefs.defaultPrefs()
             },
-            title = stringResource(id = R.string.reset_settings_dialog_title),
+            title = stringResource(id = R.string.reset_settings),
             description = stringResource(id = R.string.reset_settings_dialog_message)
         )
     }
@@ -198,13 +198,13 @@ fun BaseSettingsDialog(
                         onClick = { onDismissRequest() },
                         modifier = Modifier.padding(8.dp)
                     ) {
-                        Text(text = stringResource(id = R.string.dialog_cancel))
+                        Text(text = stringResource(id = R.string.cancel))
                     }
                     TextButton(
                         onClick = { onConfirmation() },
                         modifier = Modifier.padding(8.dp)
                     ) {
-                        Text(text = stringResource(id = R.string.dialog_ok))
+                        Text(text = stringResource(id = R.string.ok))
                     }
                 }
             }
@@ -230,7 +230,7 @@ fun MapTypeDialog(
                 )
             )
         },
-        title = stringResource(id = R.string.map_type_setting_title)
+        title = stringResource(id = R.string.map_type)
     ) {
         GOOGLE_MAP_TYPES_BY_NAME.forEach { mapType ->
             Row {

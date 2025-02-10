@@ -24,15 +24,18 @@ import net.ddns.ajefferiss.waundle.menu.NavItem
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
 import net.ddns.ajefferiss.waundle.util.LocationUtils
 import net.ddns.ajefferiss.waundle.util.WaundlePreferencesHelper
+import net.ddns.ajefferiss.waundle.view.CountryCategoryListView
 import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HillMapView
+import net.ddns.ajefferiss.waundle.view.HillsByCategoryView
 import net.ddns.ajefferiss.waundle.view.HomeView
 import net.ddns.ajefferiss.waundle.view.LiveTrackingView
 import net.ddns.ajefferiss.waundle.view.NearbyHillsView
 import net.ddns.ajefferiss.waundle.view.PermissionRequest
 import net.ddns.ajefferiss.waundle.view.SearchView
 import net.ddns.ajefferiss.waundle.view.SettingsView
+import net.ddns.ajefferiss.waundle.view.WalkedHillsView
 
 @Composable
 fun Navigation() {
@@ -50,6 +53,11 @@ fun Navigation() {
             R.string.home,
             Screen.HomeScreen
         ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_walked_icon),
+            R.string.walked_hills,
+            Screen.WalkedHillsScreen
+        ),
 //        NavItem(
 //            ImageVector.vectorResource(id = R.drawable.ic_map_icon),
 //            R.string.live_track,
@@ -57,7 +65,7 @@ fun Navigation() {
 //        ),
         NavItem(
             ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
-            R.string.nearby,
+            R.string.nearby_hills,
             Screen.NearByScreen
         ),
         NavItem(
@@ -104,7 +112,7 @@ fun Navigation() {
                     }
                 )
             ) { entry ->
-                val id = if (entry.arguments != null) entry.arguments!!.getLong("id") else 0L
+                val id = entry.arguments?.getLong("id") ?: 0L
                 HillDetailsView(
                     id = id,
                     viewModel = viewModel,
@@ -129,7 +137,7 @@ fun Navigation() {
                     }
                 )
             ) { entry ->
-                val id = if (entry.arguments != null) entry.arguments!!.getLong("id") else 0L
+                val id = entry.arguments?.getLong("id") ?: 0L
                 HillMapView(
                     id = id,
                     viewModel = viewModel,
@@ -166,6 +174,55 @@ fun Navigation() {
                     navController = navController,
                     drawerState = drawerState,
                     locationUtils = locationUtils,
+                    viewModel = viewModel
+                )
+            }
+            composable(Screen.WalkedHillsScreen.route) {
+                WalkedHillsView(
+                    navController = navController,
+                    viewModel = viewModel,
+                    drawerState = drawerState
+                )
+            }
+            composable(
+                route = Screen.CategoriesList.route + "/{countryCode}",
+                arguments = listOf(
+                    navArgument("countryCode") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                        nullable = false
+                    }
+                )
+            ) { entry ->
+                val id = entry.arguments?.getString("countryCode") ?: ""
+                CountryCategoryListView(
+                    countryId = id,
+                    navController = navController,
+                    drawerState = drawerState,
+                )
+            }
+            composable(
+                route = Screen.HillsByCategory.route + "/{hillCategory}/{country}",
+                arguments = listOf(
+                    navArgument("hillCategory") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                        nullable = false
+                    },
+                    navArgument("country") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                        nullable = false
+                    }
+                )
+            ) { entry ->
+                val code = entry.arguments?.getString("hillCategory") ?: ""
+                val countryCode = entry.arguments?.getString("country") ?: ""
+                HillsByCategoryView(
+                    categoryId = code,
+                    countryCode = countryCode,
+                    navController = navController,
+                    drawerState = drawerState,
                     viewModel = viewModel
                 )
             }

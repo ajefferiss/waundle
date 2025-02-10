@@ -1,8 +1,6 @@
 package net.ddns.ajefferiss.waundle.view
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
@@ -44,13 +42,13 @@ fun WaundleScaffold(
 //        ),
         NavItem(
             ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
-            R.string.nearby,
+            R.string.nearby_hills,
             Screen.NearByScreen
         ),
         NavItem(
-            Icons.Filled.Search,
-            R.string.search_view,
-            Screen.SearchScreen
+            ImageVector.vectorResource(id = R.drawable.ic_walked_icon),
+            R.string.walked_hills,
+            Screen.WalkedHillsScreen
         )
     )
 

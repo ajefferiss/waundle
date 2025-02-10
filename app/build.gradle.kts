@@ -13,7 +13,7 @@ android {
         applicationId = "net.ddns.ajefferiss.waundle"
         minSdk = 26
         targetSdk = 34
-        versionCode = 16
+        versionCode = 17
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -35,18 +35,22 @@ android {
             isDebuggable = true
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+
+    kotlin {
+        jvmToolchain(19)
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(19))
+        }
     }
+
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     packaging {
         resources {

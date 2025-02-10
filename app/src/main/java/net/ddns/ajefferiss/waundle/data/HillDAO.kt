@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,7 +23,7 @@ abstract class HillDAO {
     @Update
     abstract suspend fun updateHill(hillEntity: Hill)
 
-    @Query("SELECT * FROM `hills_table` WHERE id = :id")
+    @Query("SELECT * FROM `hills_table` WHERE hillId = :id")
     abstract fun getHillById(id: Long): Flow<Hill>
 
     @Query("SELECT * FROM `hills_meta` WHERE id = 1")
@@ -43,4 +45,13 @@ abstract class HillDAO {
 
     @Query("UPDATE `hills_table` SET climbed = NULL")
     abstract fun resetWalkedProgress()
+
+    @Query("SELECT * FROM `hills_table` WHERE country LIKE '%' || :country || '%' AND classifications LIKE '%' || :categories || '%'")
+    abstract fun getHillsByCountryAndCategory(
+        country: String,
+        categories: String
+    ): Flow<List<Hill>>
+
+    @RawQuery
+    abstract suspend fun getCountryOtherHills(query: SupportSQLiteQuery): List<Hill>
 }

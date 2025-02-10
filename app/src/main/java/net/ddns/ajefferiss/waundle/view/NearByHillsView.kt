@@ -42,7 +42,7 @@ fun NearbyHillsView(
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.nearby)
+        title = stringResource(id = R.string.nearby_hills)
     ) {
         Column(
             modifier = Modifier.padding(it)
@@ -68,7 +68,7 @@ fun NearbyHillsView(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = stringResource(id = R.string.nearby_hill_desc),
+                                text = stringResource(id = R.string.nearby_hills),
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .fillMaxWidth(),
@@ -81,11 +81,11 @@ fun NearbyHillsView(
                             Text(stringResource(id = R.string.no_nearby_hill))
                         }
                     }
-                    items(nearbyHills.value, key = { hill -> hill.id }) { hill ->
+                    items(nearbyHills.value, key = { hill -> hill.hillId }) { hill ->
                         HillItem(
                             hill = hill,
                             onClick = {
-                                navController.navigate(Screen.HillDetailsScreen.route + "/${hill.id}")
+                                navController.navigate(Screen.HillDetailsScreen.route + "/${hill.hillId}")
                             }
                         )
                     }
