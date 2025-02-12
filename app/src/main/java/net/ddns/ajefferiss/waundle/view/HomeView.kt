@@ -56,7 +56,7 @@ fun HomeView(
                         ),
                         imageId = country.image,
                         onClick = {
-                            navController.navigate(Screen.CategoriesList.route + "/${country.countryCode}")
+                            navController.navigate(Screen.CategoriesListScreen.route + "/${country.countryCode}")
                         }
                     )
                 }

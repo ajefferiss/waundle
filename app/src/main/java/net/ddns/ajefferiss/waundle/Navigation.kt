@@ -166,7 +166,7 @@ fun Navigation() {
                 )
             }
             composable(
-                route = Screen.CategoriesList.route + "/{countryCode}",
+                route = Screen.CategoriesListScreen.route + "/{countryCode}",
                 arguments = listOf(
                     navArgument("countryCode") {
                         type = NavType.StringType
@@ -183,7 +183,7 @@ fun Navigation() {
                 )
             }
             composable(
-                route = Screen.HillsByCategory.route + "/{hillCategory}/{country}",
+                route = Screen.HillsByCategoryScreen.route + "/{hillCategory}/{country}",
                 arguments = listOf(
                     navArgument("hillCategory") {
                         type = NavType.StringType
