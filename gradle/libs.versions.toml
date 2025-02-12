@@ -19,6 +19,7 @@ compose = "1.6.8"
 junitJupiter = "5.9.3"
 secretsGradlePlugin = "2.0.1"
 uiTiles = "2.4.0"
+kotlinCsv = "1.10.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -51,6 +52,8 @@ play-services-maps = { group = "com.google.android.gms", name = "play-services-m
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 ui-tiles = { module = "com.github.alorma.compose-settings:ui-tiles", version.ref = "uiTiles" }
 ui-tiles-extended = { module = "com.github.alorma.compose-settings:ui-tiles-extended", version.ref = "uiTiles" }
+
+kotlin-csv = { module = "com.jsoizo:kotlin-csv-js", version.ref = "kotlinCsv" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

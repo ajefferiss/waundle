@@ -94,9 +94,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.datastore.preferences)
 
-
     implementation(libs.ui.tiles)
     implementation(libs.ui.tiles.extended)
+
+    implementation(libs.kotlin.csv)
 
     // Test dependencies
     testImplementation(libs.junit)
