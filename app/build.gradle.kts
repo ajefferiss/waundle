@@ -70,7 +70,7 @@ secrets {
 dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt("androidx.room:room-compiler:2.6.1")
+    kapt(libs.androidx.room.compiler)
 
     implementation(libs.maps.compose)
     implementation(libs.play.services.maps)
