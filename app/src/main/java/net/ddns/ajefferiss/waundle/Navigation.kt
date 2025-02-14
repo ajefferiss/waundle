@@ -29,6 +29,7 @@ import net.ddns.ajefferiss.waundle.view.HelpFeedbackView
 import net.ddns.ajefferiss.waundle.view.HillDetailsView
 import net.ddns.ajefferiss.waundle.view.HillsByCategoryView
 import net.ddns.ajefferiss.waundle.view.HomeView
+import net.ddns.ajefferiss.waundle.view.ImportExportView
 import net.ddns.ajefferiss.waundle.view.LiveTrackingView
 import net.ddns.ajefferiss.waundle.view.NearbyHillsView
 import net.ddns.ajefferiss.waundle.view.PermissionRequest
@@ -71,6 +72,11 @@ fun Navigation() {
             ImageVector.vectorResource(id = R.drawable.ic_settings_icon),
             R.string.settings,
             Screen.SettingsScreen
+        ),
+        NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_import_export_icon),
+            R.string.import_export,
+            Screen.ImportExportScreen
         ),
         NavItem(
             ImageVector.vectorResource(id = R.drawable.ic_info_icon),
@@ -205,6 +211,14 @@ fun Navigation() {
                     navController = navController,
                     drawerState = drawerState,
                     viewModel = viewModel
+                )
+            }
+            composable(route = Screen.ImportExportScreen.route) {
+                ImportExportView(
+                    navController = navController,
+                    viewModel = viewModel,
+                    drawerState = drawerState,
+                    context = context
                 )
             }
         }

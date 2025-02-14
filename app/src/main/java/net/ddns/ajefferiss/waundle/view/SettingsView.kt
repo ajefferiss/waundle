@@ -62,16 +62,6 @@ fun SettingsView(
                 .padding(it)
         ) {
             SettingsGroup(
-                title = { Text(text = stringResource(id = R.string.map_settings)) }
-            ) {
-                SettingsMenuLink(
-                    title = { Text(text = stringResource(id = R.string.map_type)) },
-                    subtitle = { Text(text = currentPrefs.value.mapType.name) },
-                    onClick = { showMapTypeDialog.value = true }
-                )
-            }
-
-            SettingsGroup(
                 title = { Text(text = stringResource(id = R.string.nearby_hills)) }
             ) {
                 SettingsMenuLink(

@@ -4,6 +4,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import java.time.LocalDate
 
 class HillRepository(private val hillDAO: HillDAO) {
 
@@ -62,5 +63,9 @@ class HillRepository(private val hillDAO: HillDAO) {
         return runBlocking {
             flowOf(hillDAO.getCountryOtherHills(query))
         }
+    }
+
+    fun markHillWalked(hillId: Long, walkedDate: LocalDate) {
+        hillDAO.markHillWalked(hillId, walkedDate)
     }
 }

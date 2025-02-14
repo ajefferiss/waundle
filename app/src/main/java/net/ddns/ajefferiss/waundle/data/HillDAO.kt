@@ -8,6 +8,7 @@ import androidx.room.RawQuery
 import androidx.room.Update
 import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 abstract class HillDAO {
@@ -54,4 +55,7 @@ abstract class HillDAO {
 
     @RawQuery
     abstract suspend fun getCountryOtherHills(query: SupportSQLiteQuery): List<Hill>
+
+    @Query("UPDATE `hills_table` SET climbed = :climbed WHERE hillId = :id")
+    abstract fun markHillWalked(id: Long, climbed: LocalDate)
 }

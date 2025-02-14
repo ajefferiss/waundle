@@ -57,4 +57,9 @@
     <string name="category_list_title">%1$s Hills</string>
     <string name="base_hill_description">Height: %1$.1f (ft), %2$.1f (m)</string>
     <string name="hill_detailed_description">County: %1$s\nClassification: %2$s\nHeight: %3$.1f (ft), %4$.1f (m)</string>
+    <string name="import_export">Import / Export</string>
+    <string name="import_description">Import your current tracked progress from Hill-Bagging.co.uk</string>
+    <string name="import_hills">Import</string>
+    <string name="export_description">Export your current progress so that you can import it into Hill-Bagging.co.uk</string>
+    <string name="export_hills">Export</string>
 </resources>

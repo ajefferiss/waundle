@@ -12,4 +12,5 @@ sealed class Screen(val route: String) {
     data object WalkedHillsScreen : Screen("walked_hills")
     data object CategoriesListScreen : Screen("categories_list")
     data object HillsByCategoryScreen : Screen("hills_by_category")
+    data object ImportExportScreen : Screen("import_export")
 }
