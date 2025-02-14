@@ -7,13 +7,6 @@ import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 
 class HillRepository(private val hillDAO: HillDAO) {
-
-    suspend fun addHill(hill: Hill) {
-        hillDAO.addHill(hill)
-    }
-
-    fun getAllHills(): Flow<List<Hill>> = hillDAO.getAllHills()
-
     fun getWalkedHills(): Flow<List<Hill>> = hillDAO.getWalkedHills()
 
     fun getHillById(id: Long): Flow<Hill> {
