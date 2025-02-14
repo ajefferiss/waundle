@@ -96,8 +96,8 @@ dependencies {
 
     implementation(libs.ui.tiles)
     implementation(libs.ui.tiles.extended)
-
-    implementation(libs.kotlin.csv)
+    
+    implementation(libs.apache.csv)
 
     // Test dependencies
     testImplementation(libs.junit)
