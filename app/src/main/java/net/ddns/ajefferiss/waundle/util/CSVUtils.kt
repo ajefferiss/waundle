@@ -2,10 +2,12 @@ package net.ddns.ajefferiss.waundle.util
 
 import android.content.Context
 import android.net.Uri
+import net.ddns.ajefferiss.waundle.data.Hill
 import org.apache.commons.csv.CSVFormat
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.io.StringWriter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -44,4 +46,20 @@ fun parseHillBaggingCSV(uri: Uri, context: Context): List<HillBaggingImport> {
     }
 
     return listOf()
+}
+
+fun exportHillBaggingCSV(hills: List<Hill>): String {
+    val stringWriter = StringWriter()
+    CSVFormat.RFC4180.print(stringWriter).apply {
+        printRecord("hillnumber", "climbed")
+        hills.filter { it.climbed != null }
+            .forEach { hill ->
+                printRecord(
+                    hill.hillId,
+                    hill.climbed?.format(DateTimeFormatter.ofPattern("yyyy-MM-DD"))
+                )
+            }
+    }
+
+    return stringWriter.toString()
 }
