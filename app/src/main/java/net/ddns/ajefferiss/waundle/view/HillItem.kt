@@ -17,20 +17,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.data.Hill
+import net.ddns.ajefferiss.waundle.util.formatWalkedDate
 
 @Composable
 fun HillItem(hill: Hill, onClick: () -> Unit) {
-    val hillDescription = stringResource(
+    var hillDescription = stringResource(
         R.string.base_hill_description,
         hill.feet,
         hill.metres
     )
 
     if (hill.climbed != null) {
-        hillDescription.plus("\n").plus(
+        hillDescription = hillDescription.plus("\n").plus(
             stringResource(
                 id = R.string.hill_walked_on,
-                hill.climbed.toString()
+                formatWalkedDate(hill.climbed)
             )
         )
     }

@@ -33,6 +33,7 @@ import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.data.HillClassification
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
+import net.ddns.ajefferiss.waundle.util.formatWalkedDate
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -53,8 +54,7 @@ fun HillDetailsView(
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.details_title),
-        showBottomBar = false
+        title = stringResource(id = R.string.details_title)
     ) {
         Column(
             modifier = Modifier.padding(it),
@@ -72,7 +72,7 @@ fun HillDetailsView(
                 val classifications =
                     hill.value!!.classifications?.replace("|", "")?.split(",") ?: listOf()
 
-                val hillDescription = stringResource(
+                var hillDescription = stringResource(
                     id = R.string.hill_detailed_description,
                     hill.value!!.county,
                     HillClassification.namesFromCode(classifications),
@@ -80,12 +80,10 @@ fun HillDetailsView(
                     hill.value!!.metres
                 )
 
-                if (hill.value!!.climbed != null) {
-                    hillDescription.plus("\n").plus(
-                        stringResource(
-                            id = R.string.hill_walked_on,
-                            hill.value!!.climbed.toString()
-                        )
+                val walkedDate: LocalDate? = hill.value!!.climbed
+                if (walkedDate != null) {
+                    hillDescription = hillDescription.plus("\n").plus(
+                        stringResource(id = R.string.hill_walked_on, formatWalkedDate(walkedDate))
                     )
                 }
 
