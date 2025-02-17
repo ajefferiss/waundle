@@ -54,6 +54,11 @@ fun Navigation() {
             Screen.HomeScreen
         ),
         NavItem(
+            ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
+            R.string.nearby_hills,
+            Screen.NearByScreen
+        ),
+        NavItem(
             ImageVector.vectorResource(id = R.drawable.ic_walked_icon),
             R.string.walked_hills,
             Screen.WalkedHillsScreen
@@ -63,11 +68,6 @@ fun Navigation() {
 //            R.string.live_track,
 //            Screen.LiveTrackScreen
 //        ),
-        NavItem(
-            ImageVector.vectorResource(id = R.drawable.ic_nearby_icon),
-            R.string.nearby_hills,
-            Screen.NearByScreen
-        ),
         NavItem(
             ImageVector.vectorResource(id = R.drawable.ic_settings_icon),
             R.string.settings,
