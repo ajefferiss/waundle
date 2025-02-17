@@ -7,13 +7,13 @@ plugins {
 
 android {
     namespace = "net.ddns.ajefferiss.waundle"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "net.ddns.ajefferiss.waundle"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 19
+        targetSdk = 35
+        versionCode = 20
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -70,7 +70,7 @@ secrets {
 dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt("androidx.room:room-compiler:2.6.0")
+    kapt(libs.androidx.room.compiler)
 
     implementation(libs.maps.compose)
     implementation(libs.play.services.maps)
@@ -94,9 +94,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.datastore.preferences)
 
-
     implementation(libs.ui.tiles)
     implementation(libs.ui.tiles.extended)
+
+    implementation(libs.apache.csv)
 
     // Test dependencies
     testImplementation(libs.junit)

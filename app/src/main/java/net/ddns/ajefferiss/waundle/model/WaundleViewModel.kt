@@ -16,6 +16,7 @@ import net.ddns.ajefferiss.waundle.data.Hill
 import net.ddns.ajefferiss.waundle.data.HillClassification
 import net.ddns.ajefferiss.waundle.data.HillRepository
 import net.ddns.ajefferiss.waundle.data.LocationData
+import java.time.LocalDate
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -38,28 +39,28 @@ class WaundleViewModel(
         }
     }
 
-    fun addHill(hill: Hill) {
-        viewModelScope.launch(Dispatchers.IO) {
-            hillRepository.addHill(hill)
-        }
-    }
-
-    fun getAllHills(): Flow<List<Hill>> {
-        return hillRepository.getAllHills()
-    }
-
     fun updateHill(hill: Hill) {
         viewModelScope.launch {
             hillRepository.updateHill(hill)
         }
 
         if (hill.climbed != null) {
-            walkedHills = hillRepository.getWalkedHills()
+            refreshWalkedHills()
         }
     }
 
     fun getHillById(id: Long): Flow<Hill> {
         return hillRepository.getHillById(id)
+    }
+
+    fun markHillWalked(hillId: Long, walkedDate: LocalDate) {
+        viewModelScope.launch(Dispatchers.IO) {
+            hillRepository.markHillWalked(hillId, walkedDate)
+        }
+    }
+
+    fun refreshWalkedHills() {
+        walkedHills = hillRepository.getWalkedHills()
     }
 
     fun searchBy(search: String): Flow<List<Hill>> {
