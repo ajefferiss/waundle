@@ -14,13 +14,17 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.model.WaundleViewModel
+import net.ddns.ajefferiss.waundle.util.exportHillBaggingCSV
 import net.ddns.ajefferiss.waundle.util.parseHillBaggingCSV
 import java.io.IOException
 import java.time.format.DateTimeParseException
@@ -34,6 +38,12 @@ fun ImportExportView(
     context: Context
 ) {
     val logTag = "ImportExportView"
+    val walkedHills = viewModel.walkedHills.collectAsState(initial = listOf())
+    val clipboardManager = LocalClipboardManager.current
+    val importSuccessful = stringResource(R.string.import_successful)
+    val importIOError = stringResource(R.string.import_io_error)
+    val importDateTimeError = stringResource(R.string.import_date_parser_error)
+    val exportGenerated = stringResource(R.string.export_generated)
 
     val csvFilePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
@@ -47,13 +57,13 @@ fun ImportExportView(
                         viewModel.markHillWalked(hill.hillNumber, hill.climbed)
                     }
                     viewModel.refreshWalkedHills()
-                    importMessage = "Hills imported successfully"
+                    importMessage = importSuccessful
                 } catch (ioe: IOException) {
                     Log.d(logTag, "Filed to read file for import", ioe)
-                    importMessage = "Failed to read the import file"
+                    importMessage = importIOError
                 } catch (dfe: DateTimeParseException) {
                     Log.d(logTag, "Failed to parse walked dates", dfe)
-                    importMessage = "Failed to convert date of walked hill"
+                    importMessage = importDateTimeError
                 }
 
                 Toast.makeText(context, importMessage, Toast.LENGTH_LONG).show()
@@ -98,7 +108,11 @@ fun ImportExportView(
             Text(text = stringResource(id = R.string.export_description))
             Button(
                 onClick = {
-                    Toast.makeText(context, "TODO", Toast.LENGTH_LONG).show()
+                    val csvExport = exportHillBaggingCSV(walkedHills.value)
+                    Log.d(logTag, csvExport)
+
+                    clipboardManager.setText(AnnotatedString(csvExport))
+                    Toast.makeText(context, exportGenerated, Toast.LENGTH_LONG).show()
                 },
                 modifier = Modifier
                     .padding(2.dp)
