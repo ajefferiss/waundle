@@ -56,7 +56,7 @@ fun exportHillBaggingCSV(hills: List<Hill>): String {
             .forEach { hill ->
                 printRecord(
                     hill.hillId,
-                    hill.climbed?.format(DateTimeFormatter.ofPattern("yyyy-MM-DD"))
+                    hill.climbed?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
                 )
             }
     }

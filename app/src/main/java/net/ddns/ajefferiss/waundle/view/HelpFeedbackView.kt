@@ -24,8 +24,7 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.help_feedback),
-        showBottomBar = false
+        title = stringResource(id = R.string.help_feedback)
     ) {
         Column(modifier = Modifier.padding(it)) {
             Spacer(modifier = Modifier.padding(start = 5.dp))

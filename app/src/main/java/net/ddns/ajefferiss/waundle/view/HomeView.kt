@@ -34,7 +34,8 @@ fun HomeView(
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = stringResource(id = R.string.app_name)
+        title = stringResource(id = R.string.app_name),
+        showBottomBar = true
     ) {
         Column(
             modifier = Modifier

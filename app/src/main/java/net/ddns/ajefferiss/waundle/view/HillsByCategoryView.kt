@@ -47,8 +47,7 @@ fun HillsByCategoryView(
     WaundleScaffold(
         navController = navController,
         drawerState = drawerState,
-        title = hillCategory.codeName,
-        showBottomBar = false
+        title = hillCategory.codeName
     ) {
         Column(
             modifier = Modifier

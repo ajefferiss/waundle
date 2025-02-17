@@ -24,7 +24,7 @@ fun WaundleScaffold(
     title: String,
     floatingActionButton: @Composable () -> Unit = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
-    showBottomBar: Boolean = true,
+    showBottomBar: Boolean = false,
     content: @Composable() (PaddingValues) -> Unit
 ) {
     val snackBarHostState = remember { SnackbarHostState() }

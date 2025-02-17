@@ -35,8 +35,7 @@ fun CountryCategoryListView(
         title = stringResource(
             R.string.category_list_title,
             stringResource(countryInfo.nameId)
-        ),
-        showBottomBar = false
+        )
     ) {
         Column(
             modifier = Modifier
