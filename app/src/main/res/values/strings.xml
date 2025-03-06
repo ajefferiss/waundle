@@ -66,4 +66,6 @@
     <string name="import_io_error">Failed to read the import file</string>
     <string name="import_date_parser_error">Failed to convert date of walked hill</string>
     <string name="export_generated">Export created and copied to clipboard</string>
+    <string name="fetching_walked_count">Getting the number of walked hills</string>
+    <string name="category_walked_count">You\'ve walked %1$d of %2$d hills</string>
 </resources>

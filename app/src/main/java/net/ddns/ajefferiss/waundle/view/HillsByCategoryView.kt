@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.Screen
 import net.ddns.ajefferiss.waundle.data.CountryClassifications
 import net.ddns.ajefferiss.waundle.data.CountryCode
@@ -40,7 +43,7 @@ fun HillsByCategoryView(
     } else {
         viewModel.getHillsByCountryCategory(
             country.countryCode,
-            hillCategory.code
+            "|" + hillCategory.code + "|"
         ).collectAsState(initial = listOf())
     }
 
@@ -59,6 +62,22 @@ fun HillsByCategoryView(
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
+                item {
+                    if (searchResult.value.isEmpty()) {
+                        Text(stringResource(id = R.string.fetching_walked_count))
+                    } else {
+                        val walked = searchResult.value.count { h -> h.climbed != null }
+                        val total = searchResult.value.count()
+                        Text(
+                            stringResource(
+                                id = R.string.category_walked_count,
+                                walked,
+                                total
+                            )
+                        )
+                    }
+                }
+
                 items(searchResult.value, key = { hill -> hill.hillId }) { hill ->
                     HillItem(
                         hill = hill,
