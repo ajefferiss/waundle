@@ -47,7 +47,7 @@ abstract class HillDAO {
     @Query("UPDATE `hills_table` SET climbed = NULL")
     abstract fun resetWalkedProgress()
 
-    @Query("SELECT * FROM `hills_table` WHERE country LIKE '%' || :country || '%' AND classifications LIKE '%' || :categories || '%'")
+    @Query("SELECT * FROM `hills_table` WHERE country LIKE '%' || :country || '%' AND classifications LIKE '%' || :categories || '%' ORDER BY name ASC")
     abstract fun getHillsByCountryAndCategory(
         country: String,
         categories: String

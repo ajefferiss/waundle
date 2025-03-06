@@ -49,7 +49,7 @@ class HillRepository(private val hillDAO: HillDAO) {
         val placeHolders = ignoreCategories.joinToString(" AND ") { "classifications NOT LIKE ?" }
         val args = ignoreCategories.map { "%|${it.code}|%" }.toTypedArray()
         val query = SimpleSQLiteQuery(
-            "SELECT * FROM `hills_table` WHERE country LIKE '%$countryCode%' AND $placeHolders",
+            "SELECT * FROM `hills_table` WHERE country LIKE '%$countryCode%' AND $placeHolders ORDER BY name ASC",
             args
         )
 
