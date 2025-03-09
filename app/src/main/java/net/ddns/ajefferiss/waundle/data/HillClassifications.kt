@@ -57,7 +57,7 @@ enum class HillClassification(val code: String, val codeName: String, val imageI
                 }
             }
 
-            return names
+            return names.trim().trim(',')
         }
     }
 }
