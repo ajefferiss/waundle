@@ -84,7 +84,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: '${{ secrets.SERVICE_ACCOUNT_JSON }}'
-          packageName: com.tonyxlab.echojournal
+          packageName: net.ddns.ajefferiss.waundle
           releaseFiles: ${{ github.workspace }}/app-release.aab
           track: production
           continue-on-error: false  # Fail if deployment fails
