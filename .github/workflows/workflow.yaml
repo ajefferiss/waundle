@@ -1,6 +1,8 @@
 name: Deploy Waundle
 on:
-  workflow_dispatch: null
+  push:
+    branches:
+      - main
 jobs:
   build:
     name: Job 1 - Build Signed AAB
