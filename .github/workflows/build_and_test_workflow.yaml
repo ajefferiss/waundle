@@ -1,0 +1,30 @@
+name: Test Waundle
+
+on:
+  pull_request:
+    types: [opened, edited]
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup JDK 19
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 19
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Test
+        run: ./gradlew test --stacktrace
