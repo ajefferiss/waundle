@@ -49,11 +49,14 @@ fun ImportExportView(
         contract = ActivityResultContracts.StartActivityForResult(),
         onResult = { uri ->
             if (uri.data != null && uri.data!!.data != null) {
-                var importMessage = ""
+                var importMessage: String
                 try {
-                    val data = parseHillBaggingCSV(uri.data!!.data!!, context)
+                    val data = context.contentResolver.openInputStream(uri.data!!.data!!)
+                        ?.use { inputStream ->
+                            parseHillBaggingCSV(inputStream)
+                        }
 
-                    data.forEach { hill ->
+                    data?.forEach { hill ->
                         viewModel.markHillWalked(hill.hillNumber, hill.climbed)
                     }
                     viewModel.refreshWalkedHills()
