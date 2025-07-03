@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "net.ddns.ajefferiss.waundle"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "net.ddns.ajefferiss.waundle"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 23
         versionName = "1.0"
 
