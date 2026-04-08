@@ -8,7 +8,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [Hill::class, HillsMeta::class],
-    version = 2
+    version = 2,
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class HillDatabase : RoomDatabase() {
