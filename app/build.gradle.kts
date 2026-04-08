@@ -102,6 +102,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.compose.material.icons)
 
     implementation(libs.ui.tiles)
     implementation(libs.ui.tiles.extended)
