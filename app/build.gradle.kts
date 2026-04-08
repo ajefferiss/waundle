@@ -1,12 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.gradle.secretplugin)
     id("com.google.devtools.ksp")
     alias(libs.plugins.compose.compiler)
 }
 
-android {
+extensions.configure<com.android.build.api.dsl.ApplicationExtension> {
     namespace = "net.ddns.ajefferiss.waundle"
     compileSdk = 36
 
@@ -34,16 +33,6 @@ android {
         }
         debug {
             isDebuggable = true
-        }
-    }
-
-    kotlin {
-        jvmToolchain(19)
-    }
-
-    java {
-        toolchain {
-            languageVersion.set(JavaLanguageVersion.of(19))
         }
     }
 
