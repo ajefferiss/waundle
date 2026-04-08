@@ -1,26 +1,26 @@
 [versions]
-agp = "8.11.0"
-datastorePreferences = "1.1.3"
-kotlin = "2.0.21"
-coreKtx = "1.15.0"
+agp = "9.1.0"
+datastorePreferences = "1.2.1"
+kotlin = "2.3.20"
+coreKtx = "1.18.0"
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.1"
-composeBom = "2025.02.00"
-lifecycleViewmodelCompose = "2.8.7"
-navigationCompose = "2.8.8"
-mapsCompose = "2.15.0"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+lifecycleRuntimeKtx = "2.10.0"
+activityCompose = "1.13.0"
+composeBom = "2026.03.01"
+lifecycleViewmodelCompose = "2.10.0"
+navigationCompose = "2.9.7"
+mapsCompose = "8.2.2"
 playServicesLocationVersion = "21.3.0"
-playServicesMapsVersion = "19.1.0"
-room = "2.6.1"
-compose = "1.7.8"
-junitJupiter = "5.10.2"
-roomCompiler = "2.6.1"
+playServicesMapsVersion = "20.0.0"
+room = "2.8.4"
+compose = "1.10.6"
+junitJupiter = "6.0.3"
+roomCompiler = "2.8.4"
 secretsGradlePlugin = "2.0.1"
-uiTiles = "2.4.0"
-apacheCsv = "1.13.0"
+uiTiles = "3.1.0"
+apacheCsv = "1.14.1"
 
 [libraries]
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
@@ -56,10 +56,9 @@ ui-tiles = { module = "com.github.alorma.compose-settings:ui-tiles", version.ref
 ui-tiles-extended = { module = "com.github.alorma.compose-settings:ui-tiles-extended", version.ref = "uiTiles" }
 
 apache-csv = { module = "org.apache.commons:commons-csv", version.ref = "apacheCsv" }
+compose-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gradle-secretplugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
