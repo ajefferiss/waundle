@@ -1,7 +1,6 @@
 package net.ddns.ajefferiss.waundle.view
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,12 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 
 @Composable
 fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
     val context = LocalContext.current
+    val gitHubUri = "https://github.com/ajefferiss/waundle/issues"
 
     WaundleScaffold(
         navController = navController,
@@ -36,10 +37,7 @@ fun HelpFeedbackView(navController: NavController, drawerState: DrawerState) {
                     Button(
                         modifier = Modifier.padding(2.dp),
                         onClick = {
-                            val urlIntent = Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("https://github.com/ajefferiss/waundle/issues")
-                            )
+                            val urlIntent = Intent(Intent.ACTION_VIEW, gitHubUri.toUri())
                             context.startActivity(urlIntent)
                         }) {
                         Text(text = stringResource(id = R.string.github))

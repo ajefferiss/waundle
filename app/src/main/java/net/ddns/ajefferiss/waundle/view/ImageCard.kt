@@ -12,7 +12,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +27,11 @@ fun ImageCard(description: String, imageId: Int, onClick: () -> Unit) {
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(),
     ) {
+        Text(
+            text = description,
+            fontWeight = FontWeight.ExtraBold,
+            modifier = Modifier.padding(8.dp)
+        )
         Box {
             Image(
                 painter = painterResource(imageId),
@@ -35,12 +39,7 @@ fun ImageCard(description: String, imageId: Int, onClick: () -> Unit) {
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier.fillMaxSize()
             )
-            Text(
-                text = description,
-                fontWeight = FontWeight.ExtraBold,
-                color = Color.White,
-                modifier = Modifier.padding(8.dp)
-            )
+
         }
     }
 }
