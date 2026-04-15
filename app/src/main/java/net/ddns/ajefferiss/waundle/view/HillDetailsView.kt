@@ -2,7 +2,6 @@ package net.ddns.ajefferiss.waundle.view
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import net.ddns.ajefferiss.waundle.R
 import net.ddns.ajefferiss.waundle.data.HillClassification
@@ -114,7 +114,7 @@ fun HillDetailsView(
                                         hill.value!!.longitude +
                                         " (" + hill.value!!.name + ")"
 
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(geoUri))
+                                val intent = Intent(Intent.ACTION_VIEW, geoUri.toUri())
                                 intent.setPackage("com.google.android.apps.maps")
                                 context.startActivity(intent)
                             },
